@@ -1,0 +1,60 @@
+
+============================================================
+EXPERIMENTO 04b — DataSense-17 vs Contrastivo (25 features)
+============================================================
+Dataset: data/dataset_attack_benign.csv
+
+[Preprocessor] Carregando data/dataset_attack_benign.csv...
+[Preprocessor] Shape bruto: (227191, 95)
+[Preprocessor] Features utilizáveis: 71
+Dataset: 227,191 x 71
+
+DataSense-17: 17 de 17 features encontradas
+
+============================================================
+Cenario: label1 | 2 classes
+============================================================
+
+[Eval] Cenário: label1 | 2 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['datasense_17_supervised', 'contrastive_25_unsupervised', 'all_features_71']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] datasense_17_supervised: 17 features...
+  -> F1-macro: 0.921–0.926 | 89.7s
+[Eval] contrastive_25_unsupervised: 63 features...
+  -> F1-macro: 0.935–0.936 | 189.1s
+[Eval] all_features_71: 71 features...
+  -> F1-macro: 0.933–0.936 | 194.8s
+
+Metodo                              #Feat      F1-macro       Acc       MCC
+----------------------------------- -----  ------------  --------  --------
+  contrastive_25_unsupervised          63  0.936+-0.002  0.940     0.878
+  all_features_71                      71  0.935+-0.002  0.939     0.874
+  datasense_17_supervised              17  0.924+-0.001  0.928     0.851
+
+Resultados salvos em: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\tables\datasense17_vs_contrastive_label1.csv
+
+============================================================
+Cenario: label2 | 8 classes
+============================================================
+
+[Eval] Cenário: label2 | 8 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['datasense_17_supervised', 'contrastive_25_unsupervised', 'all_features_71']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] datasense_17_supervised: 17 features...
+  -> F1-macro: 0.857–0.875 | 120.4s
+[Eval] contrastive_25_unsupervised: 63 features...
+  -> F1-macro: 0.902–0.909 | 208.7s
+[Eval] all_features_71: 71 features...
+  -> F1-macro: 0.897–0.911 | 268.5s
+
+Metodo                              #Feat      F1-macro       Acc       MCC
+----------------------------------- -----  ------------  --------  --------
+  contrastive_25_unsupervised          63  0.906+-0.003  0.934     0.889
+  all_features_71                      71  0.904+-0.003  0.931     0.884
+  datasense_17_supervised              17  0.866+-0.002  0.918     0.861
+
+Resultados salvos em: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\tables\datasense17_vs_contrastive_label2.csv
+
+============================================================
+Avaliacao DataSense-17 vs Contrastivo concluida.
+============================================================

@@ -1,0 +1,243 @@
+
+============================================================
+EXPERIMENTO 08 — K Sweep (k = [10, 15, 20, 25])
+============================================================
+Dataset: data/dataset_attack_benign.csv
+
+[Preprocessor] Carregando data/dataset_attack_benign.csv...
+[Preprocessor] Shape bruto: (227191, 95)
+[Preprocessor] Features utilizáveis: 71
+Dataset: 227,191 × 71
+
+--- Computando rankings de features (1 vez) ---
+[K-Sweep] Variância...
+  -> 0.1s
+[K-Sweep] Laplacian Score...
+  -> 2.1s
+[K-Sweep] SPEC...
+  -> 0.1s
+[K-Sweep] MCFS...
+  -> 0.1s
+[K-Sweep] k-Means+Sil: 46 features carregadas do JSON
+[K-Sweep] VICReg: 63 features carregadas do JSON
+
+--------------------------------------------------
+K = 10 features
+--------------------------------------------------
+
+[Eval] Cenário: label1 | 2 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['variance_k10', 'laplacian_k10', 'spec_k10', 'mcfs_k10', 'kmeans_sil_k10', 'vicreg_k10', 'all_features']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] variance_k10: 10 features...
+  -> F1-macro: 0.884–0.885 | 8.0s
+[Eval] laplacian_k10: 10 features...
+  -> F1-macro: 0.840–0.840 | 6.7s
+[Eval] spec_k10: 10 features...
+  -> F1-macro: 0.870–0.870 | 8.9s
+[Eval] mcfs_k10: 10 features...
+  -> F1-macro: 0.930–0.933 | 14.1s
+[Eval] kmeans_sil_k10: 10 features...
+  -> F1-macro: 0.929–0.931 | 11.1s
+[Eval] vicreg_k10: 10 features...
+  -> F1-macro: 0.907–0.909 | 10.4s
+[Eval] all_features: 71 features...
+  -> F1-macro: 0.933–0.936 | 54.0s
+
+[Eval] Cenário: label2 | 8 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['variance_k10', 'laplacian_k10', 'spec_k10', 'mcfs_k10', 'kmeans_sil_k10', 'vicreg_k10', 'all_features']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] variance_k10: 10 features...
+  -> F1-macro: 0.729–0.735 | 13.1s
+[Eval] laplacian_k10: 10 features...
+  -> F1-macro: 0.339–0.339 | 7.7s
+[Eval] spec_k10: 10 features...
+  -> F1-macro: 0.612–0.615 | 13.9s
+[Eval] mcfs_k10: 10 features...
+  -> F1-macro: 0.856–0.880 | 37.7s
+[Eval] kmeans_sil_k10: 10 features...
+  -> F1-macro: 0.870–0.878 | 24.0s
+[Eval] vicreg_k10: 10 features...
+  -> F1-macro: 0.795–0.806 | 17.2s
+[Eval] all_features: 71 features...
+  -> F1-macro: 0.897–0.911 | 119.9s
+
+--------------------------------------------------
+K = 15 features
+--------------------------------------------------
+
+[Eval] Cenário: label1 | 2 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['variance_k15', 'laplacian_k15', 'spec_k15', 'mcfs_k15', 'kmeans_sil_k15', 'vicreg_k15', 'all_features']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] variance_k15: 15 features...
+  -> F1-macro: 0.924–0.925 | 21.5s
+[Eval] laplacian_k15: 15 features...
+  -> F1-macro: 0.869–0.869 | 15.7s
+[Eval] spec_k15: 15 features...
+  -> F1-macro: 0.907–0.908 | 24.8s
+[Eval] mcfs_k15: 15 features...
+  -> F1-macro: 0.930–0.933 | 35.0s
+[Eval] kmeans_sil_k15: 15 features...
+  -> F1-macro: 0.929–0.930 | 24.0s
+[Eval] vicreg_k15: 15 features...
+  -> F1-macro: 0.922–0.923 | 18.1s
+[Eval] all_features: 71 features...
+  -> F1-macro: 0.933–0.936 | 50.0s
+
+[Eval] Cenário: label2 | 8 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['variance_k15', 'laplacian_k15', 'spec_k15', 'mcfs_k15', 'kmeans_sil_k15', 'vicreg_k15', 'all_features']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] variance_k15: 15 features...
+  -> F1-macro: 0.865–0.873 | 16.1s
+[Eval] laplacian_k15: 15 features...
+  -> F1-macro: 0.659–0.661 | 10.9s
+[Eval] spec_k15: 15 features...
+  -> F1-macro: 0.739–0.745 | 17.1s
+[Eval] mcfs_k15: 15 features...
+  -> F1-macro: 0.873–0.896 | 31.6s
+[Eval] kmeans_sil_k15: 15 features...
+  -> F1-macro: 0.872–0.877 | 23.2s
+[Eval] vicreg_k15: 15 features...
+  -> F1-macro: 0.842–0.851 | 20.0s
+[Eval] all_features: 71 features...
+  -> F1-macro: 0.897–0.911 | 81.7s
+
+--------------------------------------------------
+K = 20 features
+--------------------------------------------------
+
+[Eval] Cenário: label1 | 2 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['variance_k20', 'laplacian_k20', 'spec_k20', 'mcfs_k20', 'kmeans_sil_k20', 'vicreg_k20', 'all_features']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] variance_k20: 20 features...
+  -> F1-macro: 0.935–0.936 | 18.0s
+[Eval] laplacian_k20: 20 features...
+  -> F1-macro: 0.903–0.904 | 28.9s
+[Eval] spec_k20: 20 features...
+  -> F1-macro: 0.932–0.933 | 26.4s
+[Eval] mcfs_k20: 20 features...
+  -> F1-macro: 0.930–0.934 | 56.8s
+[Eval] kmeans_sil_k20: 20 features...
+  -> F1-macro: 0.930–0.931 | 47.0s
+[Eval] vicreg_k20: 20 features...
+  -> F1-macro: 0.934–0.936 | 35.1s
+[Eval] all_features: 71 features...
+  -> F1-macro: 0.933–0.936 | 120.4s
+
+[Eval] Cenário: label2 | 8 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['variance_k20', 'laplacian_k20', 'spec_k20', 'mcfs_k20', 'kmeans_sil_k20', 'vicreg_k20', 'all_features']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] variance_k20: 20 features...
+  -> F1-macro: 0.880–0.890 | 39.1s
+[Eval] laplacian_k20: 20 features...
+  -> F1-macro: 0.757–0.764 | 40.8s
+[Eval] spec_k20: 20 features...
+  -> F1-macro: 0.793–0.809 | 39.6s
+[Eval] mcfs_k20: 20 features...
+  -> F1-macro: 0.878–0.899 | 80.1s
+[Eval] kmeans_sil_k20: 20 features...
+  -> F1-macro: 0.876–0.883 | 47.5s
+[Eval] vicreg_k20: 20 features...
+  -> F1-macro: 0.877–0.887 | 37.5s
+[Eval] all_features: 71 features...
+  -> F1-macro: 0.897–0.911 | 145.7s
+
+--------------------------------------------------
+K = 25 features
+--------------------------------------------------
+
+[Eval] Cenário: label1 | 2 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['variance_k25', 'laplacian_k25', 'spec_k25', 'mcfs_k25', 'kmeans_sil_k25', 'vicreg_k25', 'all_features']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] variance_k25: 25 features...
+  -> F1-macro: 0.928–0.930 | 48.6s
+[Eval] laplacian_k25: 25 features...
+  -> F1-macro: 0.934–0.935 | 34.8s
+[Eval] spec_k25: 25 features...
+  -> F1-macro: 0.935–0.935 | 38.1s
+[Eval] mcfs_k25: 25 features...
+  -> F1-macro: 0.930–0.934 | 64.3s
+[Eval] kmeans_sil_k25: 25 features...
+  -> F1-macro: 0.933–0.934 | 55.2s
+[Eval] vicreg_k25: 25 features...
+  -> F1-macro: 0.935–0.936 | 47.3s
+[Eval] all_features: 71 features...
+  -> F1-macro: 0.933–0.936 | 115.2s
+
+[Eval] Cenário: label2 | 8 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['variance_k25', 'laplacian_k25', 'spec_k25', 'mcfs_k25', 'kmeans_sil_k25', 'vicreg_k25', 'all_features']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] variance_k25: 25 features...
+  -> F1-macro: 0.880–0.894 | 60.3s
+[Eval] laplacian_k25: 25 features...
+  -> F1-macro: 0.814–0.827 | 48.8s
+[Eval] spec_k25: 25 features...
+  -> F1-macro: 0.861–0.868 | 49.6s
+[Eval] mcfs_k25: 25 features...
+  -> F1-macro: 0.881–0.900 | 94.2s
+[Eval] kmeans_sil_k25: 25 features...
+  -> F1-macro: 0.889–0.900 | 74.9s
+[Eval] vicreg_k25: 25 features...
+  -> F1-macro: 0.890–0.900 | 64.8s
+[Eval] all_features: 71 features...
+  -> F1-macro: 0.897–0.911 | 157.8s
+
+[K-Sweep] Resultados salvos: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\tables\k_sweep_results.csv
+        method  k label_col  n_features  f1_macro_mean
+  variance_k10 10    label1          10       0.884761
+ laplacian_k10 10    label1          10       0.839586
+      spec_k10 10    label1          10       0.870003
+      mcfs_k10 10    label1          10       0.933454
+kmeans_sil_k10 10    label1          10       0.930509
+    vicreg_k10 10    label1          10       0.909425
+  all_features 10    label1          71       0.936436
+  variance_k10 10    label2          10       0.735165
+ laplacian_k10 10    label2          10       0.339394
+      spec_k10 10    label2          10       0.614956
+      mcfs_k10 10    label2          10       0.879831
+kmeans_sil_k10 10    label2          10       0.878143
+    vicreg_k10 10    label2          10       0.805921
+  all_features 10    label2          71       0.910707
+  variance_k15 15    label1          15       0.925403
+ laplacian_k15 15    label1          15       0.869406
+      spec_k15 15    label1          15       0.908175
+      mcfs_k15 15    label1          15       0.933491
+kmeans_sil_k15 15    label1          15       0.929754
+    vicreg_k15 15    label1          15       0.922834
+  all_features 15    label1          71       0.936436
+  variance_k15 15    label2          15       0.873122
+ laplacian_k15 15    label2          15       0.661415
+      spec_k15 15    label2          15       0.745312
+      mcfs_k15 15    label2          15       0.896368
+kmeans_sil_k15 15    label2          15       0.876618
+    vicreg_k15 15    label2          15       0.851045
+  all_features 15    label2          71       0.910707
+  variance_k20 20    label1          20       0.935614
+ laplacian_k20 20    label1          20       0.903899
+      spec_k20 20    label1          20       0.932735
+      mcfs_k20 20    label1          20       0.933583
+kmeans_sil_k20 20    label1          20       0.930664
+    vicreg_k20 20    label1          20       0.935581
+  all_features 20    label1          71       0.936436
+  variance_k20 20    label2          20       0.890410
+ laplacian_k20 20    label2          20       0.764253
+      spec_k20 20    label2          20       0.809323
+      mcfs_k20 20    label2          20       0.898850
+kmeans_sil_k20 20    label2          20       0.882803
+    vicreg_k20 20    label2          20       0.887253
+  all_features 20    label2          71       0.910707
+  variance_k25 25    label1          25       0.929591
+ laplacian_k25 25    label1          25       0.934538
+      spec_k25 25    label1          25       0.935291
+      mcfs_k25 25    label1          25       0.933853
+kmeans_sil_k25 25    label1          25       0.933858
+    vicreg_k25 25    label1          25       0.935982
+  all_features 25    label1          71       0.936436
+  variance_k25 25    label2          25       0.893530
+ laplacian_k25 25    label2          25       0.826994
+      spec_k25 25    label2          25       0.868006
+      mcfs_k25 25    label2          25       0.900090
+kmeans_sil_k25 25    label2          25       0.899763
+    vicreg_k25 25    label2          25       0.900302
+  all_features 25    label2          71       0.910707
+[K-Sweep] Gráfico salvo: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\k_sweep_label1.png
+[K-Sweep] Gráfico salvo: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\k_sweep_label2.png

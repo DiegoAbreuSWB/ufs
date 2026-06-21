@@ -1,0 +1,31 @@
+
+============================================================
+EXPERIMENT 11 — English paper figures
+============================================================
+Output: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready
+
+--- Ablation delta charts ---
+  Saved: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready/fig_ablation_label1.{pdf,png}
+[ablation] label1 done.
+  Saved: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready/fig_ablation_label2.{pdf,png}
+[ablation] label2 done.
+
+--- K-sweep lineplots ---
+  Saved: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready/fig_ksweep_label1.{pdf,png}
+[ksweep] label1 done.
+  Saved: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready/fig_ksweep_label2.{pdf,png}
+[ksweep] label2 done.
+
+--- t-SNE latent representations ---
+[tsne] Loading data: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\data\dataset_attack_benign.csv
+[Preprocessor] Carregando C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\data\dataset_attack_benign.csv...
+[Preprocessor] Shape bruto: (227191, 95)
+[Preprocessor] Features utilizáveis: 71
+[tsne] Loading encoder: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\models\encoder_datasense.pt
+[tsne] Computing representations (227,191 samples)...
+[tsne] k-Means with k=13...
+[tsne] Running t-SNE on 5000 points...
+  Saved: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready/fig_tsne.{pdf,png}
+[tsne] done.
+
+[Exp 11] Done. Files in: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready

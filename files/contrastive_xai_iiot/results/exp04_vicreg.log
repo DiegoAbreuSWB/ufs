@@ -1,0 +1,102 @@
+
+============================================================
+EXPERIMENTO 04 — Tabela Comparativa (5-fold CV)
+============================================================
+Dataset: data/dataset_attack_benign.csv
+
+[Preprocessor] Carregando data/dataset_attack_benign.csv...
+[Preprocessor] Shape bruto: (227191, 95)
+[Preprocessor] Features utilizáveis: 71
+Dataset: 227,191 x 71
+  label 'label1': 2 classes
+  label 'label2': 8 classes
+  label 'device_name': 38 classes
+
+Métodos carregados: ['contrastive_proposed', 'kmeans_silhouette', 'variance', 'laplacian_score', 'spec', 'mcfs', 'udfs', 'ndfs', 'pca', 'all_features']
+[Eval] KNN desabilitado para dataset grande (227,191 amostras)
+
+[Eval] Cenário: label1 | 2 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['contrastive_proposed', 'kmeans_silhouette', 'variance', 'laplacian_score', 'spec', 'mcfs', 'udfs', 'ndfs', 'pca', 'all_features']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] contrastive_proposed: 63 features...
+  -> F1-macro: 0.935–0.936 | 137.5s
+[Eval] kmeans_silhouette: 46 features...
+  -> F1-macro: 0.933–0.934 | 131.7s
+[Eval] variance: 25 features...
+  -> F1-macro: 0.928–0.930 | 68.0s
+[Eval] laplacian_score: 25 features...
+  -> F1-macro: 0.934–0.935 | 53.2s
+[Eval] spec: 25 features...
+  -> F1-macro: 0.935–0.935 | 3083.9s
+[Eval] mcfs: 25 features...
+  -> F1-macro: 0.930–0.934 | 95.4s
+[Eval] udfs: 25 features...
+  -> F1-macro: 0.911–0.914 | 96.7s
+[Eval] ndfs: 25 features...
+  -> F1-macro: 0.925–0.927 | 93.5s
+[Eval] all_features: 71 features...
+  -> F1-macro: 0.933–0.936 | 196.5s
+
+[Comparison] Resultados salvos: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\tables\comparison_label1.csv
+
+===========================================================================
+TABELA COMPARATIVA — label1
+===========================================================================
+Método                        #Feat    F1-macro    Accuracy       MCC
+---------------------------- ------  ----------  ----------  --------
+  contrastive_proposed           63  0.936±0.002  0.940        0.878
+  spec                           25  0.935±0.002  0.940        0.877
+  all_features                   71  0.935±0.002  0.939        0.874
+  laplacian_score                25  0.934±0.001  0.939        0.876
+  kmeans_silhouette              46  0.934±0.001  0.938        0.874
+  mcfs                           25  0.932±0.002  0.936        0.869
+  variance                       25  0.929±0.002  0.933        0.862
+  ndfs                           25  0.926±0.001  0.931        0.860
+  udfs                           25  0.913±0.001  0.919        0.833
+[Comparison] Gráfico salvo: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\comparison_barplot_label1.png
+
+[Eval] Cenário: label2 | 8 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['contrastive_proposed', 'kmeans_silhouette', 'variance', 'laplacian_score', 'spec', 'mcfs', 'udfs', 'ndfs', 'pca', 'all_features']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] contrastive_proposed: 63 features...
+  -> F1-macro: 0.902–0.909 | 149.9s
+[Eval] kmeans_silhouette: 46 features...
+  -> F1-macro: 0.899–0.907 | 143.0s
+[Eval] variance: 25 features...
+  -> F1-macro: 0.880–0.894 | 78.4s
+[Eval] laplacian_score: 25 features...
+  -> F1-macro: 0.814–0.827 | 63.3s
+[Eval] spec: 25 features...
+  -> F1-macro: 0.861–0.868 | 65.8s
+[Eval] mcfs: 25 features...
+  -> F1-macro: 0.881–0.900 | 124.1s
+[Eval] udfs: 25 features...
+  -> F1-macro: 0.823–0.840 | 79.8s
+[Eval] ndfs: 25 features...
+  -> F1-macro: 0.804–0.826 | 84.8s
+[Eval] all_features: 71 features...
+  -> F1-macro: 0.897–0.911 | 199.6s
+
+[Comparison] Resultados salvos: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\tables\comparison_label2.csv
+
+===========================================================================
+TABELA COMPARATIVA — label2
+===========================================================================
+Método                        #Feat    F1-macro    Accuracy       MCC
+---------------------------- ------  ----------  ----------  --------
+  contrastive_proposed           63  0.906±0.003  0.934        0.889
+  all_features                   71  0.904±0.003  0.931        0.884
+  kmeans_silhouette              46  0.903±0.003  0.932        0.886
+  mcfs                           25  0.891±0.003  0.924        0.872
+  variance                       25  0.887±0.002  0.924        0.871
+  spec                           25  0.865±0.003  0.917        0.860
+  udfs                           25  0.831±0.003  0.907        0.843
+  laplacian_score                25  0.820±0.003  0.908        0.844
+  ndfs                           25  0.815±0.003  0.906        0.839
+[Comparison] Gráfico salvo: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\comparison_barplot_label2.png
+
+============================================================
+Avaliação concluída.
+Tabelas: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\tables
+Figuras : C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures
+============================================================

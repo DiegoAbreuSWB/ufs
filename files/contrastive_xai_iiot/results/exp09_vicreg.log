@@ -1,0 +1,19 @@
+
+============================================================
+EXPERIMENTO 09 — Figuras para o Paper
+============================================================
+Output: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready
+
+[fig2] Copiado: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\tsne_clusters_vs_labels.png -> C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready\fig2_tsne_vicreg.png
+  Salvo: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready/fig3_comparison_heatmap.{png,pdf}
+[fig3] Heatmap comparativo gerado.
+  Salvo: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready/fig4_k_sweep_label1.{png,pdf}
+[fig4] K-sweep label1 gerado.
+  Salvo: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready/fig4_k_sweep_label2.{png,pdf}
+[fig4] K-sweep label2 gerado.
+[fig5] Copiado: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\shap_summary.png -> C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready\fig5_shap_summary.png
+
+[Exp 09] Concluído. Figuras em: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\paper_ready
+Pendentes (requerem re-execução de exp 02 e 06 com VICReg):
+  fig2_tsne_comparison — precisa exp 06 re-rodado com VICReg
+  fig5_shap_summary   — precisa exp 06 re-rodado com VICReg

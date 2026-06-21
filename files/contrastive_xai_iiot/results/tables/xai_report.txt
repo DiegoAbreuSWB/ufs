@@ -1,0 +1,168 @@
+======================================================================
+RELATÓRIO XAI — ContrastiveXAI-FS para IIoT
+======================================================================
+Proxy RF acurácia: 94.2%
+Clusters: 13 | Features totais: 63
+Features selecionadas: 63
+
+──────────────────────────────────────────────────────────────────────
+TOP 10 FEATURES GLOBAIS (média |SHAP|)
+──────────────────────────────────────────────────────────────────────
+   1. [SEL] network_packets_dst_count                     0.01511
+   2. [SEL] network_packets_all_count                     0.01237
+   3. [SEL] network_ip-length_avg                         0.00977
+   4. [SEL] network_ip-length_std_deviation               0.00789
+   5. [SEL] network_ttl_avg                               0.00777
+   6. [SEL] network_ip-length_min                         0.00742
+   7. [SEL] network_tcp-flags_min                         0.00698
+   8. [SEL] network_tcp-flags_std_deviation               0.00672
+   9. [SEL] network_ip-flags_avg                          0.00644
+  10. [SEL] network_packet-size_avg                       0.00641
+
+──────────────────────────────────────────────────────────────────────
+TOP 5 FEATURES POR CLUSTER
+──────────────────────────────────────────────────────────────────────
+
+  Cluster 0  (384 amostras):
+    [SEL] network_window-size_min                       0.01447
+    [SEL] network_tcp-flags_min                         0.01311
+    [SEL] network_packets_dst_count                     0.01243
+    [SEL] network_window-size_avg                       0.00929
+    [SEL] network_tcp-flags_std_deviation               0.00903
+
+  Cluster 1  (384 amostras):
+    [SEL] network_macs_src_count                        0.01980
+    [SEL] network_macs_dst_count                        0.01829
+    [SEL] network_packet-size_min                       0.01681
+    [SEL] network_protocols_all_count                   0.01625
+    [SEL] network_packet-size_avg                       0.01591
+
+  Cluster 2  (384 amostras):
+    [SEL] network_packets_dst_count                     0.02657
+    [SEL] network_packets_all_count                     0.02505
+    [SEL] network_ip-length_avg                         0.01107
+    [SEL] network_tcp-flags_min                         0.00894
+    [SEL] network_macs_dst_count                        0.00742
+
+  Cluster 3  (384 amostras):
+    [SEL] network_packets_dst_count                     0.02104
+    [SEL] network_ip-flags_avg                          0.01727
+    [SEL] network_tcp-flags_std_deviation               0.01350
+    [SEL] network_packets_all_count                     0.01316
+    [SEL] network_ip-length_avg                         0.01238
+
+  Cluster 4  (384 amostras):
+    [SEL] network_ttl_avg                               0.02021
+    [SEL] network_ip-length_min                         0.01658
+    [SEL] network_ttl_min                               0.01607
+    [SEL] network_packets_dst_count                     0.01320
+    [SEL] network_ip-length_std_deviation               0.01117
+
+  Cluster 5  (384 amostras):
+    [SEL] network_tcp-flags_min                         0.01753
+    [SEL] network_packets_dst_count                     0.01495
+    [SEL] network_ip-length_std_deviation               0.01289
+    [SEL] network_packets_all_count                     0.01261
+    [SEL] network_mss_min                               0.01145
+
+  Cluster 6  (384 amostras):
+    [SEL] network_payload-length_avg                    0.02965
+    [SEL] network_fragmentation-score                   0.02456
+    [SEL] network_fragmented-packets                    0.02137
+    [SEL] network_ip-length_avg                         0.01843
+    [SEL] network_packet-size_avg                       0.01217
+
+  Cluster 7  (384 amostras):
+    [SEL] network_ttl_std_deviation                     0.03562
+    [SEL] network_ip-flags_avg                          0.01666
+    [SEL] network_tcp-flags_std_deviation               0.01519
+    [SEL] network_ttl_avg                               0.01047
+    [SEL] network_mss_min                               0.00970
+
+  Cluster 8  (384 amostras):
+    [SEL] network_packets_dst_count                     0.03905
+    [SEL] network_packets_all_count                     0.02557
+    [SEL] network_ip-length_avg                         0.02389
+    [SEL] network_ip-length_std_deviation               0.00984
+    [SEL] network_ip-flags_avg                          0.00878
+
+  Cluster 9  (384 amostras):
+    [SEL] network_tcp-flags_std_deviation               0.01207
+    [SEL] network_mss_min                               0.01136
+    [SEL] network_mss_avg                               0.01023
+    [SEL] network_mss_max                               0.00876
+    [SEL] network_tcp-flags_min                         0.00782
+
+  Cluster 10  (384 amostras):
+    [SEL] network_packets_dst_count                     0.01174
+    [SEL] network_ip-length_min                         0.00953
+    [SEL] network_packets_all_count                     0.00922
+    [SEL] network_ip-length_std_deviation               0.00841
+    [SEL] network_packet-size_avg                       0.00574
+
+  Cluster 11  (384 amostras):
+    [SEL] network_packets_dst_count                     0.03011
+    [SEL] network_packets_all_count                     0.02237
+    [SEL] network_tcp-flags_min                         0.01448
+    [SEL] network_window-size_avg                       0.01242
+    [SEL] network_ip-length_avg                         0.00887
+
+  Cluster 12  (384 amostras):
+    [SEL] network_ip-length_min                         0.02216
+    [SEL] network_ttl_avg                               0.01773
+    [SEL] network_header-length_min                     0.01716
+    [SEL] network_header-length_avg                     0.01676
+    [SEL] network_ttl_max                               0.01584
+
+──────────────────────────────────────────────────────────────────────
+COMPARAÇÃO: SELECIONADAS vs NÃO SELECIONADAS
+──────────────────────────────────────────────────────────────────────
+  Features no top-10 SHAP que FORAM selecionadas    : 10/10
+  Features no top-10 SHAP que NÃO foram selecionadas: 0/10
+
+──────────────────────────────────────────────────────────────────────
+COERÊNCIA SEMÂNTICA POR CONTEXT GROUP
+──────────────────────────────────────────────────────────────────────
+  Grupo                            SHAP Total    Selected
+  ------------------------------ ------------  ----------
+  Size Length                         0.08816  20/20
+  Header Flags                        0.05844  14/14
+  Address Diversity                   0.02522  6/6
+  Timing Control                      0.01401  4/4
+  Packet Traffic Rate                 0.01121  4/4
+  Network Multiplexing                0.00967  6/6
+  Fragmentation                       0.00629  2/2
+  Log Data Rate                       0.00439  2/2
+  Log Data Stats                      0.00319  5/5
+
+──────────────────────────────────────────────────────────────────────
+INTERPRETAÇÃO SEMÂNTICA DOS CLUSTERS
+──────────────────────────────────────────────────────────────────────
+  Cluster 0: dominado por [Timing Control, Header Flags, Size Length]
+    Features chave: network_window-size_min, network_tcp-flags_min, network_packets_dst_count
+  Cluster 1: dominado por [Address Diversity, Size Length]
+    Features chave: network_macs_src_count, network_macs_dst_count, network_packet-size_min
+  Cluster 2: dominado por [Size Length, Header Flags]
+    Features chave: network_packets_dst_count, network_packets_all_count, network_ip-length_avg
+  Cluster 3: dominado por [Size Length, Header Flags]
+    Features chave: network_packets_dst_count, network_ip-flags_avg, network_tcp-flags_std_deviation
+  Cluster 4: dominado por [Header Flags, Size Length]
+    Features chave: network_ttl_avg, network_ip-length_min, network_ttl_min
+  Cluster 5: dominado por [Header Flags, Size Length]
+    Features chave: network_tcp-flags_min, network_packets_dst_count, network_ip-length_std_deviation
+  Cluster 6: dominado por [Packet Traffic Rate, Log Data Rate, Fragmentation]
+    Features chave: network_payload-length_avg, network_fragmentation-score, network_fragmented-packets
+  Cluster 7: dominado por [Header Flags, Size Length]
+    Features chave: network_ttl_std_deviation, network_ip-flags_avg, network_tcp-flags_std_deviation
+  Cluster 8: dominado por [Size Length, Header Flags]
+    Features chave: network_packets_dst_count, network_packets_all_count, network_ip-length_avg
+  Cluster 9: dominado por [Header Flags, Size Length, Address Diversity]
+    Features chave: network_tcp-flags_std_deviation, network_mss_min, network_mss_avg
+  Cluster 10: dominado por [Size Length]
+    Features chave: network_packets_dst_count, network_ip-length_min, network_packets_all_count
+  Cluster 11: dominado por [Size Length, Header Flags]
+    Features chave: network_packets_dst_count, network_packets_all_count, network_tcp-flags_min
+  Cluster 12: dominado por [Size Length, Header Flags]
+    Features chave: network_ip-length_min, network_ttl_avg, network_header-length_min
+
+======================================================================

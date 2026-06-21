@@ -1,0 +1,62 @@
+
+======================================================================
+EXPERIMENTO 10 — Teste de Wilcoxon pareado
+======================================================================
+Folds para o teste estatistico : 10
+Folds usados no paper (ref)    : 5
+Hipotese alternativa           : VICReg-63 > comparador (one-sided)
+======================================================================
+Dataset: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\data\dataset_attack_benign.csv
+[Preprocessor] Carregando C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\data\dataset_attack_benign.csv...
+[Preprocessor] Shape bruto: (227191, 95)
+[Preprocessor] Features utilizáveis: 71
+Shape: (227191, 71)
+
+Feature sets:
+  VICReg-63 : 63 features
+  All-71    : 71 features
+  DS-17     : 17/17 features encontradas
+
+======================================================================
+CENARIO: label1 (2 classes)
+======================================================================
+  Computando vicreg_63_rf (10-fold)... done — mean=0.9364 ± 0.0016
+  Computando vicreg_63_dt (10-fold)... done — mean=0.9355 ± 0.0017
+  Computando all_71_rf (10-fold)... done — mean=0.9365 ± 0.0018
+  Computando all_71_dt (10-fold)... done — mean=0.9333 ± 0.0023
+  Computando datasense_17_rf (10-fold)... done — mean=0.9264 ± 0.0019
+  Computando datasense_17_dt (10-fold)... done — mean=0.9209 ± 0.0020
+
+--- Resultados (one-sided: VICReg > comparador; * = p<0.05) ---
+  VICReg-63    vs All-71         | diff=-0.0002 (std=0.0005) | Wilcoxon p=0.9678  | t-test p=0.8198 
+  VICReg-63    vs DS-17          | diff=+0.0100 (std=0.0006) | Wilcoxon p=0.0010* | t-test p=0.0000*
+  VICReg-63-DT vs All-71-DT      | diff=+0.0022 (std=0.0008) | Wilcoxon p=0.0010* | t-test p=0.0000*
+  VICReg-63-DT vs DS-17-DT       | diff=+0.0146 (std=0.0010) | Wilcoxon p=0.0010* | t-test p=0.0000*
+
+======================================================================
+CENARIO: label2 (8 classes)
+======================================================================
+  Computando vicreg_63_rf (10-fold)... done — mean=0.9097 ± 0.0035
+  Computando vicreg_63_dt (10-fold)... done — mean=0.9027 ± 0.0032
+  Computando all_71_rf (10-fold)... done — mean=0.9111 ± 0.0031
+  Computando all_71_dt (10-fold)... done — mean=0.8983 ± 0.0027
+  Computando datasense_17_rf (10-fold)... done — mean=0.8774 ± 0.0034
+  Computando datasense_17_dt (10-fold)... done — mean=0.8592 ± 0.0036
+
+--- Resultados (one-sided: VICReg > comparador; * = p<0.05) ---
+  VICReg-63    vs All-71         | diff=-0.0014 (std=0.0017) | Wilcoxon p=0.9863  | t-test p=0.9807 
+  VICReg-63    vs DS-17          | diff=+0.0324 (std=0.0044) | Wilcoxon p=0.0010* | t-test p=0.0000*
+  VICReg-63-DT vs All-71-DT      | diff=+0.0044 (std=0.0014) | Wilcoxon p=0.0010* | t-test p=0.0000*
+  VICReg-63-DT vs DS-17-DT       | diff=+0.0435 (std=0.0049) | Wilcoxon p=0.0010* | t-test p=0.0000*
+
+[Exp 10] Resultados salvos: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\tables\wilcoxon_results.csv
+
+======================================================================
+RESUMO EXECUTIVO
+======================================================================
+  [label1] VICReg-63 vs All-71: diff=-0.0002 — nao significativo
+  [label1] VICReg-63 vs DS-17: diff=+0.0100 — SIGNIFICATIVO (Wilcoxon p<0.05, t-test p<0.05)
+  [label2] VICReg-63 vs All-71: diff=-0.0014 — nao significativo
+  [label2] VICReg-63 vs DS-17: diff=+0.0324 — SIGNIFICATIVO (Wilcoxon p<0.05, t-test p<0.05)
+
+Nota: Wilcoxon one-sided (VICReg > comparador). Com 10 folds, p_min = 0.0020 (two-sided).

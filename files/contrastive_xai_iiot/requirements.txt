@@ -1,0 +1,30 @@
+# ContrastiveXAI-FS for IIoT — Dependencies
+# Dataset: DataSense (CIC IIoT 2025)
+
+# Core ML
+torch>=2.0.0
+scikit-learn>=1.3.0
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.11.0
+
+# XAI
+shap>=0.43.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Classifiers
+xgboost>=2.0.0
+
+# UFS baselines (try install; if fails, implement manually)
+# pip install skfeature-chappers
+# Provides: lap_score, SPEC, MCFS, UDFS, NDFS
+
+# Utilities
+tqdm>=4.65.0
+joblib>=1.3.0
+
+# Testing
+pytest>=7.4.0

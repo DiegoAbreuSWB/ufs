@@ -1,0 +1,111 @@
+
+============================================================
+EXPERIMENTO 05 — Ablation Study
+============================================================
+Dataset: data/dataset_attack_benign.csv
+
+[Preprocessor] Carregando data/dataset_attack_benign.csv...
+[Preprocessor] Shape bruto: (227191, 95)
+[Preprocessor] Features utilizáveis: 71
+Dataset: 227,191 x 71
+  label 'label1': 2 classes
+  label 'label2': 8 classes
+[Ablation] Config C (k-Means Sil raw): 46 features (csv: dataset_attack_benign.csv)
+[Ablation] Config D (Contrastive proposed): 63 features
+
+Configuracoes de ablation (8 total):
+  A_all_features: 71 features
+  B_variance: 25 features
+  B_laplacian_score: 25 features
+  B_spec: 25 features
+  B_mcfs: 25 features
+  B_ndfs: 25 features
+  C_kmeans_sil_raw: 46 features
+  D_contrastive_proposed: 63 features
+[Ablation] KNN desabilitado para dataset grande (227,191 amostras)
+
+[Eval] Cenário: label1 | 2 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['A_all_features', 'B_variance', 'B_laplacian_score', 'B_spec', 'B_mcfs', 'B_ndfs', 'C_kmeans_sil_raw', 'D_contrastive_proposed']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] A_all_features: 71 features...
+  -> F1-macro: 0.933–0.936 | 83.0s
+[Eval] B_variance: 25 features...
+  -> F1-macro: 0.928–0.930 | 39.7s
+[Eval] B_laplacian_score: 25 features...
+  -> F1-macro: 0.934–0.935 | 25.7s
+[Eval] B_spec: 25 features...
+  -> F1-macro: 0.935–0.935 | 24.8s
+[Eval] B_mcfs: 25 features...
+  -> F1-macro: 0.930–0.934 | 46.2s
+[Eval] B_ndfs: 25 features...
+  -> F1-macro: 0.925–0.927 | 39.2s
+[Eval] C_kmeans_sil_raw: 46 features...
+  -> F1-macro: 0.933–0.934 | 69.0s
+[Eval] D_contrastive_proposed: 63 features...
+  -> F1-macro: 0.935–0.936 | 84.7s
+
+[Ablation] Resultados salvos: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\tables\ablation_label1.csv
+
+================================================================================
+ABLATION STUDY — label1
+================================================================================
+Config                            #Feat      F1-macro    Accuracy       MCC
+-------------------------------- ------  ------------  ----------  --------
+  D_contrastive_proposed             63  0.936+-0.002  0.940       0.878
+  B_spec                             25  0.935+-0.002  0.940       0.877
+  A_all_features                     71  0.935+-0.002  0.939       0.874
+  B_laplacian_score                  25  0.934+-0.001  0.939       0.876
+  C_kmeans_sil_raw                   46  0.934+-0.001  0.938       0.874
+  B_mcfs                             25  0.932+-0.002  0.936       0.869
+  B_variance                         25  0.929+-0.002  0.933       0.862
+  B_ndfs                             25  0.926+-0.001  0.931       0.860
+
+  Ganho do metodo proposto vs. melhor baseline: +0.001 F1-macro
+[Ablation] Grafico salvo: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\ablation_barplot_label1.png
+
+[Eval] Cenário: label2 | 8 classes | 5-fold CV
+[Eval] Métodos a avaliar: ['A_all_features', 'B_variance', 'B_laplacian_score', 'B_spec', 'B_mcfs', 'B_ndfs', 'C_kmeans_sil_raw', 'D_contrastive_proposed']
+[Eval] Classificadores: ['random_forest', 'decision_tree']
+[Eval] A_all_features: 71 features...
+  -> F1-macro: 0.897–0.911 | 136.9s
+[Eval] B_variance: 25 features...
+  -> F1-macro: 0.880–0.894 | 47.9s
+[Eval] B_laplacian_score: 25 features...
+  -> F1-macro: 0.814–0.827 | 36.6s
+[Eval] B_spec: 25 features...
+  -> F1-macro: 0.861–0.868 | 37.3s
+[Eval] B_mcfs: 25 features...
+  -> F1-macro: 0.881–0.900 | 71.7s
+[Eval] B_ndfs: 25 features...
+  -> F1-macro: 0.804–0.826 | 53.9s
+[Eval] C_kmeans_sil_raw: 46 features...
+  -> F1-macro: 0.899–0.907 | 95.4s
+[Eval] D_contrastive_proposed: 63 features...
+  -> F1-macro: 0.902–0.909 | 100.1s
+
+[Ablation] Resultados salvos: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\tables\ablation_label2.csv
+
+================================================================================
+ABLATION STUDY — label2
+================================================================================
+Config                            #Feat      F1-macro    Accuracy       MCC
+-------------------------------- ------  ------------  ----------  --------
+  D_contrastive_proposed             63  0.906+-0.003  0.934       0.889
+  A_all_features                     71  0.904+-0.003  0.931       0.884
+  C_kmeans_sil_raw                   46  0.903+-0.003  0.932       0.886
+  B_mcfs                             25  0.891+-0.003  0.924       0.872
+  B_variance                         25  0.887+-0.002  0.924       0.871
+  B_spec                             25  0.865+-0.003  0.917       0.860
+  B_laplacian_score                  25  0.820+-0.003  0.908       0.844
+  B_ndfs                             25  0.815+-0.003  0.906       0.839
+
+  Ganho do metodo proposto vs. melhor baseline: +0.002 F1-macro
+[Ablation] Grafico salvo: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\ablation_barplot_label2.png
+[Ablation] Delta chart salvo: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\ablation_delta_label1.png
+[Ablation] Delta chart salvo: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures\ablation_delta_label2.png
+
+============================================================
+Ablation concluido.
+Tabelas: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\tables
+Figuras : C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\figures
+============================================================

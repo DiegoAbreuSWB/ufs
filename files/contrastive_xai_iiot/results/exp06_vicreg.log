@@ -1,0 +1,62 @@
+
+============================================================
+EXPERIMENTO 06 — Análise XAI (SHAP + t-SNE)
+============================================================
+Dataset: data/dataset_attack_benign.csv
+
+[Preprocessor] Carregando data/dataset_attack_benign.csv...
+[Preprocessor] Shape bruto: (227191, 95)
+[Preprocessor] Features utilizáveis: 71
+Dataset: 227,191 x 71
+
+[XAI] Carregando encoder: C:\Users\diego\Desktop\ufs\files\contrastive_xai_iiot\results\models\encoder_datasense.pt
+[XAI] Features selecionadas carregadas: 63
+[XAI] k do resultado contrastivo: 13
+
+[XAI] Extraindo representações latentes (128d)...
+[XAI] Shape representações: (227191, 128)
+[XAI] Clusterizando no espaço latente (k=13)...
+[XAI] Distribuição de clusters:
+  Cluster 0: 41,017 amostras (18.1%)
+  Cluster 1: 79,423 amostras (35.0%)
+  Cluster 2: 4,836 amostras (2.1%)
+  Cluster 3: 14,730 amostras (6.5%)
+  Cluster 4: 9,461 amostras (4.2%)
+  Cluster 5: 13,944 amostras (6.1%)
+  Cluster 6: 8,702 amostras (3.8%)
+  Cluster 7: 14,049 amostras (6.2%)
+  Cluster 8: 11,807 amostras (5.2%)
+  Cluster 9: 7,054 amostras (3.1%)
+  Cluster 10: 2,026 amostras (0.9%)
+  Cluster 11: 5,704 amostras (2.5%)
+  Cluster 12: 14,438 amostras (6.4%)
+
+[XAI] X_selected shape: (227191, 63)
+[SHAP] Treinando proxy RF (200 trees, max_depth=10)...
+[SHAP] Sub-amostra: 4992 / 227191 | Clusters: 13
+[SHAP] Acuracia do proxy (treino): 94.2%
+[SHAP] Calculando SHAP values...
+[SHAP] SHAP values shape: (4992, 63, 13)
+
+[XAI] Gerando visualizações...
+[SHAP] shap_summary.png salvo
+[SHAP] cluster_heatmap.png salvo
+[SHAP] waterfall_cluster_0.png salvo
+[SHAP] waterfall_cluster_1.png salvo
+[SHAP] waterfall_cluster_2.png salvo
+[SHAP] waterfall_cluster_3.png salvo
+[SHAP] waterfall_cluster_4.png salvo
+[SHAP] waterfall_cluster_5.png salvo
+[SHAP] waterfall_cluster_6.png salvo
+[SHAP] waterfall_cluster_7.png salvo
+[SHAP] waterfall_cluster_8.png salvo
+[SHAP] waterfall_cluster_9.png salvo
+[SHAP] waterfall_cluster_10.png salvo
+[SHAP] waterfall_cluster_11.png salvo
+[SHAP] waterfall_cluster_12.png salvo
+
+[XAI] Gerando t-SNE (pode demorar ~2 min)...
+[SHAP] Calculando t-SNE em 5000 pontos...
+[SHAP] tsne_clusters_vs_labels.png salvo
+
+[XAI] Gerando relatório textual...
