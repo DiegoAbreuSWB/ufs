@@ -1,0 +1,125 @@
+\section{Dataset: DataSense CIC IIoT 2025}
+\label{sec:dataset}
+
+\subsection{Overview and Collection Methodology}
+
+DataSense CIC IIoT 2025 \cite{firouzi2025datasense} is a publicly available Industrial Internet of Things (IIoT) network-security dataset released by the Canadian Institute for Cybersecurity (CIC/UNB). The dataset was collected in a controlled IIoT testbed containing heterogeneous devices, including industrial sensors, IP cameras, smart plugs, Raspberry Pi-based edge and attacker nodes, and commercial IoT devices. Traffic was captured over IP-based networks and temporally aligned with device- and application-level logs, producing an integrated tabular representation of network and operational behavior for machine-learning-based intrusion detection.
+
+The dataset provides network-flow attributes, device-log-derived attributes, and a hierarchical attack-label structure with multiple levels of granularity. DataSense was selected because it is a recent IIoT benchmark that combines synchronized network and sensor-log streams, heterogeneous device coverage, a hierarchical attack taxonomy, and features derived from multiple behavioral perspectives. The original study reports 49 distinct attack types across seven attack categories, in addition to benign traffic, covering reconnaissance, denial-of-service, distributed denial-of-service, web exploitation, man-in-the-middle, brute-force, and malware behaviors.
+
+The collection comprises approximately 1.82 billion network packets and 1.63 million device-log records \cite{firouzi2025datasense}. These values characterize the raw traffic and log volumes collected in the testbed and should not be interpreted as the number of tabular samples after temporal synchronization, aggregation, and feature extraction. Compared with earlier IoT benchmarks such as N-BaIoT \cite{meidan2018n}, DataSense provides a broader combination of industrial sensors, commercial IoT devices, network infrastructure, synchronized logs, packet-level traffic, and recent attack scenarios.
+
+\subsection{Attack Taxonomy, Label Structure, and Evaluated Samples}
+
+DataSense organizes traffic labels into a four-level hierarchy, summarized in Table~\ref{tab:labels}. The coarsest level, \feat{label1}, separates benign traffic from attack traffic. The second level, \feat{label2}, groups attacks into strategy-level categories: distributed denial-of-service (DDoS), denial-of-service (DoS), reconnaissance, man-in-the-middle (MitM), web attacks, brute-force attempts, and malware-related activity. The remaining levels provide increasingly fine-grained descriptions of attack subtypes and individual attack variants. The \feat{label2} level is used in the eight-class evaluation because it is more informative than binary detection but less sparse than the fine-grained levels.
+
+\begin{table}[t]
+\caption{DataSense Label Hierarchy and Use in This Study}
+\label{tab:labels}
+\centering
+\footnotesize
+\begin{tabular}{@{}llp{3.0cm}l@{}}
+\toprule
+Column & Classes & Granularity & Use in This Study \\
+\midrule
+\feat{label1} & 2 & Benign and attack traffic & Binary evaluation \\
+\feat{label2} & 8 & Benign and seven attack categories & Eight-class evaluation \\
+\feat{label3} & \rev{61} & Attack subtypes & Not evaluated \\
+\feat{label4} & \rev{84} & Individual attack variants & Not evaluated \\
+\bottomrule
+\multicolumn{4}{@{}p{0.95\columnwidth}@{}}{\rev{Counts are the distinct values in the evaluated dataframe, in which port-specific variants are listed separately; the original study groups them into 49 attack types \cite{firouzi2025datasense}.}}
+\end{tabular}
+\end{table}
+
+\rev{The evaluated dataframe contains 227,191 one-second windows from 38 devices. Table~\ref{tab:classdist} reports its class distribution. Three structural properties of this dataframe are relevant for interpreting every result in this paper. First, all 136,800 benign windows originate from a single one-hour capture in which each of the 38 devices contributes 3,600 windows, whereas the attack windows originate from 936 separate attack executions (identified by the \feat{label_full} column; median duration 60~s) recorded on other days. Second, the attack categories are unevenly distributed over devices: web attacks target a single device and brute-force attempts target five devices. Third, 78,859 windows (34.7\%) are \emph{idle}: all 71 numeric features are zero because no packet or log event of the corresponding device was observed in that second. Of these idle windows, 69,185 are labeled benign and 9,674 carry an attack label inherited from an execution in which the device itself was silent. Because identical feature vectors cannot be separated by any classifier, feature-identical windows with conflicting labels (dominated by the idle windows) bound the attainable accuracy on this dataframe at approximately 0.957 for both tasks, which explains why all evaluated configurations saturate at similar scores.}
+
+\begin{table}[t]
+\revon
+\caption{Class Distribution of the Evaluated DataSense Dataframe (227,191 One-Second Windows)}
+\label{tab:classdist}
+\centering
+\footnotesize
+\begin{tabular}{@{}lrr@{\hspace{1.2em}}lrr@{}}
+\toprule
+Class & Windows & \% & Class & Windows & \% \\
+\midrule
+Benign & 136,800 & 60.21 & MitM & 8,062 & 3.55 \\
+Recon & 33,648 & 14.81 & Malware & 7,541 & 3.32 \\
+DoS & 18,420 & 8.11 & Web & 2,796 & 1.23 \\
+DDoS & 18,056 & 7.95 & BruteForce & 1,868 & 0.82 \\
+\midrule
+\multicolumn{6}{@{}l}{Binary task: 136,800 benign (60.21\%) vs.\ 90,391 attack (39.79\%).} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:attacks} describes the attack categories considered at the \feat{label2} level. Because the classes are imbalanced, all classification experiments report macro-F1 as the primary metric; accuracy, precision, recall, and the Matthews correlation coefficient (MCC) are reported as complementary metrics.
+
+\begin{table}[t]
+\caption{Attack Categories in the DataSense \texttt{label2} Taxonomy}
+\label{tab:attacks}
+\centering
+\footnotesize
+\begin{tabular}{@{}lp{6.4cm}@{}}
+\toprule
+Category & Meaning \\
+\midrule
+Benign & Normal device, application, and control traffic generated by the IIoT testbed. \\
+DDoS & Coordinated sources attempting to exhaust the resources of a target service, device, or network segment. \\
+DoS & Denial-of-service activity generated from a single source or a limited traffic origin. \\
+Recon & Scanning behavior intended to discover hosts, ports, services, protocols, or network topology. \\
+MitM & An attacker positioned between communicating entities to intercept, relay, impersonate, or manipulate traffic. \\
+Web & Attacks targeting web services, web interfaces, or HTTP-based management surfaces. \\
+BruteForce & Repeated authentication attempts intended to guess credentials. \\
+Malware & Traffic associated with malicious software, including infection, command-and-control, propagation, or payload activity. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Feature Composition and Semantic Context Groups}
+\label{sec:groups}
+
+The raw DataSense CSV contains 94 columns. In this work, we use the 71 numeric features and exclude metadata columns and list-valued string columns. Throughout this paper, feature names are reproduced exactly as they appear in the input dataframe and are typeset in monospaced text, for example \feat{network_time-delta_avg}, \feat{network_interval-packets}, and \feat{log_messages_count}.
+
+The 71 numeric features are organized into nine semantic Context Groups, shown in Table~\ref{tab:groups}. These groups are not class labels. They represent domain-informed partitions of the feature space according to the type of traffic behavior captured by each attribute, and they are central to the proposed group-aware augmentation strategy, which masks entire semantic groups rather than perturbing isolated features.
+
+The Context Groups were constructed from the exact dataframe feature names, their definitions, and the measurement semantics documented for DataSense. No attack labels, class frequencies, classifier scores, or downstream evaluation results were used to define the groups, and each numeric feature was assigned to exactly one group. \rev{The same construction rule is applied to a second dataset with a different schema in Section~\ref{sec:wustl_setup}, where the number and composition of the groups change according to the available attributes.}
+
+\begin{table*}[t]
+\caption{DataSense Semantic Context Groups and Their Security Meaning}
+\label{tab:groups}
+\centering
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.6cm} c >{\raggedright\arraybackslash}p{5.0cm} >{\raggedright\arraybackslash}X@{}}
+\toprule
+Context Group & \#Features & Representative Columns or Measurements & Meaning for IIoT Intrusion Detection \\
+\midrule
+Size Length & 20 & Packet size, header length, IP length, MSS, payload length, and their summary statistics & Captures packet and payload size distributions, which help distinguish volumetric attacks, payload-heavy traffic, scanning with small packets, and abnormal message-size patterns. \\
+Header Flags & 14 & TCP flag counts, TCP flag summary statistics, and IP flags & Represents protocol-control behavior. Flags such as SYN, ACK, RST, FIN, PSH, and URG can reveal floods, incomplete handshakes, resets, scans, and other protocol anomalies. \\
+Timing Control & 12 & TTL statistics, TCP window-size statistics, and inter-packet timing columns, including \feat{network_time-delta_avg} & Captures timing and transport-control behavior. TTL can reflect routing or evasion patterns; window size describes transport-level behavior; inter-packet timing may reflect device polling, heartbeats, or attack bursts. \\
+Address Diversity & 6 & Counts of distinct source and destination MAC and IP addresses & Measures how many distinct devices or addresses appear within a temporal window. High diversity may indicate scanning, reconnaissance, distributed attacks, or unexpected lateral movement. \\
+Network Multiplexing & 6 & Counts of source, destination, and overall ports and protocols & Describes service and protocol diversity, which may be associated with scanning, service enumeration, or activities involving multiple network services. \\
+Log Data Stats & 5 & Range, average, minimum, maximum, and type count of log-derived values & Summarizes numerical properties of log-derived values, capturing variations in device state, sensor reporting, or application-level behavior. \\
+Packet Traffic Rate & 4 & Total, source, and destination packet counts, together with \feat{network_interval-packets} & Measures the intensity and directionality of traffic, relevant to floods, bursts, asymmetric flows, and abnormal communication rates. \\
+Fragmentation & 2 & Fragmented-packet count and fragmentation score & Captures IP fragmentation behavior, which occurs in benign traffic but can also be associated with evasion or traffic manipulation. \\
+Log Data Rate & 2 & \feat{log_messages_count} and \feat{log_interval-messages} & Represents the volume and pacing of device or application log events. \\
+\midrule
+Total & 71 & & \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection{Feature Semantics and Attack-Relevant Interactions}
+
+The feature groups in Table~\ref{tab:groups} are semantically distinct, but they are not independent. Many IIoT attacks are expressed through interactions among multiple groups rather than through a single isolated feature. For example, a DDoS attack may simultaneously increase packet-rate measurements, alter packet and payload-size statistics, and produce unusual TCP flag distributions, whereas a reconnaissance attack may combine high address diversity, increased port diversity, and short connection attempts. These examples describe plausible interactions among network measurements rather than fixed mappings between dataframe columns and attack labels; the Context Groups do not assign an expected attack class to any feature and are not employed as pseudo-labels.
+
+This interaction structure motivates the proposed approach. Ranking-based methods may select features that are individually informative, but they do not explicitly learn nonlinear relationships among feature groups. \method{} instead learns a latent representation from unlabeled traffic and evaluates feature subsets according to their ability to preserve cluster separability in that latent space. The same structure motivates group-aware augmentation: many features within a Context Group are correlated by construction (for example, the average, minimum, maximum, and standard deviation of packet size over the same window), so corrupting isolated columns may break relationships among measurements derived from the same traffic window. Masking an entire Context Group removes one observational view of the traffic while preserving the internal structure of the remaining groups.
+
+\subsection{Preprocessing and Anti-Leakage Protocol}
+\label{sec:preprocessing}
+
+All experiments use only the 71 numeric features. For each cross-validation fold, preprocessing parameters are estimated exclusively from the training partition and then applied to the corresponding test partition.
+
+Missing numeric values are replaced with zero in the raw feature space before standardization. Infinite values are replaced using the maximum finite value observed for the corresponding feature in the training partition. A \texttt{StandardScaler} is then fitted exclusively on the training partition, and the same fitted scaler is applied unchanged to the corresponding test partition. Consequently, a raw value imputed as zero does not necessarily remain zero after standardization.
+
+Feature-subset masking is a separate operation performed after standardization. At this stage, assigning zero to an unselected feature corresponds to replacing it with the training-fold mean in standardized space. Encoder training, group-aware augmentation, and bidirectional feature selection are performed only on the training partition, while class labels are used exclusively for \rev{constructing the outer evaluation folds and for} downstream evaluation.

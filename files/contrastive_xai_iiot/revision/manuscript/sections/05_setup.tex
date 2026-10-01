@@ -1,0 +1,145 @@
+\section{Experimental Setup}
+\label{sec:setup}
+
+The evaluation is designed to answer \rev{seven} questions: (i) whether the selected features preserve downstream intrusion-detection performance; (ii) whether the method is competitive with classical unsupervised feature-selection baselines; (iii) how each method behaves under fixed feature budgets; (iv) whether the learned clusters can be interpreted through the original traffic features; \rev{(v) how stable the selected subsets, the selected number of clusters, and the clusters themselves are across folds and independent master seeds; (vi) how the conclusions change when related traffic windows are kept out of the test partition; and (vii) whether the pipeline can be applied to a second IIoT dataset with a different feature schema.}
+
+\subsection{Cross-Validation and Anti-Leakage Protocol}
+\label{sec:cv}
+
+The main experiments use 10-fold stratified cross-validation. \rev{The folds are stratified by the eight-class label \feat{label2}; because benign traffic is one of the eight classes, the same partition is also stratified with respect to the binary label and is used for both tasks.} The labels are used only to construct the outer evaluation folds and to compute downstream metrics. They are not provided to the scaler, VICReg encoder, clustering algorithm, Silhouette objective, feature-selection search, or SHAP proxy.
+
+For each fold $r$, with training and test sets $X^{(r)}_{\mathrm{tr}}$ and $X^{(r)}_{\mathrm{te}}$, the processing order is: training-fold imputation and standardization, VICReg training, selection of $k^{*}_r$, latent-space feature selection, downstream classifier fitting, and test-fold evaluation. The scaler, encoder, clustering structure, subset-search cache, and selected subset $S^{*}_r$ are recomputed within each fold and are not transferred from another fold; downstream classifiers are trained on $X^{(r)}_{\mathrm{tr},:,S^{*}_r}$ and evaluated on $X^{(r)}_{\mathrm{te},:,S^{*}_r}$. \rev{All unsupervised baselines follow the same rule. Every number reported in Section~\ref{sec:results} was produced by this fold-internal implementation, which is released with the paper.}
+
+\rev{\textbf{Sample-level folds.} In the main protocol the folds are generated at the level of individual one-second windows. Windows from the same device, attack execution, or temporal neighborhood can therefore be assigned to both the training and the test partition. In addition, 35.3\% of the test windows have an exact duplicate in the corresponding training partition; almost all of these are the idle windows described in Section~\ref{sec:dataset}, and only \DupNonIdle\% of the test windows are non-idle exact duplicates. The sample-level results must consequently be read as within-dataset IID generalization.}
+
+\rev{\textbf{Grouped folds.} To measure how much the sample-level protocol benefits from related windows, the complete pipeline is also executed under two grouped protocols, each with five stratified folds. In the \emph{execution-grouped} protocol, a group is one attack execution (one value of \feat{label_full}) or, for benign traffic, one contiguous 60-s block of the benign capture shared by all devices; all windows of an attack execution and all windows of a benign time block are therefore assigned to the same fold. In the \emph{device-grouped} protocol, the group is the device identity, so that the test partition contains only devices that were never seen during scaling, encoder training, feature selection, or classifier fitting. Because web attacks are recorded on a single device and brute-force attempts on five devices, some categories are absent from the training partition of some device-grouped folds; the affected classes are reported explicitly.}
+
+\subsection{Independent Master Seeds}
+\label{sec:seeds}
+
+\rev{The complete 10-fold experiment is executed three times with independent master seeds $s \in \{42, 43, 44\}$. The master seed determines the outer-fold partition, and the derived seed $s + r$ initializes every stochastic component of fold $r$: the encoder-training subsample, neural-network initialization, mini-batch order, augmentation sampling, the subsample used by the Silhouette objective, $k$-Means initialization, the graph subsamples of the spectral baselines, and the Random Forest and Decision Tree classifiers. The three executions therefore differ in the data partition and in all sources of randomness. Results are reported per seed and across seeds, and the 30 fold-specific subsets are used for the stability analysis. Seed 42 is the primary execution: it includes all baselines, the KNN classifier, and the fixed-budget regime, whereas seeds 43 and 44 evaluate \method{} and the All Features reference with Random Forest and Decision Tree. The number of seeds was limited to three, the lower end of the usual range, by the CPU-only platform.}
+
+\subsection{Evaluation Tasks and Regimes}
+
+Two intrusion-detection tasks are evaluated: a binary task based on \feat{label1} and an eight-class task based on \feat{label2}. In both tasks, the target labels are introduced only after the unsupervised feature-selection stage.
+
+Feature-selection methods are evaluated under two regimes. In the \emph{natural operating point} regime, each method determines its own subset size; results obtained with different numbers of features are distinct operating points and are not matched-budget comparisons. In the \emph{constrained feature-budget} regime, all methods retain exactly $k \in \{10, 15, 20, 25\}$ features; this regime provides the matched-cardinality comparison. Ranking-based methods select their top-$k$ features. \rev{Subset-search methods (\method{} and $k$-Means+Sil) use the budget-constrained variant defined in Section~\ref{sec:search}.}
+
+\subsection{Downstream Classifiers}
+
+Classification performance is evaluated using Random Forest (RF, 100 trees), Decision Tree (DT, Gini criterion), and $k$-Nearest Neighbors (KNN, $k = 5$). RF is an ensemble that is robust to noisy features, DT is more sensitive to spurious split candidates, and KNN evaluates whether the selected subset preserves neighborhood structure. The same classifier configuration is used for all methods within each fold, without hyperparameter tuning. The classifiers do not participate in the Silhouette objective or in the selection of $S^{*}_r$.
+
+\subsection{Metrics and Statistical Testing}
+
+The primary metric is macro-F1, the unweighted average of the per-class F1 scores,
+\begin{equation}
+F1_{\mathrm{macro}} = \frac{1}{C}\sum_{c=1}^{C} \frac{2\,\mathrm{Precision}_c\,\mathrm{Recall}_c}{\mathrm{Precision}_c + \mathrm{Recall}_c},
+\end{equation}
+where $C$ is the number of classes. Secondary metrics are accuracy, macro-precision, macro-recall, and the Matthews correlation coefficient (MCC).
+
+Statistical significance is assessed with the two-sided Wilcoxon signed-rank test over paired folds: the score of \method{} in a fold is compared with the score of the reference method on the same training and test partitions. \rev{Two-sided $p$-values are reported throughout. Tests are reported for the primary execution (10 pairs) and for the three executions pooled (30 pairs); folds from different master seeds partition the same dataframe and are therefore not independent samples, so the pooled test is interpreted together with the sign and size of the differences.} A non-significant result is not treated as evidence of equivalence.
+
+\rev{\textbf{Selection stability.} For the fold-specific subsets we report the distribution of subset sizes, the selection frequency of every feature, the pairwise Jaccard similarity $|S_a \cap S_b| / |S_a \cup S_b|$ between subsets, and the stability estimator of Nogueira \emph{et al.} \cite{nogueira2018stability}, which corrects for chance agreement and accommodates subsets of different sizes (1 indicates identical subsets; 0 corresponds to random selection of the same average size). Because most features are retained, the Jaccard similarity of the \emph{removed} sets is also reported; it is the more demanding measure.}
+
+\rev{\textbf{Cluster stability.} Two measures are reported, both using the adjusted Rand index (ARI) \cite{hubert1985comparing} and the adjusted mutual information (AMI) \cite{vinh2010information}. \emph{Within-fold} stability refits $k$-Means on five independently drawn training-fold subsamples with different initializations and compares the labels assigned to a common reference subsample. \emph{Cross-pipeline} stability lets every fold-specific pipeline (scaler, encoder, selected subset, and $k$-Means centers) label the same 5,000 fixed reference windows and compares all pairs of pipelines, within and across master seeds; it therefore includes the variability of encoder training and feature selection.}
+
+\subsection{Baseline and Reference Methods}
+
+The evaluated unsupervised methods are:
+\begin{itemize}
+\item \textbf{Variance ranking}: top-$k$ features with the largest training-fold variance. \rev{Because the variance of every $z$-scored feature equals one, the variance is computed after min--max scaling with training-fold statistics.}
+\item \textbf{Laplacian Score} \cite{he2005laplacian}: ranks features by their locality-preserving ability with respect to a nearest-neighbor graph.
+\item \textbf{SPEC} \cite{zhao2007spectral}: evaluates features using a spectral graph objective.
+\item \textbf{MCFS} \cite{cai2010unsupervised}: selects features through sparse regression over spectral embeddings.
+\item \textbf{UDFS} \cite{yang2011l2} and \textbf{NDFS} \cite{li2012unsupervised}: structured-sparsity and nonnegative spectral selection.
+\item \textit{k}\textbf{-Means+Sil}: the same \rev{$k^{*}$ selection,} bidirectional search\rev{, and budget-constrained variant as \method{}, applied in the standardized original feature space instead of the VICReg latent space. It isolates the effect of the evaluation space.}
+\end{itemize}
+\rev{The graph-based methods use a 5-nearest-neighbor graph built on 5,000 training-fold rows, and MCFS uses five spectral components.} At their natural operating point, the ranking methods retain 25 features.
+
+Two reference configurations are also included. \emph{All Features} uses all numeric features and serves as a no-selection reference. \emph{DataSense-17} (DS-17) \cite{firouzi2025datasense} is the compact subset reported with the dataset; because it was obtained with label information, it is treated as a fixed external supervised reference, is not re-selected within the folds, and is not ranked as an unsupervised baseline.
+
+\subsection{Controlled Component Comparisons}
+\label{sec:ablation_setup}
+
+\rev{Three controlled comparisons are added in which exactly one component is changed while the folds, seeds, encoder architecture, optimization schedule, objective, and search are held fixed. (a) \emph{Augmentation}: the group-aware encoder is compared with an encoder trained with independent per-feature masking at the same expected masking rate ($E[m]/q = 1/9$ of the features per view, the standard unstructured corruption) and with an encoder trained without masking (Gaussian noise and feature dropout only). (b) \emph{Search direction}: the bidirectional search is compared with a backward-only search on the same encoder and objective. (c) \emph{Evaluation space}: the latent-space and raw-space searches are compared at identical feature budgets and at the cardinality of the latent natural subset. Comparisons (b) and (c) use all ten folds of the primary execution; comparison (a) requires retraining the encoder and uses its first five folds.}
+
+\subsection{External Dataset: WUSTL-IIoT-2021}
+\label{sec:wustl_setup}
+
+\rev{To examine whether the pipeline can be applied beyond DataSense, the complete fold-wise protocol is repeated on WUSTL-IIoT-2021 \cite{zolanvari2021wustl,zolanvari2019machine}, a public dataset collected from an industrial control testbed (SCADA and Modbus traffic among PLCs, sensors, and actuators) that contains normal traffic and denial-of-service, reconnaissance, command-injection, and backdoor attacks. It was chosen because it is an IIoT dataset rather than a consumer-IoT dataset, is directly downloadable, consists of numeric tabular attributes, and has a schema that differs substantially from DataSense: its samples are bidirectional flow records rather than per-device one-second windows, it has no device-log attributes and no fragmentation or address-diversity counters, and it is strongly imbalanced (92.7\% normal traffic).}
+
+\rev{Following the recommendation of the dataset authors, the columns \feat{StartTime}, \feat{LastTime}, \feat{SrcAddr}, \feat{DstAddr}, \feat{sIpId}, and \feat{dIpId} are removed, which leaves 41 numeric attributes. To keep the cost comparable with DataSense, a uniform random sample of 25\% of the 1,194,464 flows is drawn once, without reference to labels (298,616 flows: 276,622 normal, 19,856 DoS, 2,018 reconnaissance, 63 command injection, and 57 backdoor). A binary task and a five-class task are evaluated with RF and DT.}
+
+\rev{The Context Groups cannot be transferred from DataSense and were rebuilt with the construction rule of Section~\ref{sec:groups}, using only the documented meaning of each flow attribute (Table~\ref{tab:wustl_groups}). All other components and hyperparameters are identical to those in Table~\ref{tab:config}; no hyperparameter was tuned on this dataset. The ranking baselines retain 14 features at their natural operating point (the same 35\% proportion used for DataSense), and the fixed budgets are $k \in \{5, 10, 15, 20\}$. This experiment is an application of the unchanged method to a second dataset with dataset-specific Context Groups; it is not a cross-dataset transfer experiment, because the encoder, subsets, and classifiers are trained and tested on the same dataset.}
+
+\begin{table}[t]
+\revon
+\caption{Context Groups Rebuilt for WUSTL-IIoT-2021 (41 Flow Attributes)}
+\label{tab:wustl_groups}
+\centering
+\footnotesize
+\begin{tabular}{@{}p{2.55cm}cp{4.6cm}@{}}
+\toprule
+Context Group & \# & Attributes \\
+\midrule
+Flow Duration and Activity & 7 & \feat{Dur}, \feat{RunTime}, \feat{Mean}, \feat{Sum}, \feat{Min}, \feat{Max}, \feat{IdleTime} \\
+Packet/Byte Volume & 6 & \feat{SrcPkts}, \feat{DstPkts}, \feat{TotPkts}, \feat{SrcBytes}, \feat{DstBytes}, \feat{TotBytes} \\
+Traffic Rate and Load & 6 & \feat{SrcLoad}, \feat{DstLoad}, \feat{Load}, \feat{SrcRate}, \feat{DstRate}, \feat{Rate} \\
+Inter-Packet Timing and Jitter & 6 & \feat{SrcJitter}, \feat{DstJitter}, \feat{SIntPkt}, \feat{DIntPkt}, \feat{SrcJitAct}, \feat{DstJitAct} \\
+Loss and Retransmission & 4 & \feat{SrcLoss}, \feat{DstLoss}, \feat{Loss}, \feat{pLoss} \\
+IP Header Control & 4 & \feat{sTtl}, \feat{dTtl}, \feat{sTos}, \feat{sDSb} \\
+Application Payload & 3 & \feat{SAppBytes}, \feat{DAppBytes}, \feat{TotAppByte} \\
+Network Multiplexing & 3 & \feat{Proto}, \feat{Sport}, \feat{Dport} \\
+Connection Setup & 2 & \feat{TcpRtt}, \feat{SynAck} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Encoder and Search Configuration}
+
+Table~\ref{tab:config} summarizes the configuration. The encoder maps the standardized feature vector to a 128-dimensional latent representation, and the projector maps it to a 512-dimensional space used only during VICReg training. The projector is intentionally wider than the encoder output, following the standard VICReg design in which the projection space absorbs the constraints imposed by the loss terms. The Random Forest proxy is fitted only after the latent clusters have been constructed and does not participate in VICReg training, feature selection, or downstream attack classification; its agreement with the latent cluster assignments is distinct from the intrusion-detection metrics.
+
+\begin{table}[t]
+\caption{\method{} Hyperparameters and Experimental Configuration}
+\label{tab:config}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{1.55cm}p{2.35cm}p{4.3cm}@{}}
+\toprule
+Component & Parameter & Value \\
+\midrule
+Input & Numeric features & 71 (DataSense); \rev{41 (WUSTL-IIoT-2021)} \\
+ & Preprocessing & Training-fold imputation and standardization \\
+ & Context Groups & 9 semantic groups \rev{per dataset} \\
+Encoder $f_\theta$ & Architecture & $d{\rightarrow}256$(BN, ReLU, Dropout 0.2)${\rightarrow}128$(BN, ReLU) \\
+Projector $g_\phi$ & Architecture & $128{\rightarrow}512$(BN, ReLU)${\rightarrow}512$ \\
+VICReg & $(\lambda, \mu, \nu)$; $\gamma$; $\epsilon$ & $(25, 25, 1)$; $1.0$; $10^{-4}$ \\
+Optimization & Optimizer & AdamW, learning rate $10^{-3}$, weight decay $10^{-4}$ \\
+ & Scheduler & Cosine annealing, $\eta_{\min} = 10^{-5}$ \\
+ & Epochs / batch size & 100 / 512 \\
+ & Gradient clipping & Maximum norm 1.0 \\
+ & \rev{Training rows} & \rev{Uniform subsample of $\le$20,480 training-fold rows} \\
+Augmentation & Group masking & $m \sim \mathrm{Uniform}\{0,1,2\}$ groups \\
+ & Gaussian noise & $\mathcal{N}(0, 0.05^{2})$ in standardized units \\
+ & Feature dropout & $p_{\mathrm{drop}} = 0.10$ \\
+Feature search & Cluster range & $\mathcal{K} = \{2,\dots,14\}$ \\
+ & Objective & Latent Silhouette at \rev{fold-specific $k^{*}$ (Eq.~\ref{eq:objective})} \\
+ & \rev{Objective estimate} & \rev{$k$-Means on 5,000 training rows (5 initializations); Silhouette on 2,000 rows} \\
+ & Direction & Backward removal with forward recovery \\
+ & Initialization & Complete feature set; minimum size 2 \\
+ & \rev{Budget variant} & \rev{Forced backward elimination (Sec.~\ref{sec:search})} \\
+Classifiers & RF / DT / KNN & 100 trees / Gini / $k = 5$ \\
+SHAP proxy & Model & Random Forest, 200 trees, depth 10 \\
+ & \rev{Training sample} & \rev{Cluster-balanced, $\le$5,000 rows; fidelity and SHAP on held-out rows} \\
+Reproducibility & \rev{Master seeds} & \rev{42, 43, 44 (fold seed $s + r$)} \\
+ & \rev{Repetitions} & \rev{Three complete 10-fold executions} \\
+ & Platform & Dell XPS 9320, Intel Core i7-1260P, Windows 11, \rev{CPU only} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Reproducibility}
+\label{sec:repro}
+
+Whenever a method requires the number of clusters as an internal parameter, the value is selected using only the training fold. Identical fold assignments across methods preserve the paired structure of the comparisons. The experiments were executed on a Dell XPS 9320 notebook running Microsoft Windows 11 and equipped with a 12th-generation Intel Core i7-1260P processor with 12 cores and 16 logical processors, \rev{without GPU acceleration. The implementation, the fold-wise runner, the configuration, the per-fold selected subsets, and the scripts that generate every table and figure of Section~\ref{sec:results} are described in the Data and Code Availability statement.}

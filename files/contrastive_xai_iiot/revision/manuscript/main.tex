@@ -1,0 +1,101 @@
+\documentclass{ieeeaccess}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{url}
+
+\usepackage{bm}
+\makeatletter
+\AtBeginDocument{\DeclareMathVersion{bold}
+\SetSymbolFont{operators}{bold}{T1}{times}{b}{n}
+\SetSymbolFont{NewLetters}{bold}{T1}{times}{b}{it}
+\SetMathAlphabet{\mathrm}{bold}{T1}{times}{b}{n}
+\SetMathAlphabet{\mathit}{bold}{T1}{times}{b}{it}
+\SetMathAlphabet{\mathbf}{bold}{T1}{times}{b}{n}
+\SetMathAlphabet{\mathtt}{bold}{OT1}{pcr}{b}{n}
+\SetSymbolFont{symbols}{bold}{OMS}{cmsy}{b}{n}
+\renewcommand\boldmath{\@nomath\boldmath\mathversion{bold}}}
+\makeatother
+
+% --------------------------------------------------------------------------
+% Revision marking. Text changed in this revision is wrapped in \rev{...}
+% (or follows \revon inside a float). In the clean build the marking is a no-op;
+% in the marked build (file marked.flag present) it uses a near-black colour
+% that build.py turns into yellow PDF highlight annotations.
+% --------------------------------------------------------------------------
+\newif\ifmarked
+\InputIfFileExists{marked.flag}{\markedtrue}{\markedfalse}
+\ifmarked
+  \definecolor{revc}{cmyk}{0,0,0,0.985}
+  \newcommand{\rev}[1]{{\color{revc}#1}}
+  \newcommand{\revon}{\color{revc}}
+\else
+  \newcommand{\rev}[1]{#1}
+  \newcommand{\revon}{\relax}
+\fi
+
+\newcommand{\feat}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\method}{ContrastiveXAI-FS}
+\newcommand{\pmstd}[2]{#1\,{\scriptsize$\pm$\,#2}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\Sil}{Sil}
+\algrenewcommand\algorithmicrequire{\textbf{Require:}}
+\algrenewcommand\algorithmicensure{\textbf{Ensure:}}
+\input{numbers}
+
+\begin{document}
+\history{Date of submission XX XXXX 2026.}
+\doi{10.1109/ACCESS.2026.DOI}
+
+\title{ContrastiveXAI-FS: Explainable Unsupervised Feature Selection for IIoT Intrusion Detection}
+\author{\uppercase{Diego Medeiros de Abreu}\authorrefmark{1,2}, \IEEEmembership{Member, IEEE}}
+
+\address[1]{Graduate Program in Computer Science (PPGCC), Federal University of Par\'a (UFPA), Bel\'em, PA 66075-110, Brazil}
+\address[2]{National Education and Research Network (RNP), Brazil}
+\tfootnote{This study was financed in part by the Coordena\c{c}\~ao de Aperfei\c{c}oamento de Pessoal de N\'ivel Superior -- Brasil (CAPES) -- Finance Code 001.}
+
+\markboth
+{de Abreu \headeretal: ContrastiveXAI-FS for IIoT Intrusion Detection}
+{de Abreu \headeretal: ContrastiveXAI-FS for IIoT Intrusion Detection}
+
+\corresp{Corresponding author: Diego Medeiros de Abreu (e-mail: diego.abreu@itec.ufpa.br).}
+
+\input{sections/00_abstract}
+
+\titlepgskip=-21pt
+
+\maketitle
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_dataset}
+\input{sections/04_method}
+\input{sections/05_setup}
+\input{sections/06_results}
+\input{sections/07_discussion}
+\input{sections/08_conclusion}
+
+\section*{Data and Code Availability}
+\input{sections/09_availability}
+
+\section*{Acknowledgment}
+The author thanks the Canadian Institute for Cybersecurity for releasing the DataSense CIC IIoT 2025 dataset \rev{and Washington University in St.~Louis for releasing the WUSTL-IIoT-2021 dataset}. The author also acknowledges the use of ChatGPT and Claude AI tools to support English-language proofreading and editing of the manuscript. All scientific content, analyses, interpretations, and conclusions were reviewed and validated by the author.
+
+\input{sections/10_references}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{figures/author.png}}]{Diego Medeiros de Abreu} received the B.Sc. degree in computer engineering in 2019 and the M.Sc. and Ph.D. degrees in computer science in 2022 and 2026, respectively, from the Federal University of Par\'a (UFPA), Bel\'em, Brazil. He is currently a Senior Research and Development Analyst with the Brazilian National Research and Educational Network (Rede Nacional de Ensino e Pesquisa -- RNP), Brazil. He has experience in technical research and in the management of research, development, and innovation projects in mobile networks, 5G/Open RAN, artificial intelligence, and quantum communications.
+
+His research interests include future networks, explainable artificial intelligence, network traffic analysis, intrusion detection, Open RAN architectures, quantum networking, and secure distributed communication systems. He has also contributed to multidisciplinary projects involving experimental testbeds, network protocol design, system architecture, and the application of AI techniques to next-generation communication networks.
+\end{IEEEbiography}
+
+\EOD
+
+\end{document}

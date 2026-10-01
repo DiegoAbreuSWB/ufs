@@ -1,3 +1,16 @@
 files/contrastive_xai_iiot/data/
 files/contrastive_xai_iiot/.ipynb_checkpoints/
 files/contrastive_xai_iiot/__pycache__/
+files/contrastive_xai_iiot/.venv_rev/
+files/contrastive_xai_iiot/results/revision_smoke/
+files/contrastive_xai_iiot/results/revision/runs/
+files/contrastive_xai_iiot/results/revision/_logs/
+files/contrastive_xai_iiot/revision/manuscript/_template/
+files/contrastive_xai_iiot/revision/manuscript/*.aux
+files/contrastive_xai_iiot/revision/manuscript/*.log
+files/contrastive_xai_iiot/revision/manuscript/*.out
+files/contrastive_xai_iiot/revision/manuscript/*.pfb
+files/contrastive_xai_iiot/revision/manuscript/*.tfm
+files/contrastive_xai_iiot/revision/manuscript/marked.flag
+*.pdf
+!files/contrastive_xai_iiot/results/figures/paper_ready/*.pdf

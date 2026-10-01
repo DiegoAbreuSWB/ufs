@@ -1,0 +1,87 @@
+\section{Related Work}
+\label{sec:related}
+
+Table~\ref{tab:related} compares the main related method families using objective dimensions: label use during feature selection, representation learning, feature-selection space, joint subset evaluation, domain-aware augmentation, and explainability.
+
+\begin{table*}[t]
+\caption{Objective Comparison of Related Work and \method}
+\label{tab:related}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.9cm} >{\raggedright\arraybackslash}p{1.0cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{2.6cm} >{\raggedright\arraybackslash}p{2.4cm}@{}}
+\toprule
+Method / Family & Labels in FS & Learned Representation & Selection Space & Joint Subset Evaluation & Domain-Aware Augmentation & Explainability \\
+\midrule
+Laplacian Score \cite{he2005laplacian} and SPEC \cite{zhao2007spectral} & No & None & Original feature space & No; feature ranking & No & No \\
+MCFS \cite{cai2010unsupervised}, UDFS \cite{yang2011l2}, and NDFS \cite{li2012unsupervised} & No & Spectral or sparse latent structure & Original features guided by an embedding or pseudo-label structure & Embedded sparse objective & No & No \\
+JSF-BRFS \cite{maleknia2026joint} & No & Joint sample and feature subspaces & Coupled sample--feature latent spaces & Yes; bidirectional reconstruction & No & No explicit post-hoc XAI \\
+UFS-GAN \cite{pakmanesh2026unsupervised} & No & Graph proximity and autoencoder-like NMF & Structured graph and NMF latent spaces & Yes; unified representation and selection & No & Interpretable NMF structure, but no IDS-specific post-hoc XAI \\
+AMUFS \cite{gao2026unsupervised} and UDLA \cite{wang2026unsupervised} & No & Adaptive latent representations or dual-graph structures & Latent, data, and feature spaces & Yes; sparse or adaptively weighted objectives & No & No \\
+SimCLR \cite{chen2020simple}, VICReg \cite{bardes2022vicreg}, SCARF \cite{bahri2022scarf}, and SubTab \cite{ucar2021subtab} & No & Self-supervised representation & Representation learning only; no native FS objective & No & Generic view generation or feature corruption & No \\
+Recent XAI-based IoT/IDS studies \cite{esmaeilyfard2026gelax,alrumaih2026lightweight,mohamed2025iot,arya2025explainable,patokar2026secure} & Mostly yes & Classifier-, graph-, or federated-model dependent & Generally not a UFS objective & No & Application-specific & Yes \\
+\method & No & VICReg representation & Original-feature subsets evaluated in latent space & Yes; bidirectional Silhouette search & Yes; semantic Context Group masking & Random Forest proxy with SHAP \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection{Unsupervised Feature Selection for Intrusion Detection}
+
+The feature-selection literature for network intrusion detection systems spans supervised, semi-supervised, and unsupervised paradigms \cite{solorio2020review}. Supervised approaches, such as information gain, mutual information, and recursive feature elimination, can achieve strong performance when reliable labels are available. However, their applicability is limited in IIoT deployment scenarios where device populations change over time, attacks evolve rapidly, and labeled attack traffic may be unavailable during system commissioning. This motivates the use of unsupervised feature selection, which aims to identify informative features from unlabeled traffic data.
+
+Within the unsupervised paradigm, filter methods are widely used due to their low computational cost and simple deployment. Laplacian Score \cite{he2005laplacian} selects features that are locally smooth with respect to a $k$-NN graph, assuming that nearby samples should have similar feature values. SPEC \cite{zhao2007spectral} generalizes this idea through a spectral objective over the graph Laplacian. MCFS \cite{cai2010unsupervised} incorporates multi-cluster structure using sparse regression on spectral embeddings, while UDFS \cite{yang2011l2} and NDFS \cite{li2012unsupervised} introduce $\ell_{2,1}$-norm and nonnegative constraints to improve feature sparsity and cluster preservation.
+
+Recent UFS methods have more closely integrated representation learning, sample structure, and feature structure into the selection objective. JSF-BRFS \cite{maleknia2026joint} jointly learns sample- and feature-level subspaces through bidirectional reconstruction and symmetric coupling, avoiding the need for a predefined similarity graph. UFS-GAN \cite{pakmanesh2026unsupervised} combines adaptive graph proximity, including higher-order sample relationships, with a structured autoencoder-like nonnegative matrix factorization model. AMUFS \cite{gao2026unsupervised} jointly optimizes adaptive latent representation learning, multi-group sample similarity, and sparse regression, whereas UDLA \cite{wang2026unsupervised} preserves manifold information in both the data and feature spaces through dual-graph clustering and adaptive weighting.
+
+These methods demonstrate that modern UFS is not restricted to independent feature ranking. However, their objectives are primarily based on reconstruction, graph or manifold preservation, pseudo-label learning, and sparse regularization. \method{} follows a different design: it first learns a nonlinear IIoT traffic representation using self-supervised VICReg and domain-aware augmentation, freezes that representation, and then evaluates subsets of original traffic features according to the cluster structure they preserve in the latent space.
+
+Although classical methods are effective and computationally attractive, they primarily evaluate features in the original input space. As a result, they may be less suited to capturing nonlinear interactions among traffic attributes, which are often relevant in IIoT intrusion detection. Joint subset evaluation can partially address this limitation by evaluating combinations of features according to clustering quality rather than ranking every attribute independently. In this work, this principle is extended to a learned latent space, where nonlinear feature interactions can be represented by a self-supervised encoder.
+
+\subsection{Contrastive and Non-Contrastive Self-Supervised Learning for Tabular Data}
+
+Contrastive and self-supervised learning have become important tools for learning representations from unlabeled data. SimCLR \cite{chen2020simple} popularized the NT-Xent objective, where two augmented views of the same sample are pulled together while different samples are pushed apart. Although highly effective in computer vision, this formulation depends strongly on the semantic validity of the augmentations. In tabular IIoT traffic, common augmentations such as Gaussian noise, feature dropout, or random corruption may alter features that directly encode traffic behavior, producing positive pairs that no longer preserve the same network semantics.
+
+VICReg \cite{bardes2022vicreg} is a non-contrastive self-supervised joint-embedding method based on invariance, variance, and covariance regularization. Unlike SimCLR, it does not use negative pairs. Its explicit variance regularization discourages collapsed representations, while covariance regularization reduces redundancy among latent dimensions. However, VICReg alone does not define domain-aware augmentations or a feature-selection procedure.
+
+Several methods have adapted self-supervised learning to tabular data. SCARF \cite{bahri2022scarf} uses random feature corruption to create augmented views, while SubTab \cite{ucar2021subtab} uses overlapping feature subsets to learn representations from tabular inputs. These methods demonstrate the potential of self-supervision for tabular data, but they do not explicitly incorporate semantic traffic groups or intrusion-detection-specific feature structures.
+
+\method{} extends this line of work by using semantic Context Group masking as its primary domain-aware augmentation, complemented by low-amplitude Gaussian noise and individual feature dropout. The Context Groups are defined from the measurement semantics of the traffic features and should not be confused with the data-driven sample groups employed by multi-group similarity methods such as AMUFS. The proposed augmentation aims to preserve relationships among semantically associated traffic measurements while forcing the encoder to learn from complementary feature contexts.
+
+\subsection{Explainability in Network Intrusion Detection}
+
+Explainability has become increasingly important in IDS research because security analysts must understand not only whether a sample is anomalous, but also which traffic characteristics support that decision. SHAP \cite{lundberg2017unified} has been widely adopted as a post-hoc method for explaining supervised classifiers.
+
+Recent studies illustrate different applications of explainability in IoT and network intrusion detection. AlRumaih \emph{et al.} \cite{alrumaih2026lightweight} survey lightweight and transparent IoMT intrusion-detection pipelines and identify SHAP and LIME as frequent post-hoc approaches, while also emphasizing limited real-world validation, inconsistent explanation metrics, and edge-computing overhead. Mohamed \emph{et al.} \cite{mohamed2025iot} use explainable AI to assess feature contributions in centralized and federated cyberattack-attribution models developed with the IoT-CAD dataset. GELAX \cite{esmaeilyfard2026gelax} combines dynamic graph pruning with anchored explainability for IoT botnet detection. Other recent studies apply explainability to feature-guided convolutional IDS models and federated graph-based automotive IDSs \cite{arya2025explainable,patokar2026secure}. These approaches primarily explain supervised detection or attribution decisions rather than an unlabeled feature-selection process or a discovered cluster structure.
+
+INSOMNIA \cite{andresini2021insomnia} addresses intrusion detection under concept drift but should not be classified as a SHAP-based IDS approach. It uses permutation-based variable importance through DALEX to examine model behavior under distributional change. It is therefore considered here as drift-aware explainability work rather than as evidence of SHAP usage in IDS.
+
+The unsupervised setting introduces a different explainability problem. Instead of explaining a supervised prediction, the goal is to characterize the behavior represented by each discovered cluster. In this work, a Random Forest proxy is trained to reproduce the cluster assignments produced in the VICReg latent space, and TreeExplainer SHAP is applied to identify the features that best describe each cluster. \rev{The scope of this proxy explanation is delimited once, in Section~\ref{sec:xai_method}.}
+
+\subsection{Comparison With Recent Representation-Aware and IDS Frameworks}
+
+Table~\ref{tab:published} complements the objective-level comparison in Table~\ref{tab:related} by summarizing the evaluation contexts and principal evidence reported by representative recent works already discussed in this section. The table distinguishes generic UFS studies from supervised IoT/IDS frameworks because they address different tasks and report different evaluation metrics.
+
+\begin{table*}[t]
+\caption{Published-Evidence Comparison With Recent Representation-Aware and IDS Frameworks}
+\label{tab:published}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.3cm} >{\raggedright\arraybackslash}p{2.4cm} >{\raggedright\arraybackslash}p{1.7cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{2.3cm} >{\raggedright\arraybackslash}X@{}}
+\toprule
+Method & Evaluation Context & Labels & Representation / Selection & Explainability & Evidence Reported in the Original Study \\
+\midrule
+JSF-BRFS (2026) \cite{maleknia2026joint} & Multiple general-purpose benchmark datasets & Not used in FS & Joint sample--feature subspaces with bidirectional reconstruction & No explicit post-hoc XAI & Reported consistent improvements in clustering accuracy and feature-selection performance over the compared UFS methods \\
+UFS-GAN (2026) \cite{pakmanesh2026unsupervised} & Ten general-purpose benchmark datasets & Not used in FS & Higher-order graph proximity and structured autoencoder-like NMF & Interpretable nonnegative latent structure & Reported an average accuracy improvement of approximately 6\% over the strongest competitors, with gains of up to approximately 9\% \\
+AMUFS (2026) \cite{gao2026unsupervised} & Seven public benchmark datasets & Not used in FS & Adaptive latent representation, multi-group similarity, and sparse regression & No explicit post-hoc XAI & Reported superior clustering accuracy and normalized mutual information relative to the evaluated UFS methods \\
+UDLA (2026) \cite{wang2026unsupervised} & Six real-world benchmark datasets & Not used in FS & Dual-graph manifold learning, NMF, adaptive weighting, and sparse regularization & No explicit post-hoc XAI & Reported strong clustering-oriented feature-selection performance, including evaluations on high-dimensional data \\
+GELAX (2026) \cite{esmaeilyfard2026gelax} & N-BaIoT and UNSW Bot-IoT & Used for supervised detection & GNN and DNN representations, dynamic graph pruning, and Lasso-based feature selection & Anchored explanations & Reported 95.9\% and 96.9\% detection accuracy, reductions exceeding 45\% in resource use, and a 22.5\% improvement in explanation faithfulness \\
+IoT-CAD (2025) \cite{mohamed2025iot} & IoT-CAD digital-forensics dataset & Used for detection and attribution & Centralized and federated cyberattack-attribution models & Post-hoc feature-contribution analysis & Validated a heterogeneous IoT forensics dataset through machine-learning, federated-learning, network-forensics, and XAI analyses \\
+\method & DataSense CIC IIoT 2025 \rev{and WUSTL-IIoT-2021} & Not used in representation learning or FS & Group-aware VICReg representation and bidirectional latent-space original-feature refinement & Random Forest cluster proxy with SHAP & \rev{\PublishedEvidenceOwn} \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+The published results in Table~\ref{tab:published} do not constitute a direct quantitative ranking. The generic UFS methods are evaluated primarily through clustering accuracy, normalized mutual information, or related criteria on general-purpose benchmark datasets. In contrast, the IDS frameworks use different IoT datasets, target labels, attack taxonomies, train--test partitions, model architectures, feature budgets, and predictive metrics. Directly ordering these values would therefore confound differences in task formulation and experimental protocol.
+
+For this reason, the controlled experiments in this study use baselines that can be executed under the same preprocessing, cross-validation, feature-budget, and downstream-classifier protocol. In contrast to recent supervised XAI-based IDS studies and recent representation-aware UFS methods, \method{} connects three distinct stages: domain-aware self-supervised representation learning, label-free original-feature refinement evaluated in the latent space, and post-hoc behavioral interpretation of the resulting cluster structure.
