@@ -54,6 +54,8 @@ DATASET_CFG = {
     # Unchanged pipeline on WUSTL-IIoT-2021 (direct reproduction): reduced evaluation scope.
     "wustl": dict(rank_k=14, budgets=(5, 10, 15, 20), knn=False, ds17=False,
                   rank_eval=(), budget_rank=(), eval_budgets=False),
+    "nbaiot_log": dict(rank_k=40, budgets=(10, 20, 30, 40), knn=False, ds17=False,
+                       rank_eval=("mcfs", "variance"), budget_rank=("mcfs",), eval_budgets=True),
     # Log-scaled attributes (methodological adaptation): main external-dataset experiment.
     "wustl_log": dict(rank_k=14, budgets=(5, 10, 15, 20), knn=False, ds17=False,
                       rank_eval=("mcfs", "variance"), budget_rank=("mcfs",), eval_budgets=True),
@@ -386,6 +388,8 @@ def build_plan(name: str) -> list[dict]:
     if name in ("wustl", "main"):              # 6. unchanged pipeline on WUSTL (direct reproduction)
         jobs += [J("wustl", "sample", 10, 42, f, "full") for f in range(10)]
         jobs += [J("wustl_log", "fulldata", 1, 42, 0, "descriptive")]
+    if name in ("nbaiot",):                   # third dataset (pre-registered, see reports/02_*)
+        jobs += [J("nbaiot_log", "sample", 10, 42, f, "full") for f in range(10)]
     if name in ("ablation_none",):             # optional: encoder trained without masking
         jobs += [J("datasense", "sample", 10, 42, f, "ablation", "aug_none") for f in range(5)]
     if name == "smoke":

@@ -128,7 +128,7 @@ def natural_points(ev, dataset, seed=42, protocol="sample_k10"):
 
 
 def rc_rank_k(dataset):
-    return {"datasense": 25, "wustl": 14, "wustl_log": 14}[dataset]
+    return {"datasense": 25, "wustl": 14, "wustl_log": 14, "nbaiot_log": 40}[dataset]
 
 
 def significance(ev, dataset, seeds, protocol="sample_k10"):
@@ -342,7 +342,7 @@ def fig_extended_profile(prof, name, k_search_max=14):
 def budget_table(ev, dataset, seed=42, protocol="sample_k10", variant="main"):
     d = ev[(ev.dataset == dataset) & (ev.protocol == protocol) & (ev.seed == seed) & (ev.variant == variant) &
            (ev.task == "multiclass") & (ev.clf == "rf")]
-    budgets = {"datasense": (10, 15, 20, 25), "wustl": (5, 10, 15, 20), "wustl_log": (5, 10, 15, 20)}[dataset]
+    budgets = {"datasense": (10, 15, 20, 25), "wustl": (5, 10, 15, 20), "wustl_log": (5, 10, 15, 20), "nbaiot_log": (10, 20, 30, 40)}[dataset]
     rk = rc_rank_k(dataset)
     rows = []
     for m in ("proposed", "kmeans_sil", "mcfs", "variance", "spec", "laplacian"):
@@ -532,7 +532,7 @@ def main():
     ev = eval_frame()
     ev.to_csv(os.path.join(TAB, "eval_long.csv"), index=False)
     out = {}
-    for dsname in ("datasense", "wustl", "wustl_log"):
+    for dsname in ("datasense", "wustl", "wustl_log", "nbaiot_log"):
         if (ev.dataset == dsname).any():
             out[f"natural_{dsname}"] = natural_points(ev, dsname)
             seeds42 = [42]

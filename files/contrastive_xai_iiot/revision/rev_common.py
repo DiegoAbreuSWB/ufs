@@ -154,11 +154,29 @@ def load_wustl(frac: float = 0.25, seed: int = 2021) -> dict:
                 strat_col="label2")
 
 
+def load_nbaiot_log() -> dict:
+    """N-BaIoT: label-free 3.5% uniform sample (seed 2018), signed log transform, 5 stream-type groups."""
+    tag = "nbaiot_f35_s2018"
+    X = np.load(os.path.join(CACHE_DIR, f"{tag}_X.npy")).astype(np.float64)
+    X = (np.sign(X) * np.log1p(np.abs(X))).astype(np.float32)
+    meta = pd.read_pickle(os.path.join(CACHE_DIR, f"{tag}_meta.pkl"))
+    with open(os.path.join(CACHE_DIR, f"{tag}_features.json"), encoding="utf-8") as f:
+        features = json.load(f)
+    groups = {}
+    for c in features:
+        prefix = c.split("_L")[0]          # MI_dir, H, HH, HH_jit, HpHp
+        groups.setdefault(prefix, []).append(c)
+    return dict(name="nbaiot_log", X_raw=X, features=features, meta=meta, groups=groups,
+                tasks={"binary": "label1", "multiclass": "label2"}, strat_col="label2")
+
+
 def load_dataset(name: str) -> dict:
     if name == "datasense":
         return load_datasense()
     if name == "wustl":
         return load_wustl()
+    if name == "nbaiot_log":
+        return load_nbaiot_log()
     if name == "wustl_log":
         # Methodological adaptation for heavy-tailed flow attributes: a stateless, label-free
         # signed log transform x -> sign(x) * log(1 + |x|) applied to every attribute before
