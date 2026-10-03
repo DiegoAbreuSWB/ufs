@@ -1,0 +1,20 @@
+[     25s]     epoch 1/100 loss 17.0998
+[    437s]     epoch 20/100 loss 12.7801
+[    852s]     epoch 40/100 loss 12.0259
+[   1255s]     epoch 60/100 loss 11.6541
+[   1665s]     epoch 80/100 loss 11.4767
+[   2117s]     epoch 100/100 loss 11.3485
+[   2243s]     search it 1: |S|=70 J=0.5884 evals=72
+[   2387s]     search it 2: |S|=69 J=0.6043 evals=142
+[   2573s]     search it 3: |S|=68 J=0.6123 evals=212
+[   2739s]     search it 4: |S|=67 J=0.6172 evals=282
+[   2911s]     search it 5: |S|=66 J=0.6253 evals=352
+[   3053s]     search it 6: |S|=65 J=0.6305 evals=422
+[   3188s]     search it 7: |S|=64 J=0.6350 evals=492
+[   3315s]     search it 8: |S|=63 J=0.6407 evals=562
+[   3458s]     search it 9: |S|=62 J=0.6451 evals=632
+[   3589s]     search it 10: |S|=61 J=0.6508 evals=702
+[   3724s]     search it 11: |S|=60 J=0.6636 evals=772
+[   3838s]     search it 12: |S|=60 J=0.6636 evals=832
+[   4475s]     eval proposed (60f) 590s
+[   5062s]     eval all_features (71f) 586s

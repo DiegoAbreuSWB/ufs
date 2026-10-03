@@ -10,11 +10,11 @@ Selector (dataset) & Folds & Mean $|S^{*}_r|$ & Range & Always selected & Never 
 \midrule
 \method{} (DataSense) & 30 & 55.7 & 13--70 & 5 & 0 & 0.692 & 0.190 & 0.185 \\
 $k$-Means+Sil (DataSense) & 10 & 35.9 & 7--63 & 3 & 6 & 0.404 & 0.417 & 0.174 \\
-\method{} (WUSTL-IIoT, log-scaled) & 10 & 15.6 & 3--35 & 0 & 4 & 0.336 & 0.514 & 0.191 \\
-$k$-Means+Sil (WUSTL-IIoT, log-scaled) & 10 & 11.0 & 2--32 & 0 & 9 & 0.313 & 0.640 & 0.202 \\
-\method{} (WUSTL-IIoT, unchanged preprocessing) & 10 & 8.5 & 2--23 & 0 & 10 & 0.164 & 0.691 & 0.134 \\
-$k$-Means+Sil (WUSTL-IIoT, unchanged preprocessing) & 10 & 10.6 & 3--22 & 0 & 11 & 0.244 & 0.647 & 0.180 \\
+\method{} (N-BaIoT) & 10 & 74.2 & 35--107 & 15 & 1 & 0.565 & 0.327 & 0.241 \\
+$k$-Means+Sil (N-BaIoT) & 10 & 87.1 & 21--114 & 20 & 0 & 0.662 & 0.227 & 0.192 \\
+\method{} (WUSTL-IIoT) & 10 & 15.6 & 3--35 & 0 & 4 & 0.336 & 0.514 & 0.191 \\
+$k$-Means+Sil (WUSTL-IIoT) & 10 & 11.0 & 2--32 & 0 & 9 & 0.313 & 0.640 & 0.202 \\
 \bottomrule
-\multicolumn{9}{@{}p{0.97\textwidth}@{}}{Jaccard values are means over all pairs of folds. ``Always''/``Never'' count the features selected in all/none of the folds. DataSense has 71 features and WUSTL-IIoT-2021 has 41. The \method{} rows for DataSense pool the three master seeds; the other rows use the primary execution.}
+\multicolumn{9}{@{}p{0.97\textwidth}@{}}{Jaccard values are means over all pairs of folds. ``Always''/``Never'' count the features selected in all/none of the folds. DataSense, N-BaIoT, and WUSTL-IIoT-2021 have 71, 115, and 41 features, respectively. The \method{} rows for DataSense pool the three master seeds; the other rows use the primary execution.}
 \end{tabular}
 \end{table*}

@@ -1,0 +1,1 @@
+{"job": {"dataset": "datasense", "protocol": "sample", "n_splits": 10, "seed": 43, "fold": 3, "level": "seed", "variant": "main"}, "finished": "2026-10-02 19:38:43", "n_train": 204472, "n_test": 22719}

@@ -9,14 +9,12 @@
 Method & $k{=}10$ & $k{=}15$ & $k{=}20$ & $k{=}25$ & $\Delta$ \\
 \midrule
 \method & 0.536 & 0.802 & 0.862 & 0.878 & -0.342 \\
-$k$-Means+Sil & 0.512 & 0.651 & 0.693 & 0.715 & -0.203 \\
+$k$-Means+Sil & 0.569$^{8}$ & 0.747$^{7}$ & 0.806$^{7}$ & 0.841$^{5}$ & -0.272 \\
 MCFS & \textbf{0.881} & \textbf{0.897} & \textbf{0.899} & \textbf{0.901} & -0.020 \\
 Variance & 0.804 & 0.823 & 0.837 & 0.899 & -0.095 \\
-SPEC & -- & -- & -- & 0.862 & +nan \\
-Laplacian & -- & -- & -- & 0.822 & +nan \\
 \midrule
 All Features$^{\dagger}$ & 0.911 & 0.911 & 0.911 & 0.911 & -- \\
 \bottomrule
-\multicolumn{6}{@{}p{0.95\columnwidth}@{}}{$\Delta = \mathrm{F1}(k{=}10) - \mathrm{F1}(k{=}25)$. Best value per budget in bold. $^{\dagger}$Unconstrained reference using all features.}
+\multicolumn{6}{@{}p{0.95\columnwidth}@{}}{$\Delta = \mathrm{F1}(k{=}10) - \mathrm{F1}(k{=}25)$. Best value per budget in bold. A superscript gives the number of folds (when fewer than 10) in which the search provides exactly $k$ features. $^{\dagger}$Unconstrained reference using all features.}
 \end{tabular}
 \end{table}

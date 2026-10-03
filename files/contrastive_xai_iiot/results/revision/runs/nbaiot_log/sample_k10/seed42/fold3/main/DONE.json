@@ -1,0 +1,1 @@
+{"job": {"dataset": "nbaiot_log", "protocol": "sample", "n_splits": 10, "seed": 42, "fold": 3, "level": "full", "variant": "main"}, "finished": "2026-10-02 19:01:47", "n_train": 222549, "n_test": 24728}

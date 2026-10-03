@@ -235,10 +235,8 @@ Master seed & $|S^{{*}}_r|$ mean (range) & $k^{{*}}_r$ range & \\method & All Fe
 def tab_stability():
     rows = []
     for ds, space, lab in (("datasense", "latent", r"\method{} (DataSense)"), ("datasense", "raw", r"$k$-Means+Sil (DataSense)"),
-                           ("wustl_log", "latent", r"\method{} (WUSTL-IIoT, log-scaled)"),
-                           ("wustl_log", "raw", r"$k$-Means+Sil (WUSTL-IIoT, log-scaled)"),
-                           ("wustl", "latent", r"\method{} (WUSTL-IIoT, unchanged preprocessing)"),
-                           ("wustl", "raw", r"$k$-Means+Sil (WUSTL-IIoT, unchanged preprocessing)")):
+                           ("nbaiot_log", "latent", r"\method{} (N-BaIoT)"), ("nbaiot_log", "raw", r"$k$-Means+Sil (N-BaIoT)"),
+                           ("wustl_log", "latent", r"\method{} (WUSTL-IIoT)"), ("wustl_log", "raw", r"$k$-Means+Sil (WUSTL-IIoT)")):
         s = rd(f"selsummary_{space}_{ds}")
         if s is None:
             continue
@@ -272,7 +270,7 @@ Selector (dataset) & Folds & Mean $|S^{{*}}_r|$ & Range & Always selected & Neve
 \\midrule
 {chr(10).join(rows)}
 \\bottomrule
-\\multicolumn{{9}}{{@{{}}p{{0.97\\textwidth}}@{{}}}}{{Jaccard values are means over all pairs of folds. ``Always''/``Never'' count the features selected in all/none of the folds. DataSense has 71 features and WUSTL-IIoT-2021 has 41. The \\method{{}} rows for DataSense pool the three master seeds; the other rows use the primary execution.}}
+\\multicolumn{{9}}{{@{{}}p{{0.97\\textwidth}}@{{}}}}{{Jaccard values are means over all pairs of folds. ``Always''/``Never'' count the features selected in all/none of the folds. DataSense, N-BaIoT, and WUSTL-IIoT-2021 have 71, 115, and 41 features, respectively. The \\method{{}} rows for DataSense pool the three master seeds; the other rows use the primary execution.}}
 \\end{{tabular}}
 \\end{{table*}}
 """
@@ -291,12 +289,12 @@ def tab_budget(ds, label, caption):
             rows.append("\\midrule")
             rows.append("All Features$^{\\dagger}$ & " + " & ".join(f3(r[f"k{b}_mean"]) for b in budgets) + " & -- \\\\")
             continue
-        if all(pd.isna(r[f"k{b}_mean"]) for b in budgets):
+        if any(pd.isna(r[f"k{b}_mean"]) for b in budgets):
             continue
         cells = []
         for b in budgets:
             v = r[f"k{b}_mean"]
-            s = f3(v)
+            s = f3(v) + (f"$^{{{int(r[f'k{b}_n'])}}}$" if r[f"k{b}_n"] < 10 else "")
             cells.append(f"\\textbf{{{s}}}" if (not pd.isna(v) and abs(v - best[b]) < 5e-4) else s)
         delta = r[f"k{budgets[0]}_mean"] - r[f"k{budgets[-1]}_mean"]
         rows.append(f"{LABEL[r.method]} & " + " & ".join(cells) + f" & {delta:+.3f} \\\\")
@@ -317,7 +315,7 @@ Method & {' & '.join(f'$k{{=}}{b}$' for b in budgets)} & $\\Delta$ \\\\
 \\midrule
 {chr(10).join(rows)}
 \\bottomrule
-\\multicolumn{{{len(budgets) + 2}}}{{@{{}}p{{0.95\\columnwidth}}@{{}}}}{{$\\Delta = \\mathrm{{F1}}(k{{=}}{budgets[0]}) - \\mathrm{{F1}}(k{{=}}{budgets[-1]})$. Best value per budget in bold. $^{{\\dagger}}$Unconstrained reference using all features.}}
+\\multicolumn{{{len(budgets) + 2}}}{{@{{}}p{{0.95\\columnwidth}}@{{}}}}{{$\\Delta = \\mathrm{{F1}}(k{{=}}{budgets[0]}) - \\mathrm{{F1}}(k{{=}}{budgets[-1]})$. Best value per budget in bold. A superscript gives the number of folds (when fewer than 10) in which the search provides exactly $k$ features. $^{{\\dagger}}$Unconstrained reference using all features.}}
 \\end{{tabular}}
 \\end{{table}}
 """
@@ -434,10 +432,46 @@ Encoder augmentation & $|S^{{*}}_r|$ mean (range) & Jaccard & $J([d])$ & Bin.\\ 
     write("ablation_aug", body)
 
 
+def tab_ablation_paired():
+    d = rd("ablation_paired_datasense")
+    if d is None:
+        return
+    names = [("latent vs raw search (budget k=15)", "Evaluation space", "Latent vs.\\ raw, $k{=}15$"),
+             ("latent vs raw search (budget k=20)", "", "Latent vs.\\ raw, $k{=}20$"),
+             ("latent vs raw search (budget k=25)", "", "Latent vs.\\ raw, $k{=}25$"),
+             ("latent vs raw search at |S*|", "", "Latent vs.\\ raw, $|S^{*}_r|$ features"),
+             ("bidirectional vs backward-only", "Search direction", "Bidirectional vs.\\ backward-only"),
+             ("group vs independent masking (natural subset)", "Augmentation", "Group vs.\\ independent masking")]
+    rows = []
+    for key, block, lab in names:
+        x = d[(d.comparison == key) & (d.task == "multiclass") & (d.clf == "rf")]
+        if x.empty:
+            continue
+        x = x.iloc[0]
+        p = "$<$0.001" if x.wilcoxon_p_two_sided < 0.001 else f"{x.wilcoxon_p_two_sided:.3f}"
+        rows.append(f"{block} & {lab} & {int(x.n_pairs)} & {f3(x.mean_a)} & {f3(x.mean_b)} & {x.mean_diff:+.4f} & {int(x.n_positive)}/{int(x.n_negative)} & {p} \\\\")
+    body = f"""\\begin{{table*}}[t]
+\\revon
+\\caption{{Paired Controlled Comparisons on DataSense (8-Class RF Macro-F1, Master Seed 42; One Component Changed, Everything Else Fixed)}}
+\\label{{tab:ablation_paired}}
+\\centering
+\\footnotesize
+\\begin{{tabular}}{{@{{}}llcccrcc@{{}}}}
+\\toprule
+Component & Comparison (A vs.\\ B) & Folds & A & B & $\\Delta$ & Wins/Losses & $p_{{\\mathrm{{W}}}}$ \\\\
+\\midrule
+{chr(10).join(rows)}
+\\bottomrule
+\\multicolumn{{8}}{{@{{}}p{{0.97\\textwidth}}@{{}}}}{{Folds: paired folds in which both configurations provide a subset of the required cardinality (budget and $|S^{{*}}_r|$ rows) or in which the encoder was retrained (augmentation row, first five folds). Ties are folds with identical subsets. $p_{{\\mathrm{{W}}}}$: two-sided Wilcoxon signed-rank test; with five pairs, the smallest attainable value is 0.0625.}}
+\\end{{tabular}}
+\\end{{table*}}
+"""
+    write("ablation_paired", body)
+
+
 def tab_extras():
     rows = []
-    for ds, lab in (("datasense", "DataSense"), ("wustl_log", "WUSTL-IIoT-2021 (log-scaled)"),
-                    ("wustl", "WUSTL-IIoT-2021 (unchanged)")):
+    for ds, lab in (("datasense", "DataSense"), ("nbaiot_log", "N-BaIoT"), ("wustl_log", "WUSTL-IIoT-2021")):
         e = rd(f"extras_{ds}")
         if e is None:
             continue
@@ -519,7 +553,7 @@ def tab_removed():
     rem = rd("xai_removed_features_datasense")
     if freq is None:
         return
-    f = freq[freq.selection_frequency < 1.0].sort_values("selection_frequency")
+    f = freq[freq.selection_frequency < 0.8].sort_values("selection_frequency")
     removed_desc = set(rem.feature) if rem is not None else set()
     rows = []
     for _, r in f.iterrows():
@@ -528,7 +562,7 @@ def tab_removed():
     macro("DSNumEverRemoved", len(f))
     body = f"""\\begin{{table}}[t]
 \\revon
-\\caption{{DataSense Features Removed in at Least One of the {int(freq.n_runs.iloc[0])} Fold-Specific Subsets}}
+\\caption{{DataSense Features Removed in More Than 20\% of the {int(freq.n_runs.iloc[0])} Fold-Specific Subsets}}
 \\label{{tab:removed}}
 \\centering
 \\scriptsize
@@ -621,6 +655,7 @@ def main():
     tab_budget("wustl", "tab:wustl_budget_direct", "Macro-F1 vs. Feature Budget $k$ for the 5-Class Task on WUSTL-IIoT-2021 (Unchanged Preprocessing; RF, 10 Folds)")
     tab_protocols()
     tab_ablation()
+    tab_ablation_paired()
     tab_extras()
     tab_clarity("datasense")
     tab_clarity("wustl_log")

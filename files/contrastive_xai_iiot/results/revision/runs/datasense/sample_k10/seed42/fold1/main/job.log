@@ -1,0 +1,97 @@
+[     24s]     epoch 1/100 loss 16.9511
+[    375s]     epoch 20/100 loss 12.8164
+[   1192s]     epoch 40/100 loss 12.0878
+[     47s]     epoch 1/100 loss 16.9511
+[    679s]     epoch 20/100 loss 12.8164
+[   1337s]     epoch 40/100 loss 12.0878
+[   2001s]     epoch 60/100 loss 11.6358
+[   2691s]     epoch 80/100 loss 11.3464
+[   3321s]     epoch 100/100 loss 11.2661
+[   3497s]     search it 1: |S|=70 J=0.5782 evals=72
+[   3651s]     search it 2: |S|=69 J=0.5808 evals=142
+[   3812s]     search it 3: |S|=68 J=0.5898 evals=212
+[   4009s]     search it 4: |S|=67 J=0.5995 evals=282
+[   4195s]     search it 5: |S|=66 J=0.6022 evals=352
+[   4394s]     search it 6: |S|=65 J=0.6072 evals=422
+[   4563s]     search it 7: |S|=64 J=0.6139 evals=492
+[   4675s]     search it 8: |S|=63 J=0.6240 evals=562
+[   4781s]     search it 9: |S|=63 J=0.6451 evals=632
+[   4881s]     search it 10: |S|=62 J=0.6580 evals=702
+[   4972s]     search it 11: |S|=61 J=0.6689 evals=772
+[   5049s]     search it 12: |S|=61 J=0.6689 evals=833
+[   7934s]     search it 1: |S|=70 J=0.5731 evals=72
+[   7987s]     search it 2: |S|=69 J=0.5811 evals=142
+[   8037s]     search it 3: |S|=68 J=0.5929 evals=212
+[   8089s]     search it 4: |S|=67 J=0.6005 evals=282
+[   8137s]     search it 5: |S|=66 J=0.6124 evals=352
+[   8187s]     search it 6: |S|=65 J=0.6281 evals=422
+[   8229s]     search it 7: |S|=64 J=0.6460 evals=492
+[   8273s]     search it 8: |S|=63 J=0.6482 evals=562
+[   8314s]     search it 9: |S|=62 J=0.6616 evals=632
+[   8354s]     search it 10: |S|=61 J=0.6663 evals=702
+[   8395s]     search it 11: |S|=60 J=0.6717 evals=772
+[   8439s]     search it 12: |S|=59 J=0.6739 evals=842
+[   8473s]     search it 13: |S|=58 J=0.6813 evals=912
+[   8507s]     search it 14: |S|=57 J=0.6856 evals=982
+[   8568s]     search it 15: |S|=56 J=0.6929 evals=1052
+[   8655s]     search it 16: |S|=55 J=0.6973 evals=1122
+[   8695s]     search it 17: |S|=54 J=0.6988 evals=1192
+[   8755s]     search it 18: |S|=53 J=0.7017 evals=1262
+[   8804s]     search it 19: |S|=52 J=0.7037 evals=1332
+[   8840s]     search it 20: |S|=51 J=0.7093 evals=1402
+[   8878s]     search it 21: |S|=50 J=0.7128 evals=1472
+[   8916s]     search it 22: |S|=49 J=0.7153 evals=1542
+[   8953s]     search it 23: |S|=48 J=0.7183 evals=1612
+[   8987s]     search it 24: |S|=47 J=0.7206 evals=1682
+[   9021s]     search it 25: |S|=46 J=0.7236 evals=1752
+[   9063s]     search it 26: |S|=45 J=0.7260 evals=1822
+[   9100s]     search it 27: |S|=44 J=0.7289 evals=1892
+[   9139s]     search it 28: |S|=43 J=0.7305 evals=1962
+[   9183s]     search it 29: |S|=42 J=0.7334 evals=2032
+[   9226s]     search it 30: |S|=41 J=0.7422 evals=2102
+[   9269s]     search it 31: |S|=40 J=0.7445 evals=2172
+[   9309s]     search it 32: |S|=39 J=0.7472 evals=2242
+[   9357s]     search it 33: |S|=38 J=0.7550 evals=2312
+[   9405s]     search it 34: |S|=37 J=0.7614 evals=2382
+[   9450s]     search it 35: |S|=36 J=0.7682 evals=2452
+[   9494s]     search it 36: |S|=35 J=0.7761 evals=2522
+[   9539s]     search it 37: |S|=34 J=0.7817 evals=2592
+[   9580s]     search it 38: |S|=33 J=0.7865 evals=2662
+[   9615s]     search it 39: |S|=32 J=0.7953 evals=2732
+[   9649s]     search it 40: |S|=31 J=0.7979 evals=2802
+[   9686s]     search it 41: |S|=30 J=0.8053 evals=2872
+[   9723s]     search it 42: |S|=29 J=0.8073 evals=2942
+[   9762s]     search it 43: |S|=28 J=0.8097 evals=3012
+[   9813s]     search it 44: |S|=27 J=0.8152 evals=3082
+[   9862s]     search it 45: |S|=26 J=0.8251 evals=3152
+[   9905s]     search it 46: |S|=25 J=0.8305 evals=3222
+[   9949s]     search it 47: |S|=24 J=0.8595 evals=3292
+[   9990s]     search it 48: |S|=23 J=0.8738 evals=3362
+[  10031s]     search it 49: |S|=22 J=0.8840 evals=3432
+[  10045s]     search it 50: |S|=22 J=0.8840 evals=3454
+[  10731s]     eval proposed (61f) 577s
+[  11316s]     eval all_features (71f) 585s
+[  11548s]     eval kmeans_sil (22f) 232s
+[  11902s]     eval mcfs_25 (25f) 354s
+[  12208s]     eval variance_25 (25f) 306s
+[  12547s]     eval spec_25 (25f) 339s
+[  12852s]     eval laplacian_25 (25f) 305s
+[  13214s]     eval ndfs_25 (25f) 363s
+[  13522s]     eval udfs_25 (25f) 308s
+[  13813s]     eval ds17 (17f) 290s
+[  14087s]     eval kmeans_sil_at_nprop (61f) 274s
+[  14172s]     eval proposed_backward_only (15f) 85s
+[  14217s]     eval proposed_b10 (10f) 46s
+[  14232s]     eval kmeans_sil_b10 (10f) 15s
+[  14296s]     eval mcfs_10 (10f) 64s
+[  14332s]     eval variance_10 (10f) 36s
+[  14379s]     eval proposed_b15 (15f) 47s
+[  14415s]     eval kmeans_sil_b15 (15f) 36s
+[  14492s]     eval mcfs_15 (15f) 76s
+[  14536s]     eval variance_15 (15f) 44s
+[  14597s]     eval proposed_b20 (20f) 61s
+[  14647s]     eval kmeans_sil_b20 (20f) 50s
+[  14742s]     eval mcfs_20 (20f) 95s
+[  14795s]     eval variance_20 (20f) 53s
+[  14872s]     eval proposed_b25 (25f) 77s
+[  14932s]     eval kmeans_sil_b25 (22f) 60s

@@ -1,0 +1,1 @@
+{"job": {"dataset": "wustl_log", "protocol": "sample", "n_splits": 10, "seed": 42, "fold": 8, "level": "full", "variant": "main"}, "finished": "2026-10-02 14:19:40", "n_train": 268755, "n_test": 29861}

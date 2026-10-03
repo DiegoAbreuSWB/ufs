@@ -1,0 +1,46 @@
+[     18s]     epoch 1/100 loss 17.0082
+[    327s]     epoch 20/100 loss 12.8993
+[    617s]     epoch 40/100 loss 12.1404
+[    899s]     epoch 60/100 loss 11.6283
+[   1237s]     epoch 80/100 loss 11.4600
+[   1509s]     epoch 100/100 loss 11.4284
+[   1611s]     search it 1: |S|=70 J=0.5753 evals=72
+[   1705s]     search it 2: |S|=69 J=0.5753 evals=142
+[   1803s]     search it 3: |S|=69 J=0.5753 evals=211
+[   2790s]     search it 1: |S|=70 J=0.5680 evals=72
+[   2852s]     search it 2: |S|=69 J=0.5690 evals=142
+[   2919s]     search it 3: |S|=68 J=0.5865 evals=212
+[   2982s]     search it 4: |S|=67 J=0.5907 evals=282
+[   3042s]     search it 5: |S|=66 J=0.5948 evals=352
+[   3100s]     search it 6: |S|=65 J=0.5983 evals=422
+[   3158s]     search it 7: |S|=65 J=0.6093 evals=492
+[   3218s]     search it 8: |S|=64 J=0.6314 evals=562
+[   3274s]     search it 9: |S|=63 J=0.6348 evals=632
+[   3328s]     search it 10: |S|=62 J=0.6541 evals=702
+[   3380s]     search it 11: |S|=61 J=0.6605 evals=772
+[   3424s]     search it 12: |S|=61 J=0.6605 evals=833
+[   4370s]     eval proposed (69f) 562s
+[   5022s]     eval all_features (71f) 652s
+[   5693s]     eval kmeans_sil (61f) 671s
+[   6048s]     eval mcfs_25 (25f) 355s
+[   6295s]     eval variance_25 (25f) 247s
+[   6518s]     eval spec_25 (25f) 223s
+[   6698s]     eval laplacian_25 (25f) 180s
+[   6914s]     eval ndfs_25 (25f) 216s
+[   7145s]     eval udfs_25 (25f) 230s
+[   7387s]     eval ds17 (17f) 243s
+[   7677s]     eval kmeans_sil_at_nprop (69f) 290s
+[   7709s]     eval proposed_b10 (10f) 33s
+[   7737s]     eval kmeans_sil_b10 (10f) 27s
+[   7804s]     eval mcfs_10 (10f) 68s
+[   7841s]     eval variance_10 (10f) 36s
+[   7887s]     eval proposed_b15 (15f) 46s
+[   7931s]     eval kmeans_sil_b15 (15f) 44s
+[   8013s]     eval mcfs_15 (15f) 82s
+[   8056s]     eval variance_15 (15f) 43s
+[   8113s]     eval proposed_b20 (20f) 57s
+[   8163s]     eval kmeans_sil_b20 (20f) 50s
+[   8261s]     eval mcfs_20 (20f) 98s
+[   8318s]     eval variance_20 (20f) 57s
+[   8398s]     eval proposed_b25 (25f) 80s
+[   8474s]     eval kmeans_sil_b25 (25f) 76s

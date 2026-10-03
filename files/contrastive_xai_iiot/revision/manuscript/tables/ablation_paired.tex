@@ -1,0 +1,20 @@
+\begin{table*}[t]
+\revon
+\caption{Paired Controlled Comparisons on DataSense (8-Class RF Macro-F1, Master Seed 42; One Component Changed, Everything Else Fixed)}
+\label{tab:ablation_paired}
+\centering
+\footnotesize
+\begin{tabular}{@{}llcccrcc@{}}
+\toprule
+Component & Comparison (A vs.\ B) & Folds & A & B & $\Delta$ & Wins/Losses & $p_{\mathrm{W}}$ \\
+\midrule
+Evaluation space & Latent vs.\ raw, $k{=}15$ & 7 & 0.800 & 0.747 & +0.0526 & 5/2 & 0.156 \\
+ & Latent vs.\ raw, $k{=}20$ & 7 & 0.867 & 0.806 & +0.0615 & 7/0 & 0.016 \\
+ & Latent vs.\ raw, $k{=}25$ & 5 & 0.882 & 0.841 & +0.0404 & 4/1 & 0.125 \\
+ & Latent vs.\ raw, $|S^{*}_r|$ features & 9 & 0.908 & 0.901 & +0.0075 & 7/2 & 0.129 \\
+Search direction & Bidirectional vs.\ backward-only & 10 & 0.908 & 0.881 & +0.0273 & 4/2 & 0.312 \\
+Augmentation & Group vs.\ independent masking & 5 & 0.908 & 0.913 & -0.0044 & 1/4 & 0.125 \\
+\bottomrule
+\multicolumn{8}{@{}p{0.97\textwidth}@{}}{Folds: paired folds in which both configurations provide a subset of the required cardinality (budget and $|S^{*}_r|$ rows) or in which the encoder was retrained (augmentation row, first five folds). Ties are folds with identical subsets. $p_{\mathrm{W}}$: two-sided Wilcoxon signed-rank test; with five pairs, the smallest attainable value is 0.0625.}
+\end{tabular}
+\end{table*}

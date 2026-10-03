@@ -3,7 +3,6 @@ files/contrastive_xai_iiot/.ipynb_checkpoints/
 files/contrastive_xai_iiot/__pycache__/
 files/contrastive_xai_iiot/.venv_rev/
 files/contrastive_xai_iiot/results/revision_smoke/
-files/contrastive_xai_iiot/results/revision/runs/
 files/contrastive_xai_iiot/results/revision/_logs/
 files/contrastive_xai_iiot/revision/manuscript/_template/
 files/contrastive_xai_iiot/revision/manuscript/*.aux
@@ -14,3 +13,5 @@ files/contrastive_xai_iiot/revision/manuscript/*.tfm
 files/contrastive_xai_iiot/revision/manuscript/marked.flag
 *.pdf
 !files/contrastive_xai_iiot/results/figures/paper_ready/*.pdf
+files/contrastive_xai_iiot/revision/deliverables/
+files/contrastive_xai_iiot/results/revision/_invalid_group_exec_k5_timestamp_bug/

@@ -584,7 +584,7 @@ def fig_selection_frequency(st, name, max_rows=None):
     import matplotlib.pyplot as plt
 
     f = st["freq"].sort_values("selection_frequency")
-    f = f[f.selection_frequency < 1.0]
+    f = f[f.selection_frequency < 0.8]
     if f.empty:
         return
     if max_rows:

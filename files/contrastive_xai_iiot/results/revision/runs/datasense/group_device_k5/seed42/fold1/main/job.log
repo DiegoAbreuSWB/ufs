@@ -1,0 +1,10 @@
+[     20s]     epoch 1/100 loss 17.1360
+[    323s]     epoch 20/100 loss 12.7297
+[    620s]     epoch 40/100 loss 12.0554
+[    906s]     epoch 60/100 loss 11.5723
+[   1174s]     epoch 80/100 loss 11.3152
+[   1456s]     epoch 100/100 loss 11.3866
+[   1541s]     search it 1: |S|=70 J=0.5960 evals=72
+[   1615s]     search it 2: |S|=70 J=0.5960 evals=142
+[   1934s]     eval proposed (70f) 291s
+[   2234s]     eval all_features (71f) 299s

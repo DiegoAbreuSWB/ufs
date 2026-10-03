@@ -1,3 +1,130 @@
-\section{Results}\label{sec:results}
-\subsection{Cost}\label{sec:cost}
-stub
+\section{Results}
+\label{sec:results}
+
+This section reports feature-selection quality and its stability across folds and seeds (§\ref{sec:res_selection}), downstream classification performance (§\ref{sec:res_classification}), robustness under fixed feature budgets (§\ref{sec:res_budget}), controlled component comparisons (§\ref{sec:res_ablation}), grouped evaluation protocols (§\ref{sec:res_grouped}), additional datasets (§\ref{sec:res_external}), and SHAP-based cluster explainability (§\ref{sec:res_xai}). \rev{Unless otherwise stated, results refer to the primary execution (master seed 42) and are reported as mean values across its 10 folds.}
+
+\subsection{Feature Selection Quality and Stability}
+\label{sec:res_selection}
+
+\rev{Because feature selection is performed independently in every training fold, each fold produces its own subset $S^{*}_r$. Table~\ref{tab:stability} summarizes the 30 fold-specific subsets obtained with the three master seeds, and Fig.~\ref{fig:selfreq} shows the selection frequency of every feature that was removed at least once. The subsets retain a median of 61 features (mean 55.7), and the pairwise Jaccard similarity between subsets is 0.69, both within a seed (0.70) and across seeds (0.69), which is substantially higher than for the raw-space $k$-Means+Sil wrapper (0.40). Forty-six of the 71 features are selected in at least 80\% of the folds.}
+
+\rev{The features that are removed most often form a coherent group: the four inter-packet timing statistics \feat{network_time-delta_avg}, \feat{network_time-delta_max}, \feat{network_time-delta_min}, and \feat{network_time-delta_std_deviation} are removed in 67--73\% of the folds, followed by \feat{network_interval-packets} and several log-derived range statistics. TTL, TCP window-size, and most header-flag and size statistics are retained in nearly every fold. This pattern is consistent with the descriptive configuration discussed in Section~\ref{sec:res_xai} and with the interpretation that inter-packet timing in IIoT traffic largely reflects device polling and reporting cycles.}
+
+\input{tables/stability}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_selection_frequency_datasense.pdf}
+\caption{\rev{Selection frequency over the 30 fold-specific subsets (three master seeds) of the DataSense features that are selected in fewer than 80\% of the folds. The remaining 46 features are selected in at least 80\% of the folds.}}
+\label{fig:selfreq}
+\end{figure}
+
+\rev{\textbf{Number of clusters.} Fig.~\ref{fig:silprofile} reports the latent Silhouette profile over the candidate set $\mathcal{K} = \{2,\dots,14\}$. The profile rises steeply up to $k \approx 10$ and then flattens, and the selected value lies at the upper end of the candidate range in all folds ($k^{*} = 14$ in 23 folds, 13 in 5, and 12 or 11 in one fold each); in the descriptive configuration, $k^{*} = 13$ (Silhouette 0.554, versus 0.552 at $k = 14$). Extending the profile beyond the candidate range (Fig.~\ref{fig:silext}) shows a slow further increase, from 0.567 at $k = 14$ to 0.622 at $k = 30$. The upper bound of $\mathcal{K}$ therefore acts as the granularity limit of the explanation: it keeps the number of cluster profiles small enough to be inspected by an analyst while operating on the plateau of the Silhouette curve. The selected subsets also raise the mean latent Silhouette at every candidate $k$ (Fig.~\ref{fig:silprofile}), confirming that the search improves latent separability independently of the particular value of $k$.}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_silhouette_profile_datasense.pdf}
+\caption{\rev{Latent Silhouette profile over the candidate cluster numbers (mean $\pm$ standard deviation over the 30 fold-specific pipelines), for the complete feature set and for the selected subset $S^{*}_r$.}}
+\label{fig:silprofile}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_silhouette_extended_datasense.pdf}
+\caption{\rev{Latent Silhouette of the complete feature set for $k = 2,\dots,30$ (10 folds of the primary execution). The shaded region is the candidate set used by the search.}}
+\label{fig:silext}
+\end{figure}
+
+\subsection{Classification Performance}
+\label{sec:res_classification}
+
+Table~\ref{tab:natural} reports classification results averaged across RF, DT, and KNN. The methods retain different numbers of features, so the table presents the natural operating point of each configuration and must be read together with the \#F column; equal-cardinality comparisons are reported in Section~\ref{sec:res_budget}.
+
+\input{tables/natural_datasense}
+
+\rev{With Random Forest, \method{} reaches 0.936 binary and 0.908 eight-class macro-F1, against 0.936 and 0.911 for All Features. Table~\ref{tab:wilcoxon} reports the paired tests. A two one-sided equivalence test with a margin of $\pm$0.01 macro-F1 confirms that \method{} is statistically equivalent to the all-feature configuration in both tasks and with both RF and DT. \method{} significantly outperforms MCFS-25 with RF in both tasks (+0.0018 binary and +0.0072 eight-class; $p = 0.020$ and $p = 0.014$) and with DT in the eight-class task ($p = 0.002$), and it outperforms the supervised DS-17 reference in all folds of both tasks ($p = 0.002$). With the distance-based KNN classifier, the selected subset improves eight-class macro-F1 from 0.839 to 0.851 relative to All Features, which is consistent with the removal of attributes that do not contribute to the neighborhood structure.}
+
+\input{tables/wilcoxon}
+
+\rev{\textbf{Independent master seeds.} Table~\ref{tab:seeds} reports three complete executions of the 10-fold experiment with master seeds 42, 43, and 44. Across seeds, \method{} reaches $0.935 \pm 0.001$ binary and $0.902 \pm 0.005$ eight-class RF macro-F1 (mean $\pm$ standard deviation of the seed means). Over the 30 paired folds, the difference to All Features remains within the equivalence margin in both tasks (equivalence test $p < 0.001$ binary and $p = 0.015$ eight-class with RF; $p < 0.001$ and $p = 0.001$ with DT).}
+
+\input{tables/seeds}
+
+The comparison with DS-17 should be read as a descriptive reference: DS-17 uses label information and 17 features, whereas \method{} is label-free and retains a larger subset. Precision--recall behavior is similar to that of the complete input (Table~\ref{tab:natural}).
+
+\subsection{Robustness Under Fixed Feature Budgets}
+\label{sec:res_budget}
+
+Table~\ref{tab:budget} reports RF macro-F1 for the eight-class task under fixed budgets $k \in \{10, 15, 20, 25\}$, where all methods retain exactly $k$ features. \rev{\method{} improves steadily as the budget increases, from 0.536 at $k = 10$ to 0.878 at $k = 25$. At small budgets, MCFS is the most stable method (0.881 at $k = 10$), confirming that the proposed latent-space refinement is designed for moderate budgets and for its natural operating point rather than for aggressive compression. At every budget from 15 to 25, \method{} exceeds the raw-space $k$-Means+Sil search evaluated with the same procedure.}
+
+\input{tables/budget_datasense}
+
+\subsection{Controlled Component Comparisons}
+\label{sec:res_ablation}
+
+\rev{Table~\ref{tab:ablation_aug} and Table~\ref{tab:ablation_paired} report controlled comparisons in which exactly one component is changed while folds, seeds, architecture, objective, and search are fixed.}
+
+\rev{\textbf{Evaluation space.} At identical feature budgets, evaluating subsets through the VICReg latent space yields higher eight-class macro-F1 than evaluating them in the standardized input space at every budget from 15 to 25 (+0.053, +0.062, and +0.040), with a significant difference at $k = 20$ (7 of 7 folds, $p = 0.016$). At the cardinality of the latent natural subset, the latent search is higher in 7 of 9 folds (+0.0075). This supports the central design choice of the method: the latent representation provides a more informative criterion for joint subset evaluation than raw-space clustering.}
+
+\rev{\textbf{Search direction.} Where the bidirectional and backward-only searches return different subsets, the bidirectional search attains higher eight-class macro-F1 on average (+0.027); the backward-only variant stops at smaller subsets (34 features on average where the two differ), and the forward-recovery pass allows the search to continue beyond such early stopping points.}
+
+\rev{\textbf{Augmentation.} An encoder trained with conventional independent per-feature masking at the same expected masking rate yields performance comparable to the group-aware encoder (binary 0.937 vs.\ 0.936, equivalent within the $\pm$0.01 margin; eight-class 0.913 vs.\ 0.908) and a somewhat larger selected subset (64.0 vs.\ 53.8 features). Both forms of masking are therefore effective view-generation strategies for this pipeline; group-aware masking additionally preserves the internal consistency of each semantic measurement group within the augmented views, which is the property that motivates its design.}
+
+\input{tables/ablation_aug}
+\input{tables/ablation_paired}
+
+\subsection{Grouped Evaluation Protocols}
+\label{sec:res_grouped}
+
+\rev{Table~\ref{tab:protocols} reports the complete pipeline under the execution-grouped and device-grouped protocols defined in Section~\ref{sec:cv}. Under execution-grouped folds, in which no attack execution and no benign time block is shared between training and test data, binary detection is essentially unchanged (0.931 for \method{} and 0.933 for All Features; equivalent within the $\pm$0.01 margin), and eight-class macro-F1 is 0.793 and 0.806, respectively. Under device-grouped folds, where the test devices are never seen during training, binary macro-F1 is 0.903 and 0.913, and eight-class macro-F1 is 0.653 and 0.691. Table~\ref{tab:perclass} shows that the multi-class reduction is concentrated in categories that are recorded on few devices, notably web attacks (a single target device) and brute-force attempts (five target devices), which cannot be learned for an unseen device. In both grouped protocols, none of the paired differences between \method{} and the all-feature reference is statistically significant (Wilcoxon $p \ge 0.06$), and binary attack detection remains above 0.90.}
+
+\input{tables/protocols}
+\input{tables/perclass}
+
+\subsection{Additional Datasets}
+\label{sec:res_external}
+
+\rev{Table~\ref{tab:crossdataset} summarizes the pre-registered statistical comparison on the three datasets, and Tables~\ref{tab:nbaiot} and \ref{tab:wustl} report the natural operating points on N-BaIoT and WUSTL-IIoT-2021. On N-BaIoT, \method{} retains on average 74 of 115 features and is statistically equivalent to the all-feature configuration in both the binary task (0.9997 vs.\ 0.9998) and the eleven-class task (0.873 vs.\ 0.881), and it significantly outperforms MCFS-40 in both tasks (eleven-class 0.873 vs.\ 0.804; $p = 0.002$). The eleven-class ceiling of approximately 0.88 reflects Gafgyt attack variants with nearly identical traffic statistics and is shared by all configurations. On WUSTL-IIoT-2021, the method reaches 0.974 binary and 0.901 five-class macro-F1 while retaining on average 16 of 41 flow attributes, and it attains a higher mean five-class macro-F1 than the raw-space $k$-Means+Sil search (0.901 vs.\ 0.743); on this dataset none of the paired differences is statistically significant. The subsets selected on WUSTL-IIoT-2021 vary more in size across folds than on the other datasets (Table~\ref{tab:stability}). On both additional datasets, the latent clusters are highly stable within folds (adjusted Rand index of at least 0.97) and are reproduced by the proxy on the outer test folds with balanced accuracy of at least 0.96 (Table~\ref{tab:extras}).}
+
+\input{tables/crossdataset}
+\input{tables/natural_nbaiot_log}
+\input{tables/natural_wustl_log}
+
+\subsection{SHAP Cluster Explainability}
+\label{sec:res_xai}
+
+\rev{\textbf{Proxy fidelity and cluster stability.} Table~\ref{tab:extras} reports the agreement between the Random Forest proxy and the latent cluster assignments in three settings: on the rows used to fit the proxy, on disjoint held-out training rows, and on the outer test fold, whose rows are unseen by the scaler, the encoder, the subset search, the $k$-Means model, and the proxy. On DataSense, the proxy reproduces the latent partition with 0.989 accuracy and 0.970 balanced accuracy on the outer test folds, close to its in-sample agreement (0.995). The clusters are also stable: refitting $k$-Means on independent training subsamples yields an adjusted Rand index (ARI) of 0.964, and the 30 fold-specific pipelines, each with its own encoder, selected subset, and clustering, assign the same 5,000 reference windows with a mean pairwise ARI of 0.944 (adjusted mutual information 0.882), with no difference between pipelines from the same or from different master seeds. The explanations therefore describe a reproducible partition rather than an artifact of one particular fold or seed.}
+
+\input{tables/extras}
+
+\rev{\textbf{Descriptive configuration.} To produce the cluster profiles, the pipeline is fitted once on the complete dataframe. It retains 61 of 71 features (Table~\ref{tab:removed}), selects $k^{*} = 13$, and its proxy reproduces the latent partition on held-out rows with 0.988 accuracy and 0.980 balanced accuracy. Fig.~\ref{fig:tsne} provides a qualitative t-SNE view of the latent space, and Fig.~\ref{fig:shapclusters} shows the cluster-level SHAP profiles.}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig_tsne_datasense.pdf}
+\caption{Qualitative t-SNE visualization of the VICReg latent space of the descriptive configuration. Left: the \rev{13} latent clusters \rev{(numbered by decreasing size)}. Right: the binary evaluation label, which is not used for representation learning, feature selection, or clustering. t-SNE can distort global distances and is used only as qualitative evidence.}
+\label{fig:tsne}
+\end{figure*}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_shap_clusters_datasense.pdf}
+\caption{\rev{Cluster-level SHAP profiles of the descriptive configuration: share of each cluster's mean absolute SHAP contribution (Eq.~\ref{eq:clustershap}) carried by each feature, computed on held-out rows, for the features with the largest shares.}}
+\label{fig:shapclusters}
+\end{figure}
+
+\rev{\textbf{Selection of the clusters to interpret.} Table~\ref{tab:clarity} reports the clarity index of Eq.~\eqref{eq:clarity} for all 13 clusters. The held-out proxy F1 exceeds 0.88 for every cluster, so the index is driven mainly by profile concentration. The four clusters with the highest clarity index (C12, C6, C8, and C4; $CI_c \ge 0.385$) are separated by a clear gap from the remaining clusters ($CI_c \le 0.333$), and they are interpreted below. The other clusters have more diffuse profiles, in which the top three features carry less than a third of the SHAP mass.}
+
+\input{tables/clarity_datasense}
+
+\rev{\textbf{Cluster C12 (TCP termination profile).} The profile is dominated by \feat{network_tcp-flags-fin_count} and \feat{network_tcp-flags-rst_count}, together with destination packet counts. FIN- and RST-heavy windows indicate connection teardown and reset activity. For an analyst, this profile directs attention to abnormal connection-termination behavior; in the evaluated data, all windows of this cluster carry the DDoS evaluation label.}
+
+\rev{\textbf{Cluster C6 (TTL profile).} The profile is characterized by \feat{network_ttl_min} and \feat{network_ttl_avg}. TTL values reflect the operating system and the routing path of the traffic sources, so this profile summarizes a hop-count signature that is typical of the benign device population (89\% of its windows are benign). Deviations from it can therefore highlight traffic originating from unexpected hosts or paths.}
+
+\rev{\textbf{Cluster C8 (payload-size profile).} The profile is dominated by the average payload length, IP length, and packet size. It captures windows with distinctive message-size distributions, which in the evaluated data most frequently carry the denial-of-service label (49\% of the windows). For an analyst, it directs attention to payload-size anomalies.}
+
+\rev{\textbf{Cluster C4 (TTL-variability profile).} The profile is strongly influenced by \feat{network_ttl_std_deviation}, together with MSS and IP-flag statistics, indicating heterogeneous TTL behavior within the same window, as produced when several sources or paths are mixed. In the evaluated data, 97\% of the windows of this cluster belong to reconnaissance executions, which is consistent with scanning activity that reaches many hosts.}
+
+The cluster profiles are behavioral descriptions of unsupervised clusters; the evaluation labels are reported only as post-hoc context and are not used to define or select the clusters. Their main value is to connect the latent cluster structure back to original traffic attributes that security analysts can inspect.
+
+\input{tables/removed}

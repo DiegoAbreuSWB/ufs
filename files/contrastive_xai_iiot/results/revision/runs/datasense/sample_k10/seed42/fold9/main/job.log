@@ -1,0 +1,43 @@
+[     24s]     epoch 1/100 loss 17.0457
+[    368s]     epoch 20/100 loss 12.8130
+[    798s]     epoch 40/100 loss 12.0834
+[   1136s]     epoch 60/100 loss 11.6804
+[   1469s]     epoch 80/100 loss 11.4180
+[   1797s]     epoch 100/100 loss 11.3839
+[   1913s]     search it 1: |S|=70 J=0.5685 evals=72
+[   2005s]     search it 2: |S|=69 J=0.5685 evals=142
+[   2095s]     search it 3: |S|=69 J=0.5685 evals=211
+[   3011s]     search it 1: |S|=70 J=0.5741 evals=72
+[   3072s]     search it 2: |S|=69 J=0.5833 evals=142
+[   3147s]     search it 3: |S|=68 J=0.5938 evals=212
+[   3216s]     search it 4: |S|=67 J=0.6095 evals=282
+[   3271s]     search it 5: |S|=66 J=0.6201 evals=352
+[   3326s]     search it 6: |S|=65 J=0.6293 evals=422
+[   3383s]     search it 7: |S|=64 J=0.6398 evals=492
+[   3444s]     search it 8: |S|=63 J=0.6521 evals=562
+[   3504s]     search it 9: |S|=63 J=0.6521 evals=625
+[   4839s]     eval proposed (69f) 777s
+[   5348s]     eval all_features (71f) 510s
+[   5870s]     eval kmeans_sil (63f) 522s
+[   6253s]     eval mcfs_25 (25f) 383s
+[   6547s]     eval variance_25 (25f) 294s
+[   6856s]     eval spec_25 (25f) 309s
+[   7156s]     eval laplacian_25 (25f) 300s
+[   7510s]     eval ndfs_25 (25f) 354s
+[   7898s]     eval udfs_25 (25f) 389s
+[   8232s]     eval ds17 (17f) 334s
+[   8740s]     eval kmeans_sil_at_nprop (69f) 508s
+[   8814s]     eval proposed_b10 (10f) 74s
+[   8839s]     eval kmeans_sil_b10 (10f) 26s
+[   8954s]     eval mcfs_10 (10f) 114s
+[   9009s]     eval variance_10 (10f) 55s
+[   9089s]     eval proposed_b15 (15f) 80s
+[   9160s]     eval kmeans_sil_b15 (15f) 71s
+[   9303s]     eval mcfs_15 (15f) 144s
+[   9375s]     eval variance_15 (15f) 71s
+[   9473s]     eval proposed_b20 (20f) 98s
+[   9563s]     eval kmeans_sil_b20 (20f) 89s
+[   9712s]     eval mcfs_20 (20f) 149s
+[   9804s]     eval variance_20 (20f) 92s
+[   9926s]     eval proposed_b25 (25f) 122s
+[  10046s]     eval kmeans_sil_b25 (25f) 120s

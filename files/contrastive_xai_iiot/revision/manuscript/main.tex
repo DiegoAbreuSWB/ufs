@@ -42,7 +42,10 @@
   \newcommand{\revon}{\relax}
 \fi
 
-\newcommand{\feat}[1]{\texttt{\detokenize{#1}}}
+% dataframe column names: monospaced, with permitted line breaks after '_' and '-'
+\renewcommand{\UrlBreaks}{\do\_\do\-}
+\urlstyle{tt}
+\newcommand{\feat}[1]{\expandafter\url\expandafter{\detokenize{#1}}}
 \newcommand{\method}{ContrastiveXAI-FS}
 \newcommand{\pmstd}[2]{#1\,{\scriptsize$\pm$\,#2}}
 \DeclareMathOperator*{\argmax}{arg\,max}

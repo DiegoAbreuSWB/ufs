@@ -11,8 +11,8 @@
 Dataset & Folds & ARI & AMI & ARI & AMI & In-sample acc. & Hold-out acc. & Test-fold acc. & Test-fold bal.\ acc. \\
 \midrule
 DataSense & 30 & 0.964\,{\scriptsize$\pm$0.027} & 0.928\,{\scriptsize$\pm$0.029} & 0.944\,{\scriptsize$\pm$0.045} & 0.882\,{\scriptsize$\pm$0.033} & 0.995\,{\scriptsize$\pm$0.003} & 0.992\,{\scriptsize$\pm$0.003} & 0.989\,{\scriptsize$\pm$0.003} & 0.970\,{\scriptsize$\pm$0.012} \\
-WUSTL-IIoT-2021 (log-scaled) & 10 & 0.994\,{\scriptsize$\pm$0.016} & 0.991\,{\scriptsize$\pm$0.015} & 0.763\,{\scriptsize$\pm$0.244} & 0.788\,{\scriptsize$\pm$0.168} & 1.000\,{\scriptsize$\pm$0.000} & 1.000\,{\scriptsize$\pm$0.000} & 0.999\,{\scriptsize$\pm$0.000} & 0.980\,{\scriptsize$\pm$0.020} \\
-WUSTL-IIoT-2021 (unchanged) & 10 & 0.883\,{\scriptsize$\pm$0.155} & 0.873\,{\scriptsize$\pm$0.145} & 0.253\,{\scriptsize$\pm$0.313} & 0.261\,{\scriptsize$\pm$0.299} & 1.000\,{\scriptsize$\pm$0.000} & 0.999\,{\scriptsize$\pm$0.001} & 0.999\,{\scriptsize$\pm$0.001} & 0.922\,{\scriptsize$\pm$0.090} \\
+N-BaIoT & 10 & 0.978\,{\scriptsize$\pm$0.023} & 0.977\,{\scriptsize$\pm$0.014} & 0.875\,{\scriptsize$\pm$0.154} & 0.917\,{\scriptsize$\pm$0.061} & 0.995\,{\scriptsize$\pm$0.002} & 0.997\,{\scriptsize$\pm$0.001} & 0.994\,{\scriptsize$\pm$0.001} & 0.953\,{\scriptsize$\pm$0.017} \\
+WUSTL-IIoT-2021 & 10 & 0.994\,{\scriptsize$\pm$0.016} & 0.991\,{\scriptsize$\pm$0.015} & 0.763\,{\scriptsize$\pm$0.244} & 0.788\,{\scriptsize$\pm$0.168} & 1.000\,{\scriptsize$\pm$0.000} & 1.000\,{\scriptsize$\pm$0.000} & 0.999\,{\scriptsize$\pm$0.000} & 0.980\,{\scriptsize$\pm$0.020} \\
 \bottomrule
 \multicolumn{10}{@{}p{0.97\textwidth}@{}}{Within-fold: $k$-Means refitted on five training-fold subsamples. Cross-pipeline: all pairs of fold-specific pipelines labeling the same 5,000 reference rows. Hold-out: training-fold rows not used to fit the proxy. Test fold: rows unseen by the scaler, encoder, subset search, $k$-Means, and proxy.}
 \end{tabular}
