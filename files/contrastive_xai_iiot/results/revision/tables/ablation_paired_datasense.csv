@@ -1,0 +1,15 @@
+comparison,task,clf,n_pairs,mean_a,mean_b,mean_diff,n_positive,n_negative,wilcoxon_p_two_sided,tost_p_delta001,note
+group vs independent masking (natural subset),binary,rf,5,0.935553508576566,0.9368379662368257,-0.0012844576602595748,1,4,0.1875,0.03125,
+group vs independent masking (natural subset),binary,dt,5,0.9336278175621426,0.9348801170308361,-0.0012522994686935407,2,3,0.625,0.03125,
+group vs independent masking (natural subset),multiclass,rf,5,0.908431510733422,0.9128015629025154,-0.00437005216909323,1,4,0.125,0.0625,
+group vs independent masking (natural subset),multiclass,dt,5,0.8977659260119728,0.9020842899110839,-0.004318363899111244,1,4,0.125,0.0625,
+group vs independent masking (budget k=10),multiclass,rf,5,0.53747416937495,0.5952043384065189,-0.05773016903156888,2,3,0.8125,0.6875,
+group vs independent masking (budget k=25),multiclass,rf,5,0.8718133379079098,0.8797975000028246,-0.007984162094914949,1,4,0.625,0.78125,
+bidirectional vs backward-only,binary,rf,10,0.9355208782041432,0.9277505379713837,0.007770340232759532,4,2,0.5625,0.037109375,ties where subsets coincide
+latent vs raw search at |S*|,binary,rf,9,0.9356136415874174,0.9343088251157771,0.0013048164716404661,7,2,0.12890625,0.001953125,same cardinality; folds without a raw subset of size |S*| excluded
+bidirectional vs backward-only,multiclass,rf,10,0.9082779536679428,0.8809922922448805,0.027285661423062234,4,2,0.3125,0.2138671875,ties where subsets coincide
+latent vs raw search at |S*|,multiclass,rf,9,0.9080822351411079,0.9005634509969913,0.007518784144116528,7,2,0.12890625,0.064453125,same cardinality; folds without a raw subset of size |S*| excluded
+latent vs raw search (budget k=10),multiclass,rf,8,0.5936226799820908,0.5689691674031853,0.024653512578905502,4,4,0.84375,0.52734375,folds where both searches provide exactly k features
+latent vs raw search (budget k=15),multiclass,rf,7,0.8000060156064269,0.7473639462651267,0.052642069341300335,5,2,0.15625,0.9453125,folds where both searches provide exactly k features
+latent vs raw search (budget k=20),multiclass,rf,7,0.8674266501193706,0.8059663918936778,0.061460258225692836,7,0,0.015625,1.0,folds where both searches provide exactly k features
+latent vs raw search (budget k=25),multiclass,rf,5,0.8816153398093409,0.84117625463974,0.04043908516960097,4,1,0.125,0.9375,folds where both searches provide exactly k features

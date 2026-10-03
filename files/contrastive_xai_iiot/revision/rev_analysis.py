@@ -367,7 +367,9 @@ def budget_table(ev, dataset, seed=42, protocol="sample_k10", variant="main"):
         row = dict(method=m)
         for b in budgets:
             name = f"{m}_b{b}" if m in ("proposed", "kmeans_sil") else f"{m}_{b}"
-            x = d[d.method == name]
+            # matched cardinality only: a search whose natural subset is smaller than b cannot
+            # provide a b-feature subset, so that fold is excluded (count reported in k{b}_n)
+            x = d[(d.method == name) & (d.n_features == b)]
             row[f"k{b}_mean"], row[f"k{b}_std"], row[f"k{b}_n"] = (x.f1_macro.mean(), x.f1_macro.std(ddof=0), len(x)) if len(x) else (np.nan, np.nan, 0)
         rows.append(row)
     a = d[d.method == "all_features"]
@@ -462,6 +464,62 @@ def ablation_table(ev, dataset="datasense"):
             x = p[(p.task == task) & (p.clf == "rf")]
             row[f"{task}_rf"] = x.f1_macro.mean()
         rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def ablation_paired(ev, dataset="datasense"):
+    """
+    Paired controlled comparisons (one component changed, everything else fixed):
+      augmentation  group masking vs independent masking (encoder retrained; first 5 folds)
+      direction     bidirectional vs backward-only (same encoder/objective; identical subsets count as ties)
+      space         latent vs raw search at the same cardinality |S*| (identical subsets count as ties)
+    """
+    d = ev[(ev.dataset == dataset) & (ev.protocol == "sample_k10") & (ev.seed == 42)]
+    rows = []
+
+    def add(name, a, b, task, clf, note=""):
+        m = a.merge(b, on="fold", suffixes=("_a", "_b"))
+        if len(m) < 5:
+            return
+        diff = m.f1_macro_a - m.f1_macro_b
+        rows.append(dict(comparison=name, task=task, clf=clf, n_pairs=len(m), mean_a=m.f1_macro_a.mean(), mean_b=m.f1_macro_b.mean(),
+                         mean_diff=diff.mean(), n_positive=int((diff > 1e-12).sum()), n_negative=int((diff < -1e-12).sum()),
+                         wilcoxon_p_two_sided=wilcoxon_two_sided(m.f1_macro_a, m.f1_macro_b),
+                         tost_p_delta001=tost_wilcoxon(m.f1_macro_a, m.f1_macro_b, 0.01), note=note))
+
+    def sel(variant, method, task, clf):
+        x = d[(d.variant == variant) & (d.method == method) & (d.task == task) & (d.clf == clf)]
+        return x[["fold", "f1_macro"]]
+
+    folds_aug = sorted(d[(d.variant == "aug_independent") & (d.method == "proposed")].fold.unique())
+    for task in ("binary", "multiclass"):
+        for clf in ("rf", "dt"):
+            a = sel("main", "proposed", task, clf)
+            add("group vs independent masking (natural subset)", a[a.fold.isin(folds_aug)], sel("aug_independent", "proposed", task, clf), task, clf)
+    for b in (10, 25):
+        a = sel("main", f"proposed_b{b}", "multiclass", "rf")
+        add(f"group vs independent masking (budget k={b})", a[a.fold.isin(folds_aug)], sel("aug_independent", f"proposed_b{b}", "multiclass", "rf"), "multiclass", "rf")
+    for task in ("binary", "multiclass"):
+        base = sel("main", "proposed", task, "rf")
+        bo = sel("main", "proposed_backward_only", task, "rf")
+        bo = pd.concat([bo, base[~base.fold.isin(bo.fold)]])           # identical subsets -> identical scores
+        add("bidirectional vs backward-only", base, bo, task, "rf", "ties where subsets coincide")
+        # raw-space subset of exactly |S*| features: the dedicated evaluation, or the raw natural subset
+        # when it already has that size; folds whose raw path never reaches |S*| are excluded
+        nf = d[(d.variant == "main") & (d.task == task) & (d.clf == "rf")].pivot_table(index="fold", columns="method", values="n_features")
+        raw = sel("main", "kmeans_sil_at_nprop", task, "rf")
+        rawn = sel("main", "kmeans_sil", task, "rf")
+        same = [f for f in rawn.fold if f not in set(raw.fold) and nf.loc[f, "kmeans_sil"] == nf.loc[f, "proposed"]]
+        raw = pd.concat([raw, rawn[rawn.fold.isin(same)]])
+        add("latent vs raw search at |S*|", base[base.fold.isin(raw.fold)], raw, task, "rf", "same cardinality; folds without a raw subset of size |S*| excluded")
+    for b in (10, 15, 20, 25):
+        ok = d[(d.method == f"kmeans_sil_b{b}") & (d.n_features == b)].fold.unique()
+        okp = d[(d.method == f"proposed_b{b}") & (d.n_features == b)].fold.unique()
+        f_ok = sorted(set(ok) & set(okp))
+        a = sel("main", f"proposed_b{b}", "multiclass", "rf")
+        r = sel("main", f"kmeans_sil_b{b}", "multiclass", "rf")
+        add(f"latent vs raw search (budget k={b})", a[a.fold.isin(f_ok)], r[r.fold.isin(f_ok)], "multiclass", "rf",
+            "folds where both searches provide exactly k features")
     return pd.DataFrame(rows)
 
 

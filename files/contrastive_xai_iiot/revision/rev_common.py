@@ -228,14 +228,15 @@ def make_folds(ds: dict, protocol: str, seed: int, n_splits: int = 10):
         return list(skf.split(np.zeros(n), y))
     if protocol == "group_exec":
         t = pd.to_datetime(meta["timestamp_start"])
-        block = (t.astype("int64") // (60 * 10**9)).astype(str)
+        # unit-independent (pandas may store datetimes in ns or us): seconds since the first window
+        block = ((t - t.min()).dt.total_seconds() // 60).astype(np.int64).astype(str)
         g = np.where(meta["label1"].to_numpy() == "benign",
                      "benign_block_" + block.to_numpy(), meta["label_full"].to_numpy())
     elif protocol == "group_device":
         g = meta["device_name"].to_numpy()
     elif protocol == "group_time":
         t = pd.to_datetime(meta["timestamp_start"])
-        g = (t.astype("int64") // (300 * 10**9)).to_numpy()
+        g = ((t - t.min()).dt.total_seconds() // 300).astype(np.int64).to_numpy()
     else:
         raise ValueError(protocol)
     sgkf = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=seed)

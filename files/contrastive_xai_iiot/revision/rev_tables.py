@@ -599,7 +599,7 @@ Dataset & Reference & $\\Delta$F1 & $p_{{\\mathrm{{W}}}}$ & $p_{{\\mathrm{{TOST}
 \\midrule
 {chr(10).join(rows)}
 \\bottomrule
-\\multicolumn{{10}}{{@{{}}p{{0.97\\textwidth}}@{{}}}}{{$\\Delta$F1: mean macro-F1 of \\method{{}} minus the reference. $p_{{\\mathrm{{W}}}}$: two-sided Wilcoxon signed-rank test. $p_{{\\mathrm{{TOST}}}}$: paired equivalence test (two one-sided Wilcoxon tests) with margin $\\pm$0.01 macro-F1. Verdict rules were fixed before the N-BaIoT experiment: Superior/Inferior if $p_{{\\mathrm{{W}}}} < 0.05$; Equivalent if $p_{{\\mathrm{{TOST}}}} < 0.05$; otherwise Inconclusive. The ranking budgets (25, 40, 14) are 35\\% of the number of features of each dataset.}}
+\\multicolumn{{10}}{{@{{}}p{{0.97\\textwidth}}@{{}}}}{{$\\Delta$F1: mean macro-F1 of \\method{{}} minus the reference. $p_{{\\mathrm{{W}}}}$: two-sided Wilcoxon signed-rank test. $p_{{\\mathrm{{TOST}}}}$: paired equivalence test (two one-sided Wilcoxon tests) with margin $\\pm$0.01 macro-F1. Verdict rules were fixed before the N-BaIoT experiment: Superior/Inferior if $p_{{\\mathrm{{W}}}} < 0.05$; Equivalent if $p_{{\\mathrm{{TOST}}}} < 0.05$; otherwise Inconclusive. ``(equiv.)'' marks a significant difference that nevertheless lies within the $\\pm$0.01 margin. The ranking budgets (25, 40, 14) are 35\\% of the number of features of each dataset.}}
 \\end{{tabular}}
 \\end{{table*}}
 """
