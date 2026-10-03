@@ -1,0 +1,21 @@
+\begin{table}[t]
+\revon
+\caption{Third Dataset N-BaIoT (Log-Scaled Attributes): Results at the Natural Operating Point of Each Method (Mean$\pm$Std Over 10 Folds, Master Seed 42, Average of RF/DT)}
+\label{tab:nbaiot}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+Method & \#F & Bin.\ F1 & 11-cl. F1 & Acc. & MCC & Recall \\
+\midrule
+\method & 74.2 (35--107) & 1.000\,{\scriptsize$\pm$.000} & .873\,{\scriptsize$\pm$.021} & .871 & .870 & .901 \\
+$k$-Means+Sil & 87.1 (21--114) & 1.000\,{\scriptsize$\pm$.000} & .880\,{\scriptsize$\pm$.000} & .878 & .878 & .909 \\
+MCFS & 40 & .999\,{\scriptsize$\pm$.000} & .803\,{\scriptsize$\pm$.002} & .803 & .794 & .822 \\
+Variance & 40 & 1.000\,{\scriptsize$\pm$.000} & .880\,{\scriptsize$\pm$.000} & .878 & .878 & .909 \\
+\midrule
+All Features & 115 & 1.000\,{\scriptsize$\pm$.000} & .880\,{\scriptsize$\pm$.000} & .879 & .878 & .909 \\
+\bottomrule
+\multicolumn{7}{@{}p{0.97\columnwidth}@{}}{\#F: mean number of selected features over the folds (range in parentheses when the size varies). Acc., MCC, and Recall refer to the 11-class task. Different \#F values are different operating points, not a matched-budget ranking.}
+\end{tabular}
+\end{table}

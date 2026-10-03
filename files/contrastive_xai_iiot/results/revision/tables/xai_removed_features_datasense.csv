@@ -1,0 +1,11 @@
+feature,group,in_ds17
+log_data-ranges_std_deviation,Log Data Stats,False
+network_interval-packets,Packet Traffic Rate,True
+network_ips_all_count,Address Diversity,True
+network_mss_std_deviation,Size Length,False
+network_packet-size_min,Size Length,False
+network_tcp-flags-syn_count,Header Flags,False
+network_time-delta_avg,Timing Control,True
+network_time-delta_max,Timing Control,False
+network_time-delta_min,Timing Control,False
+network_time-delta_std_deviation,Timing Control,False

@@ -21,7 +21,7 @@ TAB = os.path.join(rc.REV_DIR, "tables")
 OUT = os.path.join(HERE, "manuscript", "tables")
 os.makedirs(OUT, exist_ok=True)
 MACROS: dict[str, str] = {}
-PRE = {"datasense": "DS", "wustl": "WU", "wustl_log": "WL"}
+PRE = {"datasense": "DS", "wustl": "WU", "wustl_log": "WL", "nbaiot_log": "NB"}
 
 
 def rd(name):
@@ -78,7 +78,7 @@ def tab_natural(ds, label, caption, knn):
     if idx:
         rows.insert(idx[0], "\\midrule")
     clf = "RF/DT/KNN" if knn else "RF/DT"
-    mc = "8-cl." if ds == "datasense" else "5-cl."
+    mc = {"datasense": "8-cl.", "nbaiot_log": "11-cl."}.get(ds, "5-cl.")
     n = int(d.n_folds.min())
     body = f"""\\begin{{table}}[t]
 \\revon
@@ -304,7 +304,7 @@ def tab_budget(ds, label, caption):
         if tag:
             for b in budgets:
                 macro(f"{PRE[ds]}Bud{tag}{'abcdefghij'[budgets.index(b)]}", f3(r[f"k{b}_mean"]))
-    mc = "8-Class" if ds == "datasense" else "5-Class"
+    mc = {"datasense": "8-Class", "nbaiot_log": "11-Class"}.get(ds, "5-Class")
     body = f"""\\begin{{table}}[t]
 \\revon
 \\caption{{{caption}}}
@@ -546,7 +546,70 @@ Feature & Context Group & Removed & Descr. & DS-17 \\\\
     write("removed", body)
 
 
+def verdict(diff, p_w, p_t, alpha=0.05):
+    """Decision rules fixed in reports/02_preregistration_third_dataset.md."""
+    if p_w < alpha and diff > 0:
+        return "Superior" + (" (equiv.)" if p_t < alpha else "")
+    if p_w < alpha and diff < 0:
+        return "Inferior" + (" (equiv.)" if p_t < alpha else "")
+    if p_t < alpha:
+        return "Equivalent"
+    return "Inconclusive"
+
+
+def tab_crossdataset():
+    specs = [("datasense", "DataSense", {"all_features": "All Features", "mcfs_25": "MCFS-25", "kmeans_sil": "$k$-Means+Sil"}),
+             ("nbaiot_log", "N-BaIoT", {"all_features": "All Features", "mcfs_40": "MCFS-40", "kmeans_sil": "$k$-Means+Sil"}),
+             ("wustl_log", "WUSTL-IIoT", {"all_features": "All Features", "mcfs_14": "MCFS-14", "kmeans_sil": "$k$-Means+Sil"})]
+    rows = []
+    for ds, lab, refs in specs:
+        s = rd(f"significance_seed42_{ds}")
+        if s is None:
+            continue
+        first = True
+        for ref, rl in refs.items():
+            cells = [lab if first else "", rl]
+            first = False
+            for task in ("binary", "multiclass"):
+                x = s[(s.task == task) & (s.clf == "rf") & (s.reference == ref)]
+                if x.empty:
+                    cells += ["--", "--", "--", "--"]
+                    continue
+                x = x.iloc[0]
+                pw = "$<$0.001" if x.wilcoxon_p_two_sided < 0.001 else f"{x.wilcoxon_p_two_sided:.3f}"
+                pt = "$<$0.001" if x.tost_p_delta001 < 0.001 else f"{x.tost_p_delta001:.3f}"
+                v = verdict(x.mean_diff, x.wilcoxon_p_two_sided, x.tost_p_delta001)
+                cells += [f"{x.mean_diff:+.4f}", pw, pt, v]
+                macro(f"X{PRE.get(ds, 'NB') if ds != 'nbaiot_log' else 'NB'}{''.join(c for c in ref.title() if c.isalpha())}{'Bin' if task == 'binary' else 'Multi'}", v)
+            rows.append(" & ".join(cells) + " \\\\")
+        rows.append("\\midrule")
+    rows = rows[:-1]
+    body = f"""\\begin{{table*}}[t]
+\\revon
+\\caption{{Pre-Registered Statistical Comparison of \\method{{}} Across the Three Datasets (RF, 10 Paired Folds, Master Seed 42)}}
+\\label{{tab:crossdataset}}
+\\centering
+\\footnotesize
+\\setlength{{\\tabcolsep}}{{3.5pt}}
+\\begin{{tabular}}{{@{{}}llrccl rccl@{{}}}}
+\\toprule
+ & & \\multicolumn{{4}}{{c}}{{Binary}} & \\multicolumn{{4}}{{c}}{{Multi-class}} \\\\
+\\cmidrule(lr){{3-6}}\\cmidrule(l){{7-10}}
+Dataset & Reference & $\\Delta$F1 & $p_{{\\mathrm{{W}}}}$ & $p_{{\\mathrm{{TOST}}}}$ & Verdict & $\\Delta$F1 & $p_{{\\mathrm{{W}}}}$ & $p_{{\\mathrm{{TOST}}}}$ & Verdict \\\\
+\\midrule
+{chr(10).join(rows)}
+\\bottomrule
+\\multicolumn{{10}}{{@{{}}p{{0.97\\textwidth}}@{{}}}}{{$\\Delta$F1: mean macro-F1 of \\method{{}} minus the reference. $p_{{\\mathrm{{W}}}}$: two-sided Wilcoxon signed-rank test. $p_{{\\mathrm{{TOST}}}}$: paired equivalence test (two one-sided Wilcoxon tests) with margin $\\pm$0.01 macro-F1. Verdict rules were fixed before the N-BaIoT experiment: Superior/Inferior if $p_{{\\mathrm{{W}}}} < 0.05$; Equivalent if $p_{{\\mathrm{{TOST}}}} < 0.05$; otherwise Inconclusive. The ranking budgets (25, 40, 14) are 35\\% of the number of features of each dataset.}}
+\\end{{tabular}}
+\\end{{table*}}
+"""
+    write("crossdataset", body)
+
+
 def main():
+    tab_crossdataset()
+    tab_natural("nbaiot_log", "tab:nbaiot", "Third Dataset N-BaIoT (Log-Scaled Attributes): Results at the Natural Operating Point of Each Method", False)
+    tab_budget("nbaiot_log", "tab:nbaiot_budget", "Macro-F1 vs. Feature Budget $k$ for the 11-Class Task on N-BaIoT (RF, 10 Folds)")
     tab_natural("datasense", "tab:natural", "Classification Results on DataSense at the Natural Operating Point of Each Method", True)
     tab_natural("wustl_log", "tab:wustl", "External Dataset WUSTL-IIoT-2021 (Log-Scaled Attributes): Results at the Natural Operating Point of Each Method", False)
     tab_natural("wustl", "tab:wustl_direct", "External Dataset WUSTL-IIoT-2021 (Unchanged Preprocessing): Results at the Natural Operating Point of Each Method", False)

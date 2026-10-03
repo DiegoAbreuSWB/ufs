@@ -1,0 +1,28 @@
+\begin{table*}[t]
+\revon
+\caption{Clarity Index and SHAP Profile of All 13 Latent Clusters of the Descriptive Configuration, in Decreasing Order of Clarity}
+\label{tab:clarity}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrcccp{3.2cm}p{6.3cm}r@{}}
+\toprule
+Cluster & Share (\%) & $F_c$ & $T_c$ & $CI_c$ & Dominant Context Group among top-5 features & Three highest-ranked features & Benign (\%) \\
+\midrule
+C12 & 0.6 & 1.00 & 0.60 & 0.60 & Header Flags (3/5) & \feat{tcp-flags-fin_count}, \feat{tcp-flags-rst_count}, \feat{packets_dst_count} & 0 \\
+C6 & 4.3 & 1.00 & 0.58 & 0.58 & Timing Control (2/5) & \feat{ttl_min}, \feat{ttl_avg}, \feat{ip-length_min} & 89 \\
+C8 & 4.0 & 1.00 & 0.55 & 0.54 & Size Length (3/5) & \feat{payload-length_avg}, \feat{ip-length_avg}, \feat{packet-size_avg} & 4 \\
+C4 & 6.3 & 0.99 & 0.39 & 0.38 & Timing Control (2/5) & \feat{ttl_std}, \feat{mss_avg}, \feat{ip-flags_avg} & 0 \\
+C1 & 41.5 & 1.00 & 0.33 & 0.33 & Size Length (4/5) & \feat{ip-length_max}, \feat{header-length_max}, \feat{ip-length_min} & 87 \\
+C5 & 4.5 & 0.95 & 0.26 & 0.25 & Size Length (3/5) & \feat{mss_avg}, \feat{mss_min}, \feat{tcp-flags_std} & 1 \\
+C9 & 3.8 & 0.96 & 0.25 & 0.24 & Size Length (4/5) & \feat{mss_avg}, \feat{mss_min}, \feat{tcp-flags_std} & 7 \\
+C10 & 3.0 & 0.98 & 0.23 & 0.22 & Header Flags (2/5) & \feat{ip-flags_avg}, \feat{ip-flags_min}, \feat{mss_avg} & 70 \\
+C13 & 0.1 & 0.91 & 0.23 & 0.21 & Header Flags (3/5) & \feat{tcp-flags_std}, \feat{mss_avg}, \feat{mss_min} & 0 \\
+C3 & 7.2 & 0.98 & 0.20 & 0.20 & Size Length (2/5) & \feat{tcp-flags_avg}, \feat{ip-length_avg}, \feat{packets_all_count} & 2 \\
+C2 & 18.4 & 0.99 & 0.20 & 0.20 & Timing Control (3/5) & \feat{window-size_avg}, \feat{log_messages_count}, \feat{log_data-types_count} & 85 \\
+C11 & 2.3 & 0.88 & 0.17 & 0.15 & Packet Traffic Rate (2/5) & \feat{packets_all_count}, \feat{packets_dst_count}, \feat{tcp-flags_avg} & 2 \\
+C7 & 4.1 & 0.97 & 0.15 & 0.14 & Size Length (3/5) & \feat{mss_avg}, \feat{tcp-flags_min}, \feat{mss_min} & 46 \\
+\bottomrule
+\multicolumn{8}{@{}p{0.97\textwidth}@{}}{Share: fraction of all windows assigned to the cluster. $F_c$: held-out proxy F1. $T_c$: share of the cluster mean $|$SHAP$|$ carried by its three top features. $CI_c = F_c \cdot T_c$. Feature names omit the \texttt{network\_} prefix. Benign: fraction of the cluster's windows with benign evaluation label, shown only as post-hoc context.}
+\end{tabular}
+\end{table*}

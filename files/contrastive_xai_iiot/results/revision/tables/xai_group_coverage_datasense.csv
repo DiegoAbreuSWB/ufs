@@ -1,0 +1,10 @@
+group,total,selected,coverage
+Log Data Rate,2,2,1.0
+Log Data Stats,5,4,0.8
+Packet Traffic Rate,4,3,0.75
+Fragmentation,2,2,1.0
+Address Diversity,6,5,0.8333333333333334
+Header Flags,14,13,0.9285714285714286
+Timing Control,12,8,0.6666666666666666
+Size Length,20,18,0.9
+Network Multiplexing,6,6,1.0

@@ -1,0 +1,26 @@
+\begin{table}[t]
+\revon
+\caption{Classification Results on DataSense at the Natural Operating Point of Each Method (Mean$\pm$Std Over 10 Folds, Master Seed 42, Average of RF/DT/KNN)}
+\label{tab:natural}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+Method & \#F & Bin.\ F1 & 8-cl. F1 & Acc. & MCC & Recall \\
+\midrule
+\method & 59.2 (28--70) & .931\,{\scriptsize$\pm$.003} & .886\,{\scriptsize$\pm$.005} & .927 & .877 & .840 \\
+$k$-Means+Sil & 35.9 (7--63) & .885\,{\scriptsize$\pm$.082} & .732\,{\scriptsize$\pm$.238} & .874 & .776 & .695 \\
+MCFS & 25 & .926\,{\scriptsize$\pm$.002} & .861\,{\scriptsize$\pm$.002} & .915 & .856 & .816 \\
+Variance & 25 & .932\,{\scriptsize$\pm$.001} & .889\,{\scriptsize$\pm$.004} & .928 & .878 & .842 \\
+SPEC & 25 & .931\,{\scriptsize$\pm$.003} & .847\,{\scriptsize$\pm$.021} & .916 & .858 & .809 \\
+Laplacian & 25 & .933\,{\scriptsize$\pm$.002} & .810\,{\scriptsize$\pm$.022} & .903 & .835 & .770 \\
+NDFS & 25 & .923\,{\scriptsize$\pm$.006} & .821\,{\scriptsize$\pm$.021} & .905 & .839 & .775 \\
+UDFS & 25 & .917\,{\scriptsize$\pm$.010} & .843\,{\scriptsize$\pm$.024} & .912 & .850 & .794 \\
+\midrule
+All Features & 71 & .929\,{\scriptsize$\pm$.001} & .883\,{\scriptsize$\pm$.002} & .925 & .873 & .839 \\
+DS-17$^{\dagger}$ & 17 & .919\,{\scriptsize$\pm$.002} & .851\,{\scriptsize$\pm$.004} & .913 & .852 & .807 \\
+\bottomrule
+\multicolumn{7}{@{}p{0.97\columnwidth}@{}}{\#F: mean number of selected features over the folds (range in parentheses when the size varies). Acc., MCC, and Recall refer to the 8-class task. Different \#F values are different operating points, not a matched-budget ranking. $^{\dagger}$Supervised reference subset.}
+\end{tabular}
+\end{table}

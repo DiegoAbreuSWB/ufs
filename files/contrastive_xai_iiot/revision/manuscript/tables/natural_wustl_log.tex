@@ -1,0 +1,21 @@
+\begin{table}[t]
+\revon
+\caption{External Dataset WUSTL-IIoT-2021 (Log-Scaled Attributes): Results at the Natural Operating Point of Each Method (Mean$\pm$Std Over 10 Folds, Master Seed 42, Average of RF/DT)}
+\label{tab:wustl}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+Method & \#F & Bin.\ F1 & 5-cl. F1 & Acc. & MCC & Recall \\
+\midrule
+\method & 15.6 (3--35) & .974\,{\scriptsize$\pm$.044} & .898\,{\scriptsize$\pm$.089} & .993 & .944 & .878 \\
+$k$-Means+Sil & 11.0 (2--32) & .962\,{\scriptsize$\pm$.039} & .742\,{\scriptsize$\pm$.190} & .987 & .911 & .738 \\
+MCFS & 14 & .999\,{\scriptsize$\pm$.000} & .935\,{\scriptsize$\pm$.045} & 1.000 & .997 & .928 \\
+Variance & 14 & .998\,{\scriptsize$\pm$.001} & .917\,{\scriptsize$\pm$.054} & .999 & .993 & .909 \\
+\midrule
+All Features & 41 & 1.000\,{\scriptsize$\pm$.000} & .953\,{\scriptsize$\pm$.030} & 1.000 & .999 & .948 \\
+\bottomrule
+\multicolumn{7}{@{}p{0.97\columnwidth}@{}}{\#F: mean number of selected features over the folds (range in parentheses when the size varies). Acc., MCC, and Recall refer to the 5-class task. Different \#F values are different operating points, not a matched-budget ranking.}
+\end{tabular}
+\end{table}

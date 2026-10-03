@@ -1,0 +1,17 @@
+\begin{table}[t]
+\revon
+\caption{Per-Class RF F1 of the All Features Reference Under Each Protocol (DataSense, Mean Over Folds)}
+\label{tab:perclass}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+Protocol & Benign & BruteF. & DDoS & DoS & Malware & MitM & Recon & Web \\
+\midrule
+Sample-level & .95 & .83 & .93 & .96 & .93 & .93 & .85 & .91 \\
+Execution-grouped & .00 & .47 & .77 & .81 & .75 & .73 & .71 & .56 \\
+Device-grouped & .94 & .28 & .88 & .87 & .70 & .76 & .80 & .00 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,20 @@
+\begin{table*}[t]
+\revon
+\caption{Three Independent Executions of the Complete 10-Fold Experiment (Macro-F1; Per-Seed Entries: Mean$\pm$Std Over the 10 Folds; Last Row: Mean$\pm$Std of the Three Seed Means)}
+\label{tab:seeds}
+\centering
+\footnotesize
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+ & & & \multicolumn{2}{c}{Binary, RF} & \multicolumn{2}{c}{8-class, RF} & \multicolumn{2}{c}{8-class, DT} \\
+\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(l){8-9}
+Master seed & $|S^{*}_r|$ mean (range) & $k^{*}_r$ range & \method & All Features & \method & All Features & \method & All Features \\
+\midrule
+42 & 59.2 (28--70) & 13--14 & .936\,{\scriptsize$\pm$.002} & .936\,{\scriptsize$\pm$.001} & .908\,{\scriptsize$\pm$.005} & .911\,{\scriptsize$\pm$.003} & .898 & .898 \\
+43 & 51.8 (29--67) & 13--14 & .934\,{\scriptsize$\pm$.003} & .937\,{\scriptsize$\pm$.002} & .900\,{\scriptsize$\pm$.015} & .911\,{\scriptsize$\pm$.002} & .891 & .897 \\
+44 & 56.1 (13--70) & 11--14 & .934\,{\scriptsize$\pm$.004} & .937\,{\scriptsize$\pm$.002} & .898\,{\scriptsize$\pm$.030} & .911\,{\scriptsize$\pm$.004} & .887 & .897 \\
+\midrule
+Across seeds & 55.7 (13--70) & 11--14 & .935\,{\scriptsize$\pm$.0010} & .937\,{\scriptsize$\pm$.0002} & .902\,{\scriptsize$\pm$.0054} & .911\,{\scriptsize$\pm$.0002} & .892 & .897 \\
+\bottomrule
+\end{tabular}
+\end{table*}

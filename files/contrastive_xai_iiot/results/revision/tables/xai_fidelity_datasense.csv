@@ -1,0 +1,2 @@
+dataset,k,n_selected,n_rows,proxy_fit_rows,heldout_rows,in_sample_accuracy,heldout_accuracy,heldout_balanced_accuracy,heldout_macro_f1,silhouette_selected,silhouette_full
+datasense,13,61,227191,4736,68158,0.9917652027027027,0.9881158484697321,0.9797968836671385,0.9701883794680436,0.6443582773208618,0.5542829632759094

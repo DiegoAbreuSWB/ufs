@@ -1,0 +1,4 @@
+protocol,dup_share_mean,dup_share_min,dup_share_max,nonidle_dup_share_mean,nonidle_dup_share_max
+sample_k10,0.00019422935582152613,0.00013394950103810864,0.0003013863773357444,0.00019422935582152613,0.0003013863773357444
+whole dataset: rows duplicated,0.00023441476679079488,,,0.00023441476679079488,
+whole dataset: idle (all-zero) rows,0.0,,,,

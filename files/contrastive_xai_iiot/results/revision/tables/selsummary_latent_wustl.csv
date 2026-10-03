@@ -1,0 +1,2 @@
+dataset,protocol,space,n_runs,d,size_mean,size_std,size_min,size_median,size_max,n_always_selected,n_never_selected,n_selected_ge_80pct,jaccard_within_seed_mean,jaccard_within_seed_min,jaccard_across_seed_mean,jaccard_all_mean,jaccard_removed_all_mean,nogueira,k_star_counts
+wustl,sample_k10,latent,10,41,8.5,6.391400472509918,2,6.0,23,0,10,0,0.1635842596932395,0.0,,0.1635842596932395,0.6912312040350418,0.13423831070889902,"{""2"": 2, ""8"": 3, ""9"": 3, ""11"": 1, ""13"": 1}"

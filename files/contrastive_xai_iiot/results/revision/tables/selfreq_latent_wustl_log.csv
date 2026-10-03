@@ -1,0 +1,42 @@
+feature,group,selection_frequency,n_selected,n_runs,freq_seed42
+Sport,Network Multiplexing,0.0,0,10,0.0
+DstRate,Traffic Rate and Load,0.0,0,10,0.0
+DstJitter,Inter-Packet Timing and Jitter,0.0,0,10,0.0
+SrcJitter,Inter-Packet Timing and Jitter,0.0,0,10,0.0
+sTtl,IP Header Control,0.1,1,10,0.1
+DIntPkt,Inter-Packet Timing and Jitter,0.1,1,10,0.1
+Rate,Traffic Rate and Load,0.1,1,10,0.1
+Dport,Network Multiplexing,0.1,1,10,0.1
+DstPkts,Packet/Byte Volume,0.2,2,10,0.2
+Min,Flow Duration and Activity,0.2,2,10,0.2
+SIntPkt,Inter-Packet Timing and Jitter,0.2,2,10,0.2
+DAppBytes,Application Payload,0.2,2,10,0.2
+SynAck,Connection Setup,0.2,2,10,0.2
+SrcJitAct,Inter-Packet Timing and Jitter,0.2,2,10,0.2
+TcpRtt,Connection Setup,0.3,3,10,0.3
+Sum,Flow Duration and Activity,0.3,3,10,0.3
+Max,Flow Duration and Activity,0.3,3,10,0.3
+SrcLoad,Traffic Rate and Load,0.3,3,10,0.3
+Load,Traffic Rate and Load,0.3,3,10,0.3
+RunTime,Flow Duration and Activity,0.3,3,10,0.3
+TotAppByte,Application Payload,0.3,3,10,0.3
+SrcRate,Traffic Rate and Load,0.3,3,10,0.3
+DstLoad,Traffic Rate and Load,0.4,4,10,0.4
+Dur,Flow Duration and Activity,0.4,4,10,0.4
+TotPkts,Packet/Byte Volume,0.4,4,10,0.4
+SrcLoss,Loss and Retransmission,0.4,4,10,0.4
+Mean,Flow Duration and Activity,0.4,4,10,0.4
+SAppBytes,Application Payload,0.5,5,10,0.5
+TotBytes,Packet/Byte Volume,0.5,5,10,0.5
+pLoss,Loss and Retransmission,0.6,6,10,0.6
+IdleTime,Flow Duration and Activity,0.6,6,10,0.6
+DstBytes,Packet/Byte Volume,0.6,6,10,0.6
+SrcBytes,Packet/Byte Volume,0.7,7,10,0.7
+SrcPkts,Packet/Byte Volume,0.7,7,10,0.7
+Proto,Network Multiplexing,0.7,7,10,0.7
+Loss,Loss and Retransmission,0.7,7,10,0.7
+sTos,IP Header Control,0.7,7,10,0.7
+sDSb,IP Header Control,0.8,8,10,0.8
+DstJitAct,Inter-Packet Timing and Jitter,0.8,8,10,0.8
+dTtl,IP Header Control,0.8,8,10,0.8
+DstLoss,Loss and Retransmission,0.9,9,10,0.9

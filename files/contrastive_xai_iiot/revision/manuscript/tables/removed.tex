@@ -1,0 +1,81 @@
+\begin{table}[t]
+\revon
+\caption{DataSense Features Removed in at Least One of the 30 Fold-Specific Subsets}
+\label{tab:removed}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}llccc@{}}
+\toprule
+Feature & Context Group & Removed & Descr. & DS-17 \\
+\midrule
+\feat{network_time-delta_avg} & Timing Control & 22/30 & Yes & Yes \\
+\feat{network_time-delta_max} & Timing Control & 21/30 & Yes & No \\
+\feat{network_time-delta_std_deviation} & Timing Control & 21/30 & Yes & No \\
+\feat{network_time-delta_min} & Timing Control & 20/30 & Yes & No \\
+\feat{log_data-ranges_max} & Log Data Stats & 17/30 & No & No \\
+\feat{network_interval-packets} & Packet Traffic Rate & 17/30 & Yes & Yes \\
+\feat{log_interval-messages} & Log Data Rate & 16/30 & No & No \\
+\feat{network_packet-size_min} & Size Length & 16/30 & Yes & No \\
+\feat{log_data-ranges_avg} & Log Data Stats & 15/30 & No & Yes \\
+\feat{log_data-ranges_min} & Log Data Stats & 15/30 & No & No \\
+\feat{network_protocols_src_count} & Network Multiplexing & 15/30 & No & No \\
+\feat{network_protocols_dst_count} & Network Multiplexing & 14/30 & No & No \\
+\feat{network_packet-size_avg} & Size Length & 13/30 & No & No \\
+\feat{network_macs_src_count} & Address Diversity & 9/30 & No & Yes \\
+\feat{network_macs_all_count} & Address Diversity & 9/30 & No & No \\
+\feat{network_protocols_all_count} & Network Multiplexing & 9/30 & No & Yes \\
+\feat{network_ips_src_count} & Address Diversity & 8/30 & No & No \\
+\feat{network_macs_dst_count} & Address Diversity & 8/30 & No & No \\
+\feat{log_messages_count} & Log Data Rate & 8/30 & No & Yes \\
+\feat{log_data-ranges_std_deviation} & Log Data Stats & 8/30 & Yes & No \\
+\feat{network_tcp-flags-syn_count} & Header Flags & 8/30 & Yes & No \\
+\feat{network_tcp-flags-ack_count} & Header Flags & 8/30 & No & No \\
+\feat{network_packets_src_count} & Packet Traffic Rate & 8/30 & No & No \\
+\feat{network_tcp-flags_avg} & Header Flags & 7/30 & No & No \\
+\feat{network_packets_all_count} & Packet Traffic Rate & 7/30 & No & Yes \\
+\feat{network_payload-length_avg} & Size Length & 6/30 & No & No \\
+\feat{network_ports_dst_count} & Network Multiplexing & 6/30 & No & No \\
+\feat{network_tcp-flags-rst_count} & Header Flags & 6/30 & No & No \\
+\feat{network_ports_src_count} & Network Multiplexing & 6/30 & No & No \\
+\feat{network_payload-length_std_deviation} & Size Length & 5/30 & No & No \\
+\feat{network_header-length_std_deviation} & Size Length & 5/30 & No & No \\
+\feat{log_data-types_count} & Log Data Stats & 5/30 & No & Yes \\
+\feat{network_ports_all_count} & Network Multiplexing & 5/30 & No & Yes \\
+\feat{network_payload-length_min} & Size Length & 5/30 & No & No \\
+\feat{network_packets_dst_count} & Packet Traffic Rate & 5/30 & No & No \\
+\feat{network_ip-flags_max} & Header Flags & 4/30 & No & Yes \\
+\feat{network_ip-length_avg} & Size Length & 4/30 & No & No \\
+\feat{network_mss_std_deviation} & Size Length & 4/30 & Yes & No \\
+\feat{network_packet-size_std_deviation} & Size Length & 4/30 & No & Yes \\
+\feat{network_tcp-flags-urg_count} & Header Flags & 4/30 & No & No \\
+\feat{network_tcp-flags_min} & Header Flags & 4/30 & No & No \\
+\feat{network_tcp-flags-psh_count} & Header Flags & 4/30 & No & Yes \\
+\feat{network_tcp-flags-fin_count} & Header Flags & 4/30 & No & No \\
+\feat{network_ttl_min} & Timing Control & 4/30 & No & No \\
+\feat{network_window-size_max} & Timing Control & 4/30 & No & No \\
+\feat{network_ip-length_std_deviation} & Size Length & 3/30 & No & No \\
+\feat{network_ips_dst_count} & Address Diversity & 3/30 & No & Yes \\
+\feat{network_packet-size_max} & Size Length & 3/30 & No & No \\
+\feat{network_tcp-flags_std_deviation} & Header Flags & 3/30 & No & No \\
+\feat{network_tcp-flags_max} & Header Flags & 3/30 & No & No \\
+\feat{network_ip-flags_avg} & Header Flags & 3/30 & No & No \\
+\feat{network_window-size_std_deviation} & Timing Control & 3/30 & No & No \\
+\feat{network_ttl_max} & Timing Control & 3/30 & No & No \\
+\feat{network_window-size_avg} & Timing Control & 3/30 & No & Yes \\
+\feat{network_ip-length_min} & Size Length & 3/30 & No & No \\
+\feat{network_ip-flags_min} & Header Flags & 2/30 & No & No \\
+\feat{network_payload-length_max} & Size Length & 2/30 & No & No \\
+\feat{network_ip-length_max} & Size Length & 2/30 & No & No \\
+\feat{network_window-size_min} & Timing Control & 2/30 & No & No \\
+\feat{network_ip-flags_std_deviation} & Header Flags & 2/30 & No & No \\
+\feat{network_mss_avg} & Size Length & 1/30 & No & No \\
+\feat{network_mss_min} & Size Length & 1/30 & No & No \\
+\feat{network_fragmented-packets} & Fragmentation & 1/30 & No & Yes \\
+\feat{network_ips_all_count} & Address Diversity & 1/30 & Yes & Yes \\
+\feat{network_ttl_std_deviation} & Timing Control & 1/30 & No & No \\
+\feat{network_ttl_avg} & Timing Control & 1/30 & No & Yes \\
+\bottomrule
+\multicolumn{5}{@{}p{0.97\columnwidth}@{}}{Removed: number of folds in which the feature is excluded. Descr.: removed in the full-data descriptive configuration. DS-17: member of the supervised reference subset.}
+\end{tabular}
+\end{table}

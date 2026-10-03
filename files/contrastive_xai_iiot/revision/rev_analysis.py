@@ -131,6 +131,22 @@ def rc_rank_k(dataset):
     return {"datasense": 25, "wustl": 14, "wustl_log": 14, "nbaiot_log": 40}[dataset]
 
 
+def tost_wilcoxon(a, b, delta=0.01):
+    """
+    Paired equivalence test (two one-sided Wilcoxon signed-rank tests on d = a - b):
+      H01: median(d) <= -delta  vs  H11: median(d) > -delta
+      H02: median(d) >= +delta  vs  H12: median(d) < +delta
+    Equivalence is declared when max(p1, p2) < alpha. Margin fixed in the pre-registration.
+    """
+    from scipy.stats import wilcoxon
+    d = np.asarray(a) - np.asarray(b)
+    if len(d) < 5:
+        return np.nan
+    p1 = wilcoxon(d + delta, alternative="greater").pvalue
+    p2 = wilcoxon(d - delta, alternative="less").pvalue
+    return float(max(p1, p2))
+
+
 def significance(ev, dataset, seeds, protocol="sample_k10"):
     rows = []
     rk = rc_rank_k(dataset)
@@ -144,7 +160,9 @@ def significance(ev, dataset, seeds, protocol="sample_k10"):
                 rows.append(dict(task=task, clf=clf, reference=ref, seeds="+".join(map(str, sorted(m.seed.unique()))),
                                  n_pairs=len(m), mean_proposed=m.f1_macro_a.mean(), mean_reference=m.f1_macro_b.mean(),
                                  mean_diff=diff.mean(), n_positive=int((diff > 0).sum()), n_negative=int((diff < 0).sum()),
-                                 wilcoxon_p_two_sided=wilcoxon_two_sided(m.f1_macro_a, m.f1_macro_b)))
+                                 wilcoxon_p_two_sided=wilcoxon_two_sided(m.f1_macro_a, m.f1_macro_b),
+                                 tost_p_delta001=tost_wilcoxon(m.f1_macro_a, m.f1_macro_b, 0.01),
+                                 diff_min=float(diff.min()), diff_max=float(diff.max())))
     return pd.DataFrame(rows)
 
 

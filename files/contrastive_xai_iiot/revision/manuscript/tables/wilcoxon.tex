@@ -1,0 +1,34 @@
+\begin{table}[t]
+\revon
+\caption{Paired Comparisons of \method{} With Reference Configurations (Two-Sided Wilcoxon Signed-Rank Test Over Folds)}
+\label{tab:wilcoxon}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lllrcrrcr@{}}
+\toprule
+ & & & \multicolumn{3}{c}{Seed 42 (10 folds)} & \multicolumn{3}{c}{Seeds 42--44 (30 folds)} \\
+\cmidrule(lr){4-6}\cmidrule(l){7-9}
+Task & Clf. & Reference & $\Delta$F1 & Wins & $p$ & $\Delta$F1 & Wins & $p$ \\
+\midrule
+Binary & RF & vs. All Features & -0.0009 & 4/10 & 0.193 & -0.0021 & 7/30 & $<$0.001 \\
+Binary & RF & vs. DS-17 & +0.0093 & 10/10 & 0.002 & -- & -- & -- \\
+Binary & RF & vs. $k$-Means+Sil & +0.0478 & 10/10 & 0.002 & -- & -- & -- \\
+Binary & RF & vs. MCFS-25 & +0.0018 & 8/10 & 0.020 & -- & -- & -- \\
+Binary & DT & vs. All Features & -0.0001 & 3/10 & 0.557 & -0.0009 & 13/30 & 0.382 \\
+Binary & DT & vs. DS-17 & +0.0123 & 10/10 & 0.002 & -- & -- & -- \\
+Binary & DT & vs. $k$-Means+Sil & +0.0469 & 7/10 & 0.084 & -- & -- & -- \\
+Binary & DT & vs. MCFS-25 & +0.0032 & 9/10 & 0.004 & -- & -- & -- \\
+\midrule
+8-class & RF & vs. All Features & -0.0027 & 2/10 & 0.049 & -0.0089 & 6/30 & $<$0.001 \\
+8-class & RF & vs. DS-17 & +0.0312 & 10/10 & 0.002 & -- & -- & -- \\
+8-class & RF & vs. $k$-Means+Sil & +0.1605 & 9/10 & 0.010 & -- & -- & -- \\
+8-class & RF & vs. MCFS-25 & +0.0072 & 9/10 & 0.014 & -- & -- & -- \\
+8-class & DT & vs. All Features & -0.0004 & 6/10 & 0.625 & -0.0053 & 19/30 & 0.570 \\
+8-class & DT & vs. DS-17 & +0.0381 & 10/10 & 0.002 & -- & -- & -- \\
+8-class & DT & vs. $k$-Means+Sil & +0.1566 & 7/10 & 0.064 & -- & -- & -- \\
+8-class & DT & vs. MCFS-25 & +0.0147 & 10/10 & 0.002 & -- & -- & -- \\
+\bottomrule
+\multicolumn{9}{@{}p{0.97\columnwidth}@{}}{$\Delta$F1: mean macro-F1 of \method{} minus the reference. Wins: folds in which \method{} is strictly higher. The $k$-Means+Sil, MCFS-25, and DS-17 configurations were evaluated only in the primary execution.}
+\end{tabular}
+\end{table}
