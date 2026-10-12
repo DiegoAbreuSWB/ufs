@@ -55,7 +55,7 @@ Recent studies illustrate different applications of explainability in IoT and ne
 
 INSOMNIA \cite{andresini2021insomnia} addresses intrusion detection under concept drift but should not be classified as a SHAP-based IDS approach. It uses permutation-based variable importance through DALEX to examine model behavior under distributional change. It is therefore considered here as drift-aware explainability work rather than as evidence of SHAP usage in IDS.
 
-The unsupervised setting introduces a different explainability problem. Instead of explaining a supervised prediction, the goal is to characterize the behavior represented by each discovered cluster. In this work, a Random Forest proxy is trained to reproduce the cluster assignments produced in the VICReg latent space, and TreeExplainer SHAP is applied to identify the features that best describe each cluster. \rev{The scope of this proxy explanation is delimited once, in Section~\ref{sec:xai_method}.}
+The unsupervised setting introduces a different explainability problem. Instead of explaining a supervised prediction, the goal is to characterize the behavior represented by each discovered cluster. In this work, a Random Forest proxy is trained to reproduce the cluster assignments produced in the VICReg latent space, and TreeExplainer SHAP is applied to identify the features that best describe each cluster. \rev{The scope of this proxy explanation is defined in Section~\ref{sec:xai_method}.}
 
 \subsection{Comparison With Recent Representation-Aware and IDS Frameworks}
 
@@ -77,7 +77,7 @@ AMUFS (2026) \cite{gao2026unsupervised} & Seven public benchmark datasets & Not 
 UDLA (2026) \cite{wang2026unsupervised} & Six real-world benchmark datasets & Not used in FS & Dual-graph manifold learning, NMF, adaptive weighting, and sparse regularization & No explicit post-hoc XAI & Reported strong clustering-oriented feature-selection performance, including evaluations on high-dimensional data \\
 GELAX (2026) \cite{esmaeilyfard2026gelax} & N-BaIoT and UNSW Bot-IoT & Used for supervised detection & GNN and DNN representations, dynamic graph pruning, and Lasso-based feature selection & Anchored explanations & Reported 95.9\% and 96.9\% detection accuracy, reductions exceeding 45\% in resource use, and a 22.5\% improvement in explanation faithfulness \\
 IoT-CAD (2025) \cite{mohamed2025iot} & IoT-CAD digital-forensics dataset & Used for detection and attribution & Centralized and federated cyberattack-attribution models & Post-hoc feature-contribution analysis & Validated a heterogeneous IoT forensics dataset through machine-learning, federated-learning, network-forensics, and XAI analyses \\
-\method & DataSense CIC IIoT 2025 \rev{and WUSTL-IIoT-2021} & Not used in representation learning or FS & Group-aware VICReg representation and bidirectional latent-space original-feature refinement & Random Forest cluster proxy with SHAP & \rev{\PublishedEvidenceOwn} \\
+\method & DataSense CIC IIoT 2025\rev{, N-BaIoT, and WUSTL-IIoT-2021} & Not used in representation learning or FS & Group-aware VICReg representation and bidirectional latent-space original-feature refinement & Random Forest cluster proxy with SHAP & \rev{\PublishedEvidenceOwn} \\
 \bottomrule
 \end{tabularx}
 \end{table*}

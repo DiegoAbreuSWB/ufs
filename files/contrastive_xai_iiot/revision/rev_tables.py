@@ -642,10 +642,10 @@ Dataset & Reference & $\\Delta$F1 & $p_{{\\mathrm{{W}}}}$ & $p_{{\\mathrm{{TOST}
 
 def main():
     tab_crossdataset()
-    tab_natural("nbaiot_log", "tab:nbaiot", "Third Dataset N-BaIoT (Log-Scaled Attributes): Results at the Natural Operating Point of Each Method", False)
+    tab_natural("nbaiot_log", "tab:nbaiot", "Additional Dataset N-BaIoT (Log-Scaled Attributes): Results at the Natural Operating Point of Each Method", False)
     tab_budget("nbaiot_log", "tab:nbaiot_budget", "Macro-F1 vs. Feature Budget $k$ for the 11-Class Task on N-BaIoT (RF, 10 Folds)")
     tab_natural("datasense", "tab:natural", "Classification Results on DataSense at the Natural Operating Point of Each Method", True)
-    tab_natural("wustl_log", "tab:wustl", "External Dataset WUSTL-IIoT-2021 (Log-Scaled Attributes): Results at the Natural Operating Point of Each Method", False)
+    tab_natural("wustl_log", "tab:wustl", "Additional Dataset WUSTL-IIoT-2021 (Log-Scaled Attributes): Results at the Natural Operating Point of Each Method", False)
     tab_natural("wustl", "tab:wustl_direct", "External Dataset WUSTL-IIoT-2021 (Unchanged Preprocessing): Results at the Natural Operating Point of Each Method", False)
     tab_significance()
     tab_seeds()

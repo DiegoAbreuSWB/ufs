@@ -83,7 +83,7 @@ The raw DataSense CSV contains 94 columns. In this work, we use the 71 numeric f
 
 The 71 numeric features are organized into nine semantic Context Groups, shown in Table~\ref{tab:groups}. These groups are not class labels. They represent domain-informed partitions of the feature space according to the type of traffic behavior captured by each attribute, and they are central to the proposed group-aware augmentation strategy, which masks entire semantic groups rather than perturbing isolated features.
 
-The Context Groups were constructed from the exact dataframe feature names, their definitions, and the measurement semantics documented for DataSense. No attack labels, class frequencies, classifier scores, or downstream evaluation results were used to define the groups, and each numeric feature was assigned to exactly one group. \rev{The same construction rule is applied to a second dataset with a different schema in Section~\ref{sec:wustl_setup}, where the number and composition of the groups change according to the available attributes.}
+The Context Groups were constructed from the exact dataframe feature names, their definitions, and the measurement semantics documented for DataSense. No attack labels, class frequencies, classifier scores, or downstream evaluation results were used to define the groups, and each numeric feature was assigned to exactly one group. \rev{The same construction rule is applied to \rev{two additional datasets with different schemas} in Section~\ref{sec:wustl_setup}, where the number and composition of the groups change according to the available attributes.}
 
 \begin{table*}[t]
 \caption{DataSense Semantic Context Groups and Their Security Meaning}
