@@ -15,3 +15,5 @@ files/contrastive_xai_iiot/revision/manuscript/marked.flag
 !files/contrastive_xai_iiot/results/figures/paper_ready/*.pdf
 files/contrastive_xai_iiot/revision/deliverables/
 files/contrastive_xai_iiot/results/revision/_invalid_group_exec_k5_timestamp_bug/
+files/contrastive_xai_iiot/revision/reports/*
+!files/contrastive_xai_iiot/revision/reports/02_preregistration_third_dataset.md

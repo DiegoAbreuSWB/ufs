@@ -14,7 +14,7 @@ learned from the training rows of the current fold.
 | `rev_analysis.py` | Aggregates the runs into the tables (`results/revision/tables/*.csv`) and figures (`results/revision/figures/*`). |
 | `rev_xai.py` | Full-data descriptive configuration: held-out proxy fidelity, TreeExplainer SHAP on held-out rows, per-cluster clarity index, t-SNE and SHAP figures. |
 | `manuscript/` | LaTeX source of the revised manuscript; `build.py` produces the clean and the highlighted PDF. |
-| `reports/` | Checklist of the reviewer requests, experiment report, response letter. |
+| `reports/02_preregistration_third_dataset.md` | Evaluation protocol for N-BaIoT, fixed before any result on that dataset was computed. |
 
 ## Environment
 
